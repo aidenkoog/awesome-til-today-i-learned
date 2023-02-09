@@ -4,7 +4,7 @@
 
 [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://github.com/aidenkoog)
 
-## Study Keyword.
+## Keyword about programming.
 
 - 리액트
   - 페이지 상호작용
