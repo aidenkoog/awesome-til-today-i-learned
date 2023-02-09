@@ -1,7 +1,6 @@
-# Coding Study Note.
+# Keyword
 
-## Let's stydy React.js, Vue.js, Angular.js, React-Native, Flutter, Android, iOS, Xamarin, Python and Everything!.
-### Let's study the concept of a variety of languages, framework and library and, implement the functions in the currently commercialized app.
+## It organizes keywords about programming and computer world in general.
 
 [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://github.com/aidenkoog)
 
