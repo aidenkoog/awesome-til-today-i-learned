@@ -1,4 +1,4 @@
-## interview question, answers and keywords
+## Software interview questions, answers and Computer science knowledge
 
 A collection of documents that summarize expected interview questions and answers
 
