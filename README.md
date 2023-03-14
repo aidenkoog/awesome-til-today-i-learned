@@ -2,6 +2,8 @@
 
 A collection of documents that summarize expected interview questions, answers and computer science knowledge.
 
+####
+
 #### Release Note
 
 - 2023/03/08: Updated directory hierarchy.
@@ -9,6 +11,7 @@ A collection of documents that summarize expected interview questions, answers a
 - 2023/02/21: Added interview summary file.
 - 2023/03/13: Update web-front-end questions & answers.
 - 2023/03/14: Organized a folder structure to contain the contents to be organized in the future.
+- 2023/03/14: Added software engineering folder structure.
 
 #### Link
 
