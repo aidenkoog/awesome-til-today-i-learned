@@ -1,3 +1,9 @@
+#### 프론트 엔드 (Front-end) 설명
+
+- 인터페이스, 사용자가 볼 수 있는 화면
+  - 웹사이트에서 나타나는 텍스트나 이미지 그리고 버튼을 클릭하는 것 등 사용자가 마주하는 앞단의 것들.
+  - 인터페이스 (슬라이더, 드롭다운 메뉴, 레이아웃, 폰트 등) 개발하는 것
+
 #### 홈페이지가 사용자에게 보이는 순서 (브라우저 렌더링 과정) 설명
 
 - **[키워드-흐름]**
@@ -155,6 +161,13 @@
   - 멱등성 X
   - Ex. 게시판 글 수정 / 저장
 
+#### 멱등성 뜻
+
+- 기본 뜻
+  - 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질
+- 웹 용어의 관점
+  - 동일한 요청을 한 번 보내는 것과 여러 번 연속으로 보내는 것이 같은 효과를 지니고, 서버의 상태도 동일하게 유지될 때 해당 HTTP 메서드가 멱등성을 가진다라 볼 수 있음
+
 #### 자바스크립트 함수 호출시 전달되는 값들 종류
 
 - 함수 내 명시된 인자값
@@ -218,8 +231,8 @@
 
 #### CORS 해결 방법
 
-- 서버: Access-Control-Allow-Origin 헤더에 값 (Ex. \* 또는 명시적 도메인 URL) 세팅하거나 보통은 CORS 관련 미들웨어 라이브러리 사용한 해결
-- 클라이언트: 대부분 로컬 개발 시 webpack-dev-server 사용하는 것이 관례적.
+- [서버]: Access-Control-Allow-Origin 헤더에 값 (Ex. \* 또는 명시적 도메인 URL) 세팅하거나 보통은 CORS 관련 미들웨어 라이브러리 사용한 해결
+- [클라이언트]: 대부분 로컬 개발 시 webpack-dev-server 사용하는 것이 관례적.
   - http-proxy-middleware 라이브러리 사용 통한 CORS 문제 우회 가능
   - 로컬 환경에서 /api로 시작하는 URL로 보내는 요청에 대해 브라우저는 localhost:8000/api 로 요청을 보낸 것으로 알고 있지만 뒤에서는 웹팩이 다른 출처로 요청을 프록싱해주기 때문에 마치 CORS 정책을 지킨 것처럼 보이게 만들 수 있음.
   - 권장되는 사용 상황
@@ -255,7 +268,7 @@
 
 #### 이벤트 버블링 설명
 
-- 하위요소에서 싱위요소로의 이벤트 전파 방식
+- 하위요소에서 상위요소로의 이벤트 전파 방식
 - HTML 구조상 자식요소에 발생한 이벤트가 상위의 부모요소에까지 영향을 미치는 것
 - 한 요소에 이벤트가 발생하면 이 요소에 할당된 핸들러가 동작하고, 이어서 부모 요소의 핸들러가 동작하고 최상단의 부모 요소를 만날 때까지 반복되면서 핸들러가 동작하는 현상
 - 코드 구현 예제
@@ -272,6 +285,11 @@
 #### 이벤트 버블링 / 캡쳐링 막는 방법 설명
 
 - 이벤트 리스너 구현체 내 e.stopPropagation() 추가 (참고. 번식, 포교의 뜻)
+
+#### 렌더링 방식 종류와 각각에 대한 설명
+
+- 클라이언트 사이드 렌더링
+- 서버 사이드 렌더링
 
 #### HTML에 대한 설명
 
@@ -431,6 +449,11 @@
   - 참고. height는 원래 상속되는 속성이 아님. inherit를 지정하면 강제로 상속받게 됨.
     - Ex. height, background-color 등
 
+#### 패럴랙스 스크롤링 설명
+
+- 주로 웹사이트에서 사용되는 기술. 스크롤에 따라 오브젝트와 배경 이미지가 시간차를 두고 변하는 기법
+- 마우스를 스크롤할 때 원거리에 있는 배경 이미지는 느리게 움직이게 하고 근거리에 있는 사물 이미지는 빠르게 움직이도록 함으로써 입체감을 느낄 수 있게 만든 디자인 기법
+
 #### CSS 선택자 우선순위에 대한 설명
 
 - 같은 요소가 여러 선언의 대상이 된 경우, 어떤 선언의 CSS 속성을 우선 적용할 지 결정하는 방법
@@ -455,18 +478,20 @@
 #### CSS 속성 용어 (Properties)
 
 - 속성
+
   - 용어 용법
     - HTML: Attributes
     - CSS & JS: Properties
   - 속성 & 속성값
+
     - [width-height]
       - 속성 기본값: auto
     - [auto-값]: 요소에 이미 들어있는 속성의 값 (브라우저가 너비를 계산)
-      - 참고. span <-- 대표적인 인라인 요소 (글자 요소)
+      - 참고. **span** <-- 대표적인 인라인 요소 (글자 요소)
         - 가로, 세로 너비는 콘텐츠 크기만큼 줄어듬.
         - 가로, 세로 너비 지정 불가 (글자 요소이므로)
       - 참고. div에 height를 지정하지 않으면 표시되지 않음.
-        - div <-- 대표적인 블록 요소
+        - **div** <-- 대표적인 블록 요소
         - 가로는 부모 요소의 크기만큼 최대한 늘어남
         - 세로는 포함한 콘텐츠 크기만큼 자동으로 줄어듬.
     - [max]
@@ -474,17 +499,170 @@
     - [min]
       - min-width, min-height 속성 기본값: 0 (단위 불필요)
     - [margin]
-      - 요소의 외부 여백(공간)을 지정하는 단축 속성
+      - 요소의 외부 여백(공간)을 지정하는 **단축 속성**
       - 참고. 음수값 지정 가능.
         - Ex. margin: 10px; / margin: 10px 15px; / margin: 10px 20px 30px; / margin: 10px 20px 30px 40px (시계 방향);
       - margin: 0 auto 의 역할
     - [padding]
-      - 요소의 내부 여백(공간)을 지정하는 단축 속성
+      - 요소의 내부 여백(공간)을 지정하는 **단축 속성**
       - 내부 여백 주는 경우 요소 내 여백이 생기는 것이므로 요소의 크기가 늘어남
     - [border]
-      - 테두리 선 지정하는 단축 속성
+      - 테두리 선 지정하는 **단축 속성**
       - 테두리 두께가 증가하면 요소의 크기가 커짐
-      - Ex. border: 4px solid yellow;
+      - Ex. border: 4px solid yellow; / none으로 설정하면 표시되지 않음.
+      - **border-width**
+        - 기본값: medium 중간두께 / **개별속성이자 단축속성**
+        - Ex. border-width: 10px 20px 30px 40px
+      - **border-style**
+        - 기본값: none (선 없음) / **개별속성이자 단축속성**
+      - **border-color**
+        - 기본값: black / **개별속성이자 단축속성**
+        - transparent 투명도 지정 가능
+        - 색상 지정 방법
+          - 브라우저 제공 색상 (Ex. red, yellow 등)
+            - 실제 개발 시에는 브라우저마다 제공 색상이 조금씩 다를 가능성이 있으므로 16진수 색상으로 정확하게 지정하는 것이 권장.
+          - 16진수 색상
+          - 삼원색 (RGB): Ex. rgb(255, 255, 255)
+          - 삼원색 + 투명도 (RGBA): rgba(0, 0, 0, 0.3)
+          - HSL (색상, 채도, 명도): hsl(120, 100%, 50%)
+          - HSLA (색상, 채도, 명도 + 투명도): hsla(120, 100%, 50%, 0.3)
+      - **border-radius**
+        - 기본값: 0 / **개별속성이자 단축속성**
+          - 왼쪽 상단 ~ 왼쪽 하단까지 시계 방향
+      - **box-sizing**
+        - 요소의 크기 계산 기준을 지정
+        - **content-box**: **기본값**, 요소의 내용으로 크기 계산
+        - **border-box**: 요소의 내용 + padding + border로 크기 계산
+          - 요소에 지정한 가로, 세로 너비만큼 정확한 크기로 내부 여백과 테두리선을 추가하고 싶을 때 사용
+    - [overflow]
+      - 요소의 크기 이상으로 내용이 넘쳤을 때 보여짐을 제어하는 단축 속성
+      - 기본값: visible
+        - visible: 그대로 보여줌
+        - hidden: 넘친 내용을 잘라냄
+        - scroll: 넘치는 경우 스크롤 표시 (가로, 세로를 무조건 표시)
+        - auto: 넘치는 부분 (세로 또는 가로)에 대해서만 스크롤 표시
+      - child 요소가 넘쳤을 때 parent 요소에서 overflow를 지정 가능
+      - overflow-x / overflow-y
+    - [display]
+      - block: 상자 요소
+      - inline: 글자 요소
+        - Ex. span CSS 에서 display 를 block 으로 변경하면 가로, 세로값 지정이 가능
+      - inline-block : 베이스는 글자이나 가로/세로값 지정 가능
+      - flex
+      - grid
+      - none
+      - table / table-row / table-cell 등
+    - [opacity]
+      - 1: 불투명 (기본값)
+      - 0: 완전 투명
+        - 참고. .5 = 0.5 와 동일
+    - [글꼴]
+      - **line-height**: 한 줄의 높이 (행간)
+        - 기본값: normal (1)
+        - 숫자 (권장): 요소가 가지고 있는 폰트 사이즈의 배수
+          - 2배의 높이를 지정하려면?
+            - 2 또는 200% 로 지정한다.
+      - **font-family**: 글꼴(서체) 지정
+        - 글꼴계열 필수 작성해야 함. (Ex. serif - 바탕체 계열)
+          - serif 바탕체 계열
+          - sans-serif 고딕체 계열
+          - monospace (고정너비(가로폭 동등))
+      - **font-style**
+      - **font-weigth**: 기본값 normal (400)
+        - bolder / lighter는 상대적인 속성 (부모요소보다 더 진하게 / 얇게)
+    - [문자]
+      - **text-decoration**
+        - 기본값: none
+        - a 태그의 경우 기본적으로 text-decoration이 지정되어 있음.
+      - **text-align**
+        - 기본값: left
+      - **line-height** 에 요소의 height를 지정해주면 수직 가운데 정렬
+      - **color**: 글자의 색상
+        - 기본값: rgb(0,0,0)
+      - **text-indent**: 들여쓰기
+        - 기본값: 0 (들여쓰기 없음)
+        - outdent 는 음수를 사용함으로써 구현 가능
+    - [background]
+      - **background-color**
+        - 기본값: transparent
+      - **background-image** : 요소의 배경 이미지 삽입
+        - Ex. url("./images/image.png");
+        - background-color 지정 후 background-image 를 지정하면 배경 색상은 이미지 뒤에 표시
+      - **background-size**
+        - Ex. 200px (바둑판식 배열 형태로 출력)
+      - **background-repeat** : 이미지 반복 여부 결정
+        - 기본값: repeat (이미지를 수직, 수평 반복)
+        - Ex. background-repeat: no-repeat;
+      - **background-position** : 이미지 위치 결정
+        - 기본값: 0% 0%
+        - Ex. background-position: center; / background-position: top right;
+        - Ex. background-position: 100px 30px;
+      - **background-size**
+        - 기본값: auto (이미지 실제 크기)
+        - cover: 요소의 X, Y 값 중 큰 쪽에 맞춰지는 속성값
+        - contain: 요소의 X, Y 값 중 작은 쪽에 맞춰지는 속성값
+      - **background-attachment** : 배경 이미지 스크롤 특성
+        - 기본값: [scroll] (이미지가 요소를 따라 같이 스크롤)
+          - 요소가 스크롤을 통해 위로 올라갈 때 배경 이미지도 같이 올라감
+        - [fixed]: 이미지가 뷰포트에 고정, 스크롤 불가능
+          - 요소는 올라가는데 이미지는 고정
+          - 패럴렉스 (Parallax)
+    - [요소-배치]
+      - position: 요소의 위치 지정 기준
+        - 기본값: [static] (기준 없음)
+        - [relative]: 요소 자기 자신을 기준
+          - relative를 지정한다고 해도 화면에는 아무런 변화 없음
+          - 원래 자기 자신의 위치를 기준으로 위치 재산정
+            - Ex. relative position 설정 후 top / left 지정하면 원래 자기가 있었던 위치를 기준으로 이동됨
+            - 단독으로 배치하는 용도로는 잘 쓰이지 않음
+            - 실제로는 원래 자리에 그대로 있는 것과 같다
+        - [absolute]: 위치 상 부모 요소를 기준
+          - absolute 를 지정하면 주변과의 상호관계가 무너짐.
+          - 상위 요소 중 position 기준을 가지고 있는 요소가 부모 요소
+            - 구조상의 부모 요소가 아닌 위치상의 부모 요소
+          - 만약 부모 요소가 없다면 body => html => viewport 까지 찾는다.
+          - display 속성이 자동으로 block 으로 변경
+        - [fixed]: 뷰포트(브라우저) 기준
+          - 지정하게 되면 주변과의 상호관계 무너짐.
+          - 부모 요소에 위치 지정 값이 있더라도 무조건 뷰포트 기준으로 배치
+          - 스크롤 하더라도 배치 유지됨 (헤더 / 배너 등)
+          - display 속성이 자동으로 block 으로 변경
+        - [sticky]: 스크롤 영역 기준
+    - [Stack-Order]
+      - 1. 요소에 position 값이 있는 경우 위에 쌓임
+      - 2. position 값이 있는 상황 하 z-index 속성 값이 높을 수록 위에 쌓임
+      - 3. 나중에 작성된 HTML 요소일수록 위에 쌓임
+      - 참고
+        - z-index 기본값: 0 (auto) => 부모 요소와 동일한 쌓임 정도
+        - 음수도 가능하나 일반적으로 -1 이외의 다른 값은 사용하지 않음
+    - [flex]
+      - 속성 지정 => display: flex (일반적인 사용) / display: inline-flex 사용의 경우도 있음 => 아이템들이 수평으로 쌓임
+        - Flex Container
+          - flex-flow
+          - flex-direction
+            - 주 축(Main-axis)을 설정
+            - 기본값: row (좌 => 우), row-reverse (우 => 좌)
+          - flex-wrap
+            - 줄 바꿈 여부
+            - 기본값: nowrap (줄 바꿈 없음. 하나의 줄에 아이템들이 추가됨)
+            - wrap: 여러 줄로 묶겠다라는 의미. 칸이 모자라면 여러줄로 표현
+          - justify-content
+            - 주 축의 정렬 방법
+            - 기본값: flex-start
+          - align-content
+          - align-items
+        - Flex Items
+          - order
+          - flex
+          - flex-grow
+          - flex-shrink
+          - flex-basis
+          - align-self
+
+#### Display 속성이 Block 값으로 자동으로 바뀌는 Position 속성의 값 설명
+
+- absolute
+- fixed
 
 #### CSS 단위 종류와 각각에 대한 설명
 
@@ -510,3 +688,17 @@
 #### 0px, 0vw, 0 중 더 큰 값
 
 - 0이라는 수치는 단위에 상관없이 모두 같은 값임.
+
+#### 자바스크립트 라이브러리 종류
+
+- jQuery, Umbrella JS
+- Chart.js, Apexcharts, Algolia Places
+- D3.js
+- TaffyDB, ActiveRecord.js
+- wForms, LiveValidation, Validanguage, qForms
+- Anime.js, JSTweener
+- ImageFX, Reflection.js
+- typeface.js
+- Date.js, Sylvester
+- ReactJS, Glimmer.js
+- underscore.js, lodash
