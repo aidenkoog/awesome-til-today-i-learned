@@ -645,19 +645,89 @@
           - flex-wrap
             - 줄 바꿈 여부
             - 기본값: nowrap (줄 바꿈 없음. 하나의 줄에 아이템들이 추가됨)
+              - 기본값인 경우 한줄에 아이템을 다 표시하려다보니 아이템 너비가 찌그러기도 함.
             - wrap: 여러 줄로 묶겠다라는 의미. 칸이 모자라면 여러줄로 표현
           - justify-content
-            - 주 축의 정렬 방법
+            - 주 축의 정렬 방법 (flex-direction에 따라 주 축은 변경됨)
             - 기본값: flex-start
           - align-content
+            - 교차 축의 **여러 줄** 정렬 방법
+            - 여러 줄일때에만 동작 (flex-wrap 이 wrap 인 경우)
+            - 기본값: stretch
+            - flex-start: 전체 컨텐츠가 교차축쪽으로 정렬
           - align-items
+            - 교차 축의 **한 줄** 정렬 방법
+            - 기본값: stretch
+              - 참고. stretch 는 아이템의 width / height가 없을 때만 동작
         - Flex Items
           - order
+            - 기본값: 0 (순서없음)
+            - 숫자가 작을수록 앞 순서로 배치
           - flex
           - flex-grow
+            - 아이템의 증가 너비 비율
+            - 기본값: 0 (증가 비율 없음)
+            - 참고. 증가비율이 없는 아이템 2개와 증가비율 1인 아이템 1개가 있다면.
+              - 증가 비율이 없는 아이템 2개의 너비는 그대로 유지
+              - 증가비율 1인 아이템이 나머지 공간을 차지
+              - 즉, 증가비율이 있는 아이템들끼리 공간을 나눠가진다.
           - flex-shrink
+            - 아이템의 감소 너비 비율
+            - 기본값: 1 (Flex Container 너비에 따라 감소 비율 적용)
+            - 0으로 지정하면 Flex Container 너비와 상관없이 원래 아이템 크기를 유지
           - flex-basis
+            - 0 을 지정하고 flex-grow 값을 지정하면 비율 정상 적용됨
+            - 기본값: auto (요소의 내용 너비, Ex. 내용: 요소 내 글자 크기)
           - align-self
+    - [전환-효과]
+      - transition
+        - 요소의 전환(시작과 끝) 효과를 지정하는 단축 속성
+        - 기본값: all (모든 속성에 적용, 사용할 수 있는 모든 CSS 속성에 적용된다라는 의미)
+        - Ex.
+          - transition: all 300ms ease-in;
+          - transition: width 1s;
+          - 속성 개별적으로 지정 가능
+            - transition: width .5s, background-color 2s;
+      - transition-duration
+        - 전환 효과 지속 시간
+        - 기본값: 0s (전환 효과 X)
+      - transition-timing-function
+        - 타이밍(easing) 함수 지정
+          - ease: 느리게 - 빠르게 - 느리게
+          - linear: 일정하게
+          - ease-in: 느리게 - 빠르게
+          - ease-out: 빠르게 - 느리게
+          - ease-in-out: 느리게 - 빠르게 - 느리게
+      - transition-delay
+        - 전환 대기 시간
+        - 기본값: 0s (대기시간 없음)
+        - Ex. transition: 1s .5s;
+    - [변환-효과]
+      - Ex. transform: rotate(45deg) scale(1.3)
+        - 45도 각도 회전, 요소 크기 1.3배 증가
+      - 2D 변환 함수
+        - translate(x, y) <= 이동
+          - Ex. transform: translate(40px, 40px)
+        - scale(x, y) <= 크기 증가, Ex. 1.3
+        - rotate(degree) <= 회전, Ex. 45deg
+        - skew(x, y) <= 기울임, Ex. 45deg
+      - 3D 변환 함수
+        - translateZ(z) <= 이동(z축)
+        - perspective(n) <= 원근법(거리)
+        - rotateX(x) <= 회전 (x축 기준)
+        - rotateY(y) <= 회전 (y축 기준)
+          - rotateX, rotateY는 원근법 지정이 없으면 회전 속성을 주더라도 변화 없음
+          - perspective 까지 같이 지정하면 변화 있음
+            - perspective 함수는 transform 에 제일 앞부분에 작성해야 함
+            - Ex. transform: perspective(500px) rotateX(45deg);
+      - perspective 속성과 함수 간 차이점
+        - 적용 대상
+          - 속성: 관찰 대상의 부모 요소에 지정 (부모 요소의 정가운데 기준)
+          - 함수: 관찰 대상 자체에 지정 (관찰 대상의 정가운데 기준)
+      - backface-visibility
+        - 3D 변환으로 회전된 요소의 뒷면 숨김 여부
+        - 기본값: visible (뒷면 보임)
+        - Ex. transform: rotateY(180deg); backface-visibily: hidden;
 
 #### Display 속성이 Block 값으로 자동으로 바뀌는 Position 속성의 값 설명
 
@@ -702,3 +772,13 @@
 - Date.js, Sylvester
 - ReactJS, Glimmer.js
 - underscore.js, lodash
+
+#### 네트워크 통신 에러 처리 설명
+
+#### Axios 사용법 / 예외처리 방법 설명
+
+#### 요소 가운데 정렬 방법 설명
+
+#### RxJs
+
+#### 번들링 개념 설명
