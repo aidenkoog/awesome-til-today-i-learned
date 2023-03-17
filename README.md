@@ -21,13 +21,15 @@ A collection of documents that summarize expected interview questions, answers a
 - 👉 flutter
 - 👉 front-end
 - 👉 ios
-- 👉 IT trend
+- 👉 it trend
+- 👉 java
+- 👉 kotlin
 - 👉 linux
 - 👉 OOP
 - 👉 problem solving
 - 👉 react native
 - 👉 refactoring
-- 👉 SW engineering
+- 👉 sw engineering
 - 👉 uml
 - 👉 vcs
 

@@ -90,3 +90,7 @@
 #### 안드로이드 상태 관리 방법 설명
 
 #### 안드로이드 레이아웃 종류와 각각에 대한 설명
+
+#### ListView 와 RecyclerView 차이점
+
+#### AsyncTask Deprecate 된 이유
