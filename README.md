@@ -1,6 +1,6 @@
-## Software interview questions, answers and Computer science knowledge
+## Software engineering knowledge
 
-A collection of documents that summarize expected interview questions, answers and computer science knowledge.
+It is a place where various knowledge related to software is organized.
 
 #### Contents
 
