@@ -85,6 +85,36 @@
     - 백그라운드: 60초
     - 키 처리: 5초
 
+#### Dialog, Toast, SnackBar 차이점 설명
+
+- 다이얼로그: 사용자에게 추가정보를 입력 또는 결정을 내릴때 표시하는 작은 화면
+- 토스트: 작은 팝업으로 메세지에 필요한 공간만을 차지하고 진행 중인 작업을 그대로 표시되고 사용자와 상호작용도 유지됨
+  - 토스트 메세지는 시간이 초과하면 자동으로 사라짐
+- 스낵바: 토스트와 유사하지만 사용자가 메세지에 응답 가능
+
+#### Annotation 설명
+
+- 주석이라는 의미
+- 특정 클래스, 변수, 메소드 등에 붙이는 코드로 해당 타켓의 기능을 좀 더 명확하게 해주는 역할
+
+#### Context 설명
+
+- 여러 컴포넌트들의 상위 클래스
+- 컨텍스트가 없다면 액티비티, 서비스, 브로드캐스트 시작/발생 불가능
+- 리소스 접근 시에도 Context 통해서만 접근 가능
+- 추상 클래스
+- Context를 직접 상속한 것은 ContextWrapper
+- ContextWrapper를 상속한 것은 Activity, Service, Application
+  - BroadcastReceiver와 ContentProvider는 Context를 상속한 것이 아님
+- 안드로이드 시스템이 어플리케이션이나 컴포넌트 등을 관리하기 위한 것
+- 리눅스에서 프로세스에 아이디를 붙여 관리하듯 안드로이드 시스템은 어플리케이션 또는 컴포넌트 등을 컨텍스트로 관리
+
+#### LayoutInflater 설명
+
+- XML에 정의된 Resource(자원)들을 View의 형태로 반환
+- 자바코드에서 View, ViewGroup을 사용하거나 Adapter의 getView() 등 배경화면이 될 Layout을 만들어놓고 View의 형태로 반환받아 Activity, Fragment에서 실행하게 됨
+- Activity onCreate 내 setContentView 메소드와 같은 원리
+
 #### LiveData 사용법 / 동작 원리 설명
 
 #### 안드로이드 상태 관리 방법 설명
