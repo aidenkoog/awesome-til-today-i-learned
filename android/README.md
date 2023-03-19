@@ -115,7 +115,22 @@
 - 자바코드에서 View, ViewGroup을 사용하거나 Adapter의 getView() 등 배경화면이 될 Layout을 만들어놓고 View의 형태로 반환받아 Activity, Fragment에서 실행하게 됨
 - Activity onCreate 내 setContentView 메소드와 같은 원리
 
-#### LiveData 사용법 / 동작 원리 설명
+#### LiveData 개념 / 사용법 / 동작 원리 설명
+
+- 라이프사이클 내에서 관찰할 수 있는 데이터 홀더 클래스
+- Observer, LifecycleOwner와 쌍으로 추가 가능
+- Observer에서 래핑된 데이터의 수정에 대해 알림을 받음
+- LifecycleOwner 상태가 Lifecycle.State.STARTED or RESUMED 일때 알림 받기 가능
+- observeForever는 항상 액티브 상태로 간주하여 항상 알림 받기 가능
+- 수동으로 removeObserver로 옵저버 제거 가능
+- 메모리 누수의 위험 없음
+ - 라이프사이클에 추가된 관찰다는 Lifecycle.State.DESTROYED 로 이동되면 옵저버가 즉시 구독 취소됨
+
+#### ObservableField와 LiveData 차이점
+
+- LiveData는 라이프사이클을 알고 있음
+
+#### RxJava 설명
 
 #### 안드로이드 상태 관리 방법 설명
 
