@@ -1,3 +1,37 @@
 #### English
 
--
+- Spending time in the country is good for relieving stress.
+- I prefer eating out to spending a lot of time cooking at home.
+- It is easy to buy my groceries at a large supermarket.
+- Many people now do their banking online.
+- I check my e-mail about four times every day.
+- I don't travel by airplane a lot because it cost too much money.
+- I don't like wasting time being stuck in traffic.
+- I do my banking during my lunch break.
+- I don't like wasting my time standing around waiting for service.
+- I often make mistakes when I am in a rush.
+- I use my mobile phone to check my email.
+- I read a book very rarely.
+- I work out a least 2 times a day.
+- The advantage of using public transportation is that it doesn't cost much money.
+- It saves a lot of time sending e-mails back and forth.
+- It doesn't cost any money to walk.
+- Convenience stores offer a variety of products at any time of the day.
+- CDs take up a lot of space, so I prefer downloading music.
+- Online shopping makes it easy to buy all the things I need.
+- The only things I purchase at bookstores are travel guidebooks.
+- When I finish watching a DVD, I can lend it to a friend.
+- I can lend my car to my mother, but never to my younger brother.
+- Recently, computers hava become more affordable.
+- There are few affordable books.
+- I can afford to buy new mobile phone.
+- Taking a deep breath is good for stress.
+- Playing outdoor sport is good for relieving stress.
+- I go out with my friends twice a month.
+- We can share out opinions about the movies we watch.
+- We can share our feelings with each other.
+- I usually eat out in the evenings with my friends after work.
+- Many people eat out less because of the bad economy.
+- It is very expensive these days to have a big family.
+- I have a big family consisting of 10 people.
+- I hava a small family.
