@@ -53,6 +53,34 @@
     - onPause() => onStop() => onDestroyView() => onDestroy() => onDetach() => Fragment Destroyed.
     - onDestroyView() => onCreateView() => onActivityCreated() => onStart() => onResume() => Fragment Active.
 
+#### View 라이프사이클 설명
+
+- Button, TextView, ImageView 등의 위젯을 작성하는데 사용되는 기본 클래스이자 이 모든 것이 View
+- View의 서브 클래스인 ViewGroup은 보이지 않는 컨테이너로써 다른 View들을 다른 View (또 다른 ViewGroup)에 포함 가능
+- 라이프사이클
+  - 노말 케이스
+    - Constructors
+    - onAttachedToWindow()
+    - measure()
+    - onMeasure()
+    - layout()
+    - onLayout()
+    - dispatchToDraw()
+    - draw()
+    - onDraw()
+  - invalidate 호출
+    - dispatchToDraw()
+    - draw()
+    - onDraw()
+  - requestLayout 호출
+    - measure()
+    - onMeasure()
+    - layout()
+    - onLayout()
+    - dispatchToDraw()
+    - draw()
+    - onDraw()
+
 #### Intent 설명
 
 - Messaging Object (메세지 객체)
@@ -124,11 +152,44 @@
 - observeForever는 항상 액티브 상태로 간주하여 항상 알림 받기 가능
 - 수동으로 removeObserver로 옵저버 제거 가능
 - 메모리 누수의 위험 없음
- - 라이프사이클에 추가된 관찰다는 Lifecycle.State.DESTROYED 로 이동되면 옵저버가 즉시 구독 취소됨
+- 라이프사이클에 추가된 관찰다는 Lifecycle.State.DESTROYED 로 이동되면 옵저버가 즉시 구독 취소됨
+
+#### 안드로이드 앱 만들 때 중요 파일과 폴더에 대해 설명 (과거 버전)
+
+- src
+  - .java / .kt 파일 포함
+  - 코드 작성 위치
+  - 프로젝트 패키지 이름으로 사용 가능
+- gen
+  - R.java 소스 파일들 포함
+  - 프로젝트에 있는 모든 자원을 참조하는 컴파일러가 생성한 파일
+  - 수정하면 안되는 파일
+- assets
+  - HTML, Text 파일 / 데이터베이스와 같은 정보를 가지고 있음
+- bin
+  - 빌드 과정에서 ADT에 의해 생성된 .APK 파일 존재
+    - .APK는 바이너리 파일, 실행하기 위한 모든 것을 포함하고 있음
+- res
+  - 안드로이드 어플리케이션에 쓰이는 모든 Resource 파일들을 가지고 있음
+
+#### AIDL 설명
+
+- Android Interface Definition Language
+- IPC를 통한 동일한 레벨로 통신하는 클라이언트와 서비스 간 인터페이스 요구사항들을 처리
+- IPC 통신을 위해 Parcel을 이용해 데이터들을 원시 타입으로 주고 받음
 
 #### ObservableField와 LiveData 차이점
 
 - LiveData는 라이프사이클을 알고 있음
+
+#### String과 StringBuffer의 차이점
+
+- String: 불변, 문자를 수정하려면 지우고 다시 생성 (new)
+  - 문자열 연산이 많으면 기능 저하
+- StringBuffer: 가변, 한번 생성 후 필요할 때 크기를 변경하여 문자를 변경
+  - append()
+- StringBuilder: 동기화 지원 X, 멀티스레드 환경에 부적합
+  - 싱글스레드에서는 StringBuffer 보다 성능 좋음
 
 #### RxJava 설명
 
