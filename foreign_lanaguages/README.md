@@ -35,3 +35,36 @@
 - It is very expensive these days to have a big family.
 - I have a big family consisting of 10 people.
 - I hava a small family.
+- I like watching action films because they are exciting.
+- The most important qualities of a hotel are being safe and being clean.
+- Therefore, I think mobile phones have made the world a better place.
+- In my opinion, public transportation is fast and efficient.
+- The characteristics of a good book are a string story and clear writing.
+- I prefer going out on weekends to staying at home.
+- First of all, the cost of clothing is very high.
+- That's because I enjoy spending time with my friends.
+- First of all, children's toys should be safe and clean.
+- Secondly, a good restaurant should offer customers exceptional service.
+- In addition, it should be easy to use.
+- For these reasons, I prefer watching television to listening to the radio.
+- Therefore, people should exercise regularly.
+- In my opinion, it is important to learn foreign languages.
+- I think it is easier to send an e-mail than write a letter.
+- In my case, I'm more likely to borrow books from a library than buy them at a store.
+- The characteristics of good clothing are having a unique design and being made of good materials.
+- The most important qualities in a good leader are good communication skills and the ability to solve problems.
+- The advantages of online shopping are that it is fast and doesn't cost much money.
+- I prefer taking a bus to taking a train.
+- I enjoy watching movies when I have free time.
+- I like working out because it keeps me healthy.
+- If I could learn how to play an instrument, I would choose to play the piano.
+- My favorite outdoor activities are mountain climbing and bike riding.
+- I visit a dental clinic twice per year.
+- I call about 10 people on a daily basis.
+- I do my banking at a branch near my office.
+- The last time I borrowed a book from a library was last year.
+- I wear casual clothes.
+- The last hotel I stayed at was the Burbank hotel.
+- I go to the back if I have to make a deposit.
+- If you could do anything on your free time, what would you do?
+- I would travel abroad.
