@@ -193,9 +193,24 @@
 
 #### RxJava 설명
 
+- Reactive Extensions의 JVM 구현체
+- 상태 변화를 관찰하고 있다가 능동적으로 동작하는 프로그램을 작성할 수 있게 도움 (반응형 프로그래밍)
+- 복잡한 비동기 에러 처리를 간단하게 구현
+- 다양한 플랫폼과 언어 지원 (크로스 플랫폼)
+- Observer Pattern + Iterator Pattern + Functional Programming
+
 #### 안드로이드 상태 관리 방법 설명
 
+- State 패턴 사용한 UI 상태 관리
+
 #### 안드로이드 레이아웃 종류와 각각에 대한 설명
+
+- LinearLayout
+- RelativeLayout
+- ConstraintLayout
+- TableLayout
+- GridLayout
+- FrameLayout
 
 #### ListView 와 RecyclerView 차이점
 
@@ -227,3 +242,45 @@
 - Configuration 변경이 일어났을 때 Crash 가능성
 - 대체 방안
   - RxJava / Coroutine
+
+#### Application 클래스 설명
+
+- 안드로이드 기본 클래스
+- 앱에 대한 모든 컴포넌트, 액티비티와 서비스를 포함하고 있는 클래스
+- 어플리케이션 클래스는 응용 프로그램/패키지에 대한 프로세스가 생성될 때 다른 클래스보다 먼저 인스턴스화됨
+
+#### View.GONE 과 View.INVISIBLE 차이점
+
+- INVISIBLE: 뷰를 그려놓고 보이지 않으나 레이아웃에 공간을 차지
+- GONE: 아답터에 getView()가 호출되지 않아 뷰를 그리지 않고 공간도 차지 하지 않음
+- 예외 상황
+  - View.GONE 으로 초기화 하면 뷰가 초기화 되지 않아 임의의 오류 발생 가능성 있음
+  - 뷰 처리 (이동, 크기 조절, 애니매이션 처리) 전 View.VISIBLE / View.INVISIBLE 로 선 초기화하여 렌더링 한 다음에 처리 필요
+
+#### Jetpack 설명
+
+- 높은 퀄리티 앱을 쉽게 개발할 수 있도록 도와주는 라이브러리
+- 분류
+  - Foundation Components
+  - Architecture Components
+  - Behavior Components
+  - UI Components
+
+#### 메인 스레드 설명
+
+- 핸들러 스레드이므로 활성화된 루퍼를 가지고 있음
+
+#### 서비스와 스레드 차이점
+
+- 서비스는 메인스레드 / 스레드는 별도의 스레드에서 동작
+- 서비스는 4대 구성요소로 강제 종료되어도 시스템이 자동 시작해주나 스레드는 자동 시작 되지 않음
+- 참고.
+  - 안드로이드 실행 => 메인스레드 생성 => 이벤트 발생 => 스레드에서 이벤트 처리
+
+#### SharedPreferences 설명
+
+- 안드로이드에서 사용 가능한 데이터 저장소
+- 데이터를 파일로 저장 (XML) / 파일이 앱 폴더 내에 저장되므로 앱 삭제 시 데이터도 삭제됨
+- Key Value 형태로 원시 데이터 형태로만 저장 가능
+- 단순 저장 용도일 때 자주 사용
+  - 자동로그인 플래그 저장

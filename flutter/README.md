@@ -51,6 +51,22 @@
 - StatelessWidget
 - StatefulWidget
 
+#### Stateful Widget Lifecycle (생명주기) 설명
+
+- 위젯 구축
+  - createState()
+  - initState(): 단 한번만 호출됨
+  - didChangeDependencies()
+- Re-Drawing
+  - 화면 드로잉 (dirty): 위젯 트리 구축
+  - build(): UI 구축
+  - 화면 드로잉 (clean): 위젯 트리 구축
+  - didUpdateWidget(): 위젯 구성이 변경될 때마다 호출됨
+  - setState(): 상태가 변경되었을 때 프레임워크에 상태가 변경 됨을 알림
+- 위젯 소멸
+  - deactivate()
+  - dispose()
+
 #### main()과 runApp() 차이점
 
 - main(): 프로그램 시작점
@@ -86,3 +102,21 @@
 
 - 다중상속 지원 X
 - 자바에서 클래스, 인터페이스 활용한 유사 다중상속 구현을 하듯이 플러터에서는 Mixins를 사용해서 다중상속 구현이 가능
+
+#### GetX 라이브러리 상태 관리 방식 설명
+
+- 단순 상태 관리
+  - 기존의 데이터와 변경되는 데이터가 같은지 확인하지 않음
+- 반응형 상태 관리
+  - 데이터 변화가 있을 때만 재랜더링 수행
+  - 추가 기능 worker
+    - Ever
+    - Once
+    - Interval
+    - Debounce
+
+#### Provider 라이브러리 상태 관리 방식 설명
+
+- 상태 변화된 것이 여러 개인 경우 여러개의 Provider를 추가하여 처리 가능
+- Provider 는 제공자 / Consumer 는 소비자
+- 어떤 데이터를 제공할 때는 Provider로 제공

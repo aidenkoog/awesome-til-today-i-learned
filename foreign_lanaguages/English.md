@@ -1,0 +1,70 @@
+#### English
+
+- Spending time in the country is good for relieving stress.
+- I prefer eating out to spending a lot of time cooking at home.
+- It is easy to buy my groceries at a large supermarket.
+- Many people now do their banking online.
+- I check my e-mail about four times every day.
+- I don't travel by airplane a lot because it cost too much money.
+- I don't like wasting time being stuck in traffic.
+- I do my banking during my lunch break.
+- I don't like wasting my time standing around waiting for service.
+- I often make mistakes when I am in a rush.
+- I use my mobile phone to check my email.
+- I read a book very rarely.
+- I work out a least 2 times a day.
+- The advantage of using public transportation is that it doesn't cost much money.
+- It saves a lot of time sending e-mails back and forth.
+- It doesn't cost any money to walk.
+- Convenience stores offer a variety of products at any time of the day.
+- CDs take up a lot of space, so I prefer downloading music.
+- Online shopping makes it easy to buy all the things I need.
+- The only things I purchase at bookstores are travel guidebooks.
+- When I finish watching a DVD, I can lend it to a friend.
+- I can lend my car to my mother, but never to my younger brother.
+- Recently, computers hava become more affordable.
+- There are few affordable books.
+- I can afford to buy new mobile phone.
+- Taking a deep breath is good for stress.
+- Playing outdoor sport is good for relieving stress.
+- I go out with my friends twice a month.
+- We can share out opinions about the movies we watch.
+- We can share our feelings with each other.
+- I usually eat out in the evenings with my friends after work.
+- Many people eat out less because of the bad economy.
+- It is very expensive these days to have a big family.
+- I have a big family consisting of 10 people.
+- I hava a small family.
+- I like watching action films because they are exciting.
+- The most important qualities of a hotel are being safe and being clean.
+- Therefore, I think mobile phones have made the world a better place.
+- In my opinion, public transportation is fast and efficient.
+- The characteristics of a good book are a string story and clear writing.
+- I prefer going out on weekends to staying at home.
+- First of all, the cost of clothing is very high.
+- That's because I enjoy spending time with my friends.
+- First of all, children's toys should be safe and clean.
+- Secondly, a good restaurant should offer customers exceptional service.
+- In addition, it should be easy to use.
+- For these reasons, I prefer watching television to listening to the radio.
+- Therefore, people should exercise regularly.
+- In my opinion, it is important to learn foreign languages.
+- I think it is easier to send an e-mail than write a letter.
+- In my case, I'm more likely to borrow books from a library than buy them at a store.
+- The characteristics of good clothing are having a unique design and being made of good materials.
+- The most important qualities in a good leader are good communication skills and the ability to solve problems.
+- The advantages of online shopping are that it is fast and doesn't cost much money.
+- I prefer taking a bus to taking a train.
+- I enjoy watching movies when I have free time.
+- I like working out because it keeps me healthy.
+- If I could learn how to play an instrument, I would choose to play the piano.
+- My favorite outdoor activities are mountain climbing and bike riding.
+- I visit a dental clinic twice per year.
+- I call about 10 people on a daily basis.
+- I do my banking at a branch near my office.
+- The last time I borrowed a book from a library was last year.
+- I wear casual clothes.
+- The last hotel I stayed at was the Burbank hotel.
+- I go to the back if I have to make a deposit.
+- If you could do anything on your free time, what would you do?
+- I would travel abroad.

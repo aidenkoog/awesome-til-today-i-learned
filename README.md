@@ -11,7 +11,6 @@ It is a place where various knowledge related to software is organized.
 - 👉 architecture pattern
 - 👉 back-end
 - 👉 blockchain
-- 👉 career_management
 - 👉 cloud
 - 👉 coding convention
 - 👉 common computer science
