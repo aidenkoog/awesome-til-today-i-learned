@@ -18,18 +18,29 @@ array	                result
 
 from collections import Counter
 
+
 def solution(array):
-    
+
+    # 요소의 개수를 구한다.
+    # counte는 Dictionary 자료형 Ex. {'test': 5, 'test1': 3}
+    # 요소의 개수가 많은 것부터 출력, 내림차순
     counter = Counter(array)
+
+    # 가장 흔한, 최대 빈도수의 값 (최빈값)을 구한다.
+    # 튜플 배열 형태로 출력
+    # Ex. [(1, 3), (2, 2)]
     most = counter.most_common()
+
+    # 첫번째 튜플의 두번째 값 (개수)
     maxCount = most[0][1]
     modeList = []
-    
+
     for item in most:
         if item[1] == maxCount:
+            # 튜플의 첫번째 값 (실제 값)
             modeList.append(item[0])
-    
+
     if len(modeList) > 1:
         return -1
-    
+
     return modeList[0]

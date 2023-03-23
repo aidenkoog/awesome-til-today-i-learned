@@ -9,13 +9,14 @@ return 하도록 구현하여라.
 1 ≤ n ≤ 100
 """
 
+
 def solution(n):
     if n <= 7:
         return 1
 
     share = n // 7
-    reminder = n % 7  
-    
+    reminder = n % 7
+
     if reminder == 0:
         return share
     return share + 1

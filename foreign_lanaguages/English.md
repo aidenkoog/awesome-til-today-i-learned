@@ -68,3 +68,46 @@
 - I go to the back if I have to make a deposit.
 - If you could do anything on your free time, what would you do?
 - I would travel abroad.
+- Where do you buy your clothes?
+- I buy my clothes at a shop in the mall.
+- I buy my clothes from a store near my home.
+- What was the last program you watched on TV?
+- The last program I watched on TV was a weather report.
+- What kinds of books do you enjoy reading?
+- I enjoy reading science fiction.
+- When was the last time you met your friends?
+- The last time I met my friends was two days ago.
+- How do you usually get to work?
+- I usually get to work by subway or on foot.
+- When do you buy gitts for your friends?
+- I buy gifts for my friends when they get promoted.
+- On what occasions do you buy cakes?
+- I buy cakes sometimes for parties.
+- How often do you get a haircur?
+- I get a haircut three times a year.
+- How long do you use the Internet every day?
+- I use the Internet every day for approximately 30 minutes.
+- How often do you go to a concert, and who do you usually go with?
+- And how do you find out about concerts in your area?
+- I'd like to go to a concert soon. What concert do you suggest I go to?
+- What I notice first is a train stopped at a station. The train is painted white and blue, and it's in front of a brown building.
+- A ship is moving along the river.
+- The ferry is leaving from the docks.
+- Buildings have been painted red.
+- A big balloon is sitting on the ground.
+- Some lights are hanging from the ceiling.
+- Fruits and vegetables are displayed at the market.
+- Many boxes are stacked next to the copy machine.
+- Many papers are scattered on the table.
+- Some paintings are exhibited at the museum.
+- What I notice first is some tables and chairs arranged in front of the building. In the middle of the picture, I can see a waiter standing next to them. There is also a white building.
+- The street is lined with many trees.
+- The road is crowded with people and vehicles.
+- I can see some trees thick with leaves.
+- Many cars are parked along the street.
+- Some chairs have been arranged on a street.
+- A house is surrounded by many buildings.
+- The fallen leaves are scattered all around the park.
+- I can see some hills covered in bushes.
+- There are some boats floating on the lake.
+- I can see shelves filled with books.

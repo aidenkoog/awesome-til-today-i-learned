@@ -59,32 +59,6 @@
 - sender: 일을 시키는 객체
 - receiver: 일을 하는 객체
 
-#### API 설명
-
-- Application Programming Interface
-- 운영체제나 프로그래밍 언어가 제공하는 기능을 제어할 수 있게 만든 인터페이스
-
-#### RESTful API 설명
-
-- REST
-  - Representational State Transfer
-  - 자원을 이름(자원 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것
-    - HTTP URL을 통해 자원을 명시하고 HTTP Method (POST/GET/PUT/DELETE)를 통해 CRUD Operation을 적용하는 것을 의미
-  - 장점
-    - HTTP 프로토콜 인프라를 활용하므로 별도의 인프라 구축 불필요
-    - HTTP 표준 프로토콜을 따르는 모든 플랫폼에서 사용 가능
-    - 의도하는 바 파악 수월
-    - 요청하는 클라이언트가 플랫폼에 무관
-    - 특정 언어 / 기술에 종속받지 않음
-    - 이전과 다음 요청 간에 연관성 없음
-    - 서버와 클라이언트 역할을 확실히 구분 가능
-- REST API
-  - REST 기반으로 서비스 API를 구현한 것
-- RESTful
-  - REST 라는 아키텍쳐를 구현하는 웹 서비스 의미
-  - REST 원리를 따르는 시스템 = RESTful
-  - 이해하기 쉽고 사용하기 쉬운 REST API를 만드는 것이 목적
-
 #### DispatchQueue 설명
 
 - Queue

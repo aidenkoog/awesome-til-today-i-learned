@@ -287,6 +287,42 @@
   - 서버의 자원을 전혀 사용하지 않음
   - Ex. "아이디, 패스워드를 저장하시겠습니까?"
 
+#### 토큰 인증 방식 흐름 설명
+
+- 1. 로그인 페이지 요청
+- 2. 로그인 페이지 응답
+- 3. 로그인 요청 (ID + Password)
+- 4. 서버 내 토큰 생성
+- 5. 토큰 응답
+- 6. 클라이언트 내 토큰 저장
+- 7. API 호출 시점에 토큰과 함께 정보 요청
+- 8. 토큰 검증 / 응답
+- 참고.
+  - 토큰에 요청한 사람의 정보가 포함되어 서버는 DB를 조회하지 않고 토큰 검증 가능
+  - 서버 내부에서는 비밀키 하나만 가지고 있으면 토큰 검증 가능
+
+#### JWT 설명
+
+- JSON Web Token
+- 인증에 필요한 정보를 암호화한 JSON 형식의 토큰
+- JWT 토큰을 HTTP 헤더에 실어서 서버가 클라이언트를 식별 가능하도록 함
+- 구성 요소
+  - 헤더 (사용할 해시 알고리즘 등의 메타 정보)
+  - 페이로드 (실제 보내고자 하는 데이터, 키 + 값 형식의 정보)
+  - 서명값, Signature (헤더 + 페이로드 + 키 정보를 해싱한 후 클라이언트에게 전달)
+- 인증 원리
+  - 페이로드 변경되면 서명값 변경되므로 서버가 위조 여부 파악 가능
+- 토큰 목적
+  - 위조 방지
+  - 서버의 메모리 가용 이점 (DB 조회 필요 없음)
+- 실제 인증 방식
+  - 1. 아이디, 비밀번호 사용한 로그인
+  - 2. 토큰 발급
+  - 3. 액세스 토큰 이용한 API 요청
+  - 4. 액세스 토큰에 이상 없다면 데이터 응답
+  - 5. 추후 액세스 토큰 만료로 리프레쉬 토큰으로 액세스 토큰 재요청
+  - 6. 액세스 토큰 재발급
+
 #### 세션 설명
 
 - 한 명의 사용자(브라우저)의 상태를 유지하는 기술
@@ -1230,3 +1266,147 @@
 - 3. 클라이언트가 동적 요청을 했을 때 웹 서버와 웹 어플리케이션 서버가 처리해서 응답 전송하는 과정
   - Ex. 웹 서버: nginx / 웹 어플리케이션 서버: Django / Bridge: Gunicorn
     - nginx <-- TCP 통신 --> Django
+
+#### API 설명
+
+- Application Programming Interface
+- 운영체제나 프로그래밍 언어가 제공하는 기능을 제어할 수 있게 만든 인터페이스
+- 프로그램이 상호작용하기 위한 인터페이스
+
+#### RESTful API 설명
+
+- REST
+  - Representational State Transfer
+  - 자원을 이름(자원 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것
+    - HTTP URL을 통해 자원을 명시하고 HTTP Method (POST/GET/PUT/DELETE)를 통해 CRUD Operation을 적용하는 것을 의미
+  - 구성 요소
+    - 자원 (Resource): URI 이용
+      - 회원 (User), https://www.test.com/users
+    - 행위 (Verb): HTTP 메소드
+      - 회원 등록, HTTP Method POST
+    - 표현 (Representation): Payload 이용
+      - 아이디: "guest", 비밀번호: "0000", {"id": "guest". "password": "0000"}
+  - 장점
+    - HTTP 프로토콜 인프라를 활용하므로 별도의 인프라 구축 불필요
+    - HTTP 표준 프로토콜을 따르는 모든 플랫폼에서 사용 가능
+    - 의도하는 바 파악 수월
+    - 요청하는 클라이언트가 플랫폼에 무관
+    - 특정 언어 / 기술에 종속받지 않음
+    - 이전과 다음 요청 간에 연관성 없음
+    - 서버와 클라이언트 역할을 확실히 구분 가능
+- REST API
+  - REST 기반으로 서비스 API를 구현한 것
+  - REST 아키텍쳐를 따르는 API
+- REST API 호출
+  - REST 방식을 따르고 있는 서버에 특정 요청을 전송하는 행위
+- REST API 연습
+  - Mocking 서비스 이용 (기능이 있는 것처럼 흉내내어 구현한 것)
+  - 서버 기능 개발 후 클라이언트 개발 시 개발 일정 지연 발생 가능성 있으므로 우선적으로 Mock Data 활용하여 개발 진행
+- RESTful
+  - REST 라는 아키텍쳐를 구현하는 웹 서비스 의미
+  - REST 원리를 따르는 시스템 = RESTful
+  - 이해하기 쉽고 사용하기 쉬운 REST API를 만드는 것이 목적
+
+#### OAuth 설명
+
+- 사용자가 설정한 권한에 대해서만 구글 정보에 접근할 수 있도록 하는 것
+  - Access Token 이용
+  - Ex. SNS 간편 로그인 기능
+- OAuth 2.0 구성 요소
+  - Resource Owner (사용자)
+  - Client (개인 / 회사가 만든 서비스)
+  - Resource Server (구글, 페이스북 등)
+    - 웹 서비스는 액세스 토큰을 Resource Server에 보내서 사용자 개인정보를 얻음
+  - Authorization Server
+    - 권한 부여 기능을 담당하는 서버
+    - 사용자는 자신의 SNS 계정정보를 넘겨 Authorization Code를 획득
+    - 웹 서비스는 사용자로부터 받은 코드를 넘겨서 Access Token을 획득
+
+#### OAuth 2.0 동작 예시 설명
+
+- 분류
+  - 일반 사용자
+    - Resource Owner
+  - 개발자
+    - 서비스 (Client)
+  - SNS API 서비스 제공자
+    - Authorization Server
+    - Resource Server
+- 동작 흐름
+  - 1. [Owner=>Client] SNS 로그인 (SNS 버튼 클릭)
+  - 2. [Client=>Owner] Client ID, Redirect URI 획득
+  - 3. [Owner=>Auth-Server] SNS 로그인 페이지 요청 (Client ID, Redirect URI, 실제 SNS 로그인 화면)
+  - 4. [Auth-Server=>Owner] SNS 로그인 페이지 제공
+  - 5. [Owner=>Auth-Server] SNS 로그인 시도 (ID + Password)
+  - 6. [Auth-Server=>Owner] Authorization Code 전달
+  - 7. [Owner=>Client] Redirect URI 접속 (Authorization Code)
+  - 8. [Client=>Auth-Server] Authorization Code 전달
+  - 9. [Auth-Server=>Client] Access Token 전달
+  - 10.[Client=>Resource-Server] Access Token으로 API 호출
+  - 11.[Resource-Server=>Client] 요청된 자원 전달
+  - 12.[Client=>Owner] 최종 서비스 제공
+
+#### 안전하지 않은 인증 방식 예 설명
+
+- 사용자가 서버에 SNS 아이디와 패스워드 정보를 주는 경우
+  - 1. 구글 로그인 요청 (나의 구글 계정 정보)
+    - 나의 구글 계정 아이디, 비밀번호 정보가 웹 서버로 전달
+  - 2. 사용자의 구글 계정 로그인
+  - 3. 사용자 정보 얻기
+  - 4. 로그인 성공 응답
+
+#### JSON 형식 설명
+
+- JSON (JavaScript Object Notation)
+- 데이터를 주고 받기 위해 사용하는 경량의 데이터 형식
+- 키와 값의 쌍으로 이루어진 데이터 객체 사용
+
+#### HTTP 메소드
+
+- 클라이언트는 요청의 목적에 따라 적절한 HTTP 메소드 사용
+- GET, POST, PUT, DELETE
+- 요청 후 크롬 개발자도구의 헤더 탭에서 상세 내용 확인 가능
+- 응답 받은 후 크롬 개발자 도구의 네트워크 탭에서 상세 내용 확인 가능
+
+#### HTTP 상태 관리와 세션 설명
+
+- HTTP 는 상태 저장 하지 않음 (Stateless)
+- 클라이언트는 HTTP로 서버에 연결한 뒤에 응답을 받으면 연결 해제
+  - 서버 입장에서 접속 유지에 대한 요구가 적어 불특정 다수를 대상으로 하는 서비스에 적합
+  - Ex. 상품확인 -> 장바구니 -> 결제 과정이 상태 정보로 기록되지는 않음
+- 세션을 이용해 저장은 가능
+
+#### Keep Alive 기능 설명
+
+- HTTP 1.1 버전부터 Keep-Alive 지원
+- 대게 웹 사이트 방문 시 수십 개의 CSS, HTML, JS 파일들을 제공받음
+  - TCP 통신 과정에서 연결 수행 / 해제 과정에서 리소스가 많이 소요
+- 파일들을 하나씩 받기 위해 매번 연결을 맺고 끊는 것을 방지하는 기능
+
+#### URI와 URL 차이점
+
+- URI (Uniform Resource Identifier)
+  - 통합 자원 식별자
+  - 인터넷 상의 리소스 "자원자체"를 식별하는 고유한 문자열 시퀀스
+    - Uniform: 리소스를 식별하는 통일된 방식
+    - Resource: URI로 식별이 가능한 모든 종류의 자원 (웹 브라우저 파일 / 그 이외의 리소스 포함)
+    - Identifier: 다른 항목과 구분하기 위해 필요한 정보
+  - 식별자
+    - Ex. xxx.co.kr (리소스 이름만 나타냄)
+  - URL 보다 더 포괄적인 개념
+- URL (Uniform Resource Locator)
+  - 네트워크상에서 통합 자원(리소스)의 "위치"를 나타내기 위한 규약
+    - 자원 식별자와 위치를 동시에 보여줌
+    - 웹 사이트 주소 + 컴퓨터 네트워크 상의 자원
+  - 특정 웹 페이지의 주소에 접속하기 위해서 웹 사이트의 주소 뿐만 아니라 프로토콜을 함께 알아야 접속이 가능한데 이들을 모두 나타내는 것
+  - 식별자 + 위치
+    - Ex. https://xxx.co.kr (리소스 이름 + 어떻게 도달할 수 있는지에 대한 위치 정보, 프로토콜 (https) 포함)
+    - 참고. 프로토콜: 리소스에 접근하는 방법을 지정하는 방식
+
+#### HTTP 통신
+
+#### 쿠키 / 세션 / 캐시
+
+#### Forward / Redirect
+
+#### CRUD
