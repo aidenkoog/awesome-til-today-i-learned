@@ -13,15 +13,29 @@ my_string과 letter은 알파벳 대소문자로 이루어져 있습니다.
 
 
 def solution(my_string, letter):
-    answer = []
+    result = ''
 
     '''
+    # 문제 생각 과정
     결과 배열 선언
     l인 지점들 파악
     그 지점 파악 후 그 다음 지점이 e 인지 파악
     만약 이런식으로 파악하다가 letter 가 아니면 그 다음 l지점으로 이동
     똑같이 반복
     0 ~ l시작 지점 + 1 까지 내용과 r 지점부터 배열 길이 + 1 까지 내용을 합친다
+
+    # 문자열이 아닌 단순 문자 비교이므로 간단한 for문으로 해결가능
     '''
 
-    return answer
+    for i in my_string:
+        if i == letter:
+            continue
+        result += i
+    return result
+
+
+'''
+[다른 풀이법]
+def solution(my_string, letter):
+    return my_string.replace(letter, '')
+'''
