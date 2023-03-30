@@ -4,6 +4,9 @@
 - 크로스 플랫폼 모바일 앱 및 다양한 플랫폼을 쉽게 개발할 수 있도록 구글에서 제공하는 무료 오픈소스
 - 렌더링 엔진, UI 컴포넌트, 테스트 프레임워크, 도구, 라우터 등 기능을 모두 제공
 - 웹, 모바일 환경, PC, Embedded 환경 지원
+- SKIA 라는 그래픽 엔진 사용
+  - 번역 작업 없이 작성 코드를 그대로 렌더링 => 속도가 네이티브 앱과 비슷 / 다른 플랫폼들에서 일관된 화면 표시 가능
+- Material & Cupertino Component, Widget들을 가지고 있음
 
 #### 크로스 플랫폼 (Cross-Platform Software) 설명
 
@@ -181,3 +184,40 @@
   - 앱 개발 시작할 때 이름이 결정됨
   - 타이핑 수월하고 발음에 용이한 간단한 영문 이름 채택 (Ex. Dox, Dog, Candy 등)
     - 일명 코드명 같은 느낌
+
+#### 프로젝트 구축
+
+- homebrew / brew install git 명령 실행
+- flutter SDK 설치
+  - https://www.flutter.dev
+  - visit https://docs.flutter.dev/development/tools/sdk/releases?tab=macos
+  - download the latest flutter of stable channel.
+  - execute export PATH="\$PATH:`pwd`/flutter/bin" on console or Modify bash_profile. (Add export PATH="\$PATH:/Users/admin/flutter/bin to .bash_profile or .zshrc)
+  - flutter precache
+  - flutter doctor
+  - if you encounter this error ---> Flutter - Unable to find bundled Java version.
+  - cd /Applications/Android\ Studio.app/Contents/jre
+  - [Not Electric Eel] ln -s ../jre jdk
+  - [Not Electric Eel] ln -s "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin" jdk
+  - [Electric Eel] cd /Applications/Android\ Studio.app/Contents
+  - [Electric Eel] ln -s jbr jre
+  - 안드로이드 라이센스 동의 에러 발생하면 flutter doctor --android-licenses 명령 실행
+  - flutter doctor
+- Visual Studio Code 설치
+  - Flutter, Flutter Intl, Dart, dart-import
+- Xcode 설치
+  - open a Simulator 명령으로 시뮬레이터 실행 가능
+- Android Studio 설치
+  - (참고) Android Platform 종속성을 제공하기 위해 Android Studio의 전체 설치에 의존
+- flutter run 명령으로 플러터 앱 실행
+- Android 기기에서 USB 설정을 '파일 전송' 모드로 설정
+- 참고. 스마트폰 미러링 위한 설치
+  - brew install scrcpy
+  - brew install --cask android-platform-tools
+  - scrcpy (scrcpy -s SERIAL_NUMBER)
+- iOS 빌드 시 3가지 버전 관리
+  - flutter
+  - Xcode
+  - Cocoapods
+- iOS 는 QuickTime Player 로 화면 미러링
+- Flutter 앱을 실제 iOS 기기에 Deploy 하려면 Apple 계정 필요. 또한 Xcode 에서 실제 기기 Deploy 설정 필요. 앱이 Flutter Plugin을 사용하는 경우 써드 파티 Cocoapods 의존성 관리도 필요
