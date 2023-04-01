@@ -1463,13 +1463,17 @@
 
 - 절대경로, 프로젝트의 메인 페이지로 이동하겠다라는 의미
 
-#### HTTP 통신
-
-#### 쿠키 / 세션 / 캐시
-
 #### Forward / Redirect
 
-#### CRUD
+- 웹에서는 페이지 전환방식 2가지가 존재
+- Forward
+  - Web Container 차원에서의 페이지 이동
+  - 웹 브라우저에는 최초 호출한 URL만 표시되고 이동한 페이지 URL 정보는 볼 수 없음
+  - 실행중인 페이지와 forward에 의해 호출될 페이지는 request, response 객체를 공유
+- Redirect
+  - Web Container 는 redirect 명령이 들어오면 웹 브라우저에게 다른 페이지로 이동하라는 명령을 내리고 웹 브라우저는 URL을 지시된 주소로 바꾸고 그 주소로 이동함
+  - 다른 Web Container에 있는 주소로 이동 가능
+  - 새로운 페이지에서는 request, response 객체가 새롭게 생성
 
 #### 미정리 스터디 내용
 
