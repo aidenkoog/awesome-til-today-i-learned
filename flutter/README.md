@@ -220,4 +220,60 @@
   - Xcode
   - Cocoapods
 - iOS 는 QuickTime Player 로 화면 미러링
-- Flutter 앱을 실제 iOS 기기에 Deploy 하려면 Apple 계정 필요. 또한 Xcode 에서 실제 기기 Deploy 설정 필요. 앱이 Flutter Plugin을 사용하는 경우 써드 파티 Cocoapods 의존성 관리도 필요
+- Flutter 앱을 실제 iOS 기기에 Deploy 하려면 Apple 계정 필요. 또한 Xcode 에서 실제 기기 Deploy 설정 필요. 앱이 Flutter Plugin을 사용하는 경우 써ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ드 파티 Cocoapods 의존성 관리도 필요
+
+#### 변수 선언 관련 설명
+
+- var 사용한 변수 선언 시 초기화 된 값 형태에 따라 자동적으로 타입 추론이 이루어짐
+- int 형 변수값에 double 값 연산 불가능 (Ex. double test = 23.444, test += 1)
+- double 형 변수값에 int 값 연산 가능 (double 형 값들은 int 형 값들보다 범위가 넓음)
+- double 형 변수에 int 타입 값이 초기화될 때 double 형 변수는 그 값을 double 형으로 인식
+  - Ex. double num1 = 30 <== 30.0
+- 4 == 4.0 <== true
+- 변수 중복 선언 불가능
+- 변수명은 소문자로 시작, 띄어쓰기 불가능, 띄어쓰기가 필요하다면 카멜표기법으로 작성
+- List 는 순서가 보장됨 / Set 은 순서 보장 안됨
+  - Set[0] 이런 식의 접근이 안되는 이유는 순서 보장 안되는 열거 타입이므로 안됨
+  - Set은 인덱스 접근 안됨
+  - Set은 중복 허용하지 않음, Ex. 1, 2, 3, 2 ==> 1, 2, 3
+  - Set은 리스트보다 접근 속도 빠름 (처리 속도 빠름)
+- 맵에서 존재하지 않는 키로 접근했을 때 null 값 출력
+- Any 타입에 해당하는 것은 dynamic, Object
+- 맵 선언, 초기화 그리고 사용법
+  - Ex. Map<String, dynamic> testMap = { 'name': 'Koo' } / testMap['name']
+- toList(), toSet()의 결과값은 각각 [ ... ], { ... }
+- 타입 추론이 아닌 타입을 명시하는 것이 권장 사항
+- ? 유무에 따른 Non-nullable, Nullable 처리
+  - 일반적으로 타입을 가진 변수 선언 시 초기화를 하지 않으면 에러 발생, Null을 허용하지 않으므로.
+
+#### Object, dynamic, var 설명
+
+- Object
+  - 모든 타입의 공통 부모
+  - 다른 타입 대입 가능
+- dynamic
+  - 컴파일 시간에 오류를 잡아내는 Static Checking을 하지 않음
+  - 컴파일 시간에 오류를 잡아내지 않으므로 어떤 값이 들어오는지 정확히 알 때만 사용해야 함
+- var
+  - 모든 타입이 될 수 있지만 초기화 값에 따라 타입이 정해짐
+
+#### final, const 차이점
+
+- final
+  - 한번 값을 대입하면 변경 불가능
+  - 런타임에 값이 할당
+- const
+  - 한번 값을 대입하면 변경 불가능
+  - 컴파일 타임에 값이 할당
+- 차이점 예
+  - DateTime.now()
+  - 실행 시에 시간이 결정되므로 final 키워드는 사용가능
+  - 실행 시에 시간이 결정되는 기능이므로 const 키워드는 사용 불가능
+
+#### if, switch 설명
+
+- switch가 if 보다 가독성 및 처리 속도가 더 빠름
+
+#### 함수 설명
+
+- 반환타입 + 함수명 + 매개변수 + 실행문 으로 구성
