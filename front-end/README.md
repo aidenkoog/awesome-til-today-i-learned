@@ -184,7 +184,7 @@
   - 멱등성 X
   - Ex. 게시판 글 수정 / 저장
   - 캐싱 불가능
-  - 요청 시 데이터의 위치: 바디 
+  - 요청 시 데이터의 위치: 바디
 
 #### 멱등성 뜻
 
@@ -261,6 +261,7 @@
 #### CORS (Cross-Origin Resource Sharing) 정책 설명
 
 - 다른 출처간의 리소스 공유
+- 도메인이 다른 2개의 사이트가 데이터를 주고 받을 때 발생하는 문제
 - 브라우저 구현 스펙에 포함되는 정책
   - 브라우저 없이 서버 간 통신 시에는 이 정책이 적용되지 않음
 - 참고. URL 내 3가지 요소만 같으면 같은 출처라고 판단
@@ -269,6 +270,13 @@
   - Port
 - 클라이언트 측에서 다른 출처 리소스 요청 시
   - 브라우저는 요청 헤더 내 Origin 필드에 요청을 보내는 출처를 함께 담아서 송신
+- CORS가 생기게 된 이유
+  - 서버 내에서 요청이 허락된 도메인에만 데이터를 주기 위해서인데, 요청을 허락하기 위해서는 Access-Control-Alow-Origin: {도메인} 과 같은 내용을 Response의 헤더에 추가해야 함
+  - 만약 도메인을 \*으로 설정하면 모든 도메인에 대해 요청을 허락할 수 있음 - 그 외에도 Access-Control-Allow-Methods, Access-Control-Max-Age 등을 설정이 가능
+    - Access-Control-Allow-Orgin : 요청을 보내는 페이지의 출처 [ *, 도메인 ]
+    - Access-Control-Allow-Methods : 요청을 허용하는 메소드. Default : GET, POST
+    - Access-Control-Max-Age : 클라이언트에서 preflight 요청 (서버의 응답 가능여부에 대한 확인) 결과를 저장할 시간
+    - Access-Control-Allow-Headers : 요청을 허용하는 헤더
 
 #### CORS 해결 방법
 
