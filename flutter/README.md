@@ -340,3 +340,13 @@
 - StatelessWidget
   - constructor
   - build
+  - public / private
+- Container
+  - Container
+  - SizedBox
+  - Center
+
+#### 위젯 클래스 관련 설명
+
+- 특정 파일 내 특정 클래스를 외부에서는 사용을 하지 않고 파일 내부에서만 사용 가능하게 만들려면 클래스와 생성자 이름 앞에 언더바를 추가하면 됨
+  - Ex. \_MyHomeWidget
