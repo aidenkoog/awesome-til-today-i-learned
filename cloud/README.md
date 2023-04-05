@@ -16,9 +16,3 @@
     - Ex. AWS (Amazon Web Sevice) EC2와 Google의 Compute Engine(GCE) 등
   - PaaS (Platform as a Service)
   - SaaS (Software as a Service)
-
-#### IaaS
-
-#### PaaS
-
-#### SaaS

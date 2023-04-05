@@ -24,31 +24,40 @@
       - OnChain 통신 (Web3.js, ether.js, caver.js)
 - 기술이라는 관점보다는 미래 인터넷 세계 관련한 운동 / 방향 / 지향점으로 이해
 
-#### IaaS / PaaS / SaaS 개념
+#### IaaS / PaaS / SaaS 개념 설명
+
+- 클라우드 서비스 종류
+- **IaaS** (Infrastructure as a Service)
+  - 서비스로 제공되는 인프라 구조
+  - 개발사에 제공되는 물리적 자원을 가상화
+  - 확장성이 높고 자동화된 컴퓨팅 리소스를 가상화하여 제공
+  - 제공하는 서비스
+    - 가상화 / 서버 / 스토리지 / 네트워크
+  - Ex: **AWS**, Microsoft Azure, DigitalOcean, GCE
+- **PaaS** (Platform as a Service)
+  - 서비스로 제공되는 플랫폼
+  - 개발사에 제공되는 플랫폼을 가상화
+  - 주로 응용 프로그램을 개발할 때 필요한 플랫폼을 제공
+  - 제공하는 서비스
+    - 런타임 / 미들웨어 / 운영체제 / 가상화 / 서버 / 스토리지 / 네트워크
+  - Ex: AWS Elastic Beanstalk, Windows Azure, **Heroku**, Google App Engine
+- **SaaS** (Software as a Service)
+  - 서비스로 제공되는 플랫폼
+  - 고객에게 제공되는 소프트웨어를 가상화
+  - 클라이언트 측에서 별도의 다운로드 / 설치 불필요
+  - 제공하는 서비스
+    - 애플리케이션 / 데이터 / 런타임 / 미들웨어 / 운영체제 / 가상화 / 서버 / 스토리지 / 네트워크
+  - Google Apps, **Dropbox**, Salesforce, WhaTap
 
 #### 서버리스 배포와 API 제공자
 
 - 베르셀(Vercel) / 네트리파이(Netlify)
-
-#### 몽고 DB
-
-#### API 빌더
 
 #### 프론트엔드 툴과 프레임워크
 
 - 스벨트(Svelte)
 - 퀵(Qwik)
 
-#### Rust
-
-#### JHipster
-
 #### 분리 아키텍쳐 (마이크로서비스)
 
 - API, 프론트엔드 진화, 커스텀 미들웨어 등
-
-#### 프로세스 자동화
-
-#### Open AI, GPT
-
-#### 애자일 방법론

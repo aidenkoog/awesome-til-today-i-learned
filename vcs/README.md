@@ -50,3 +50,9 @@
   - QA 진행 중 발생한 버그들에 대한 수정사항은 release 브랜치에 추가
   - QA 완료 후 release 브랜치를 master와 develop로 Merge
   - master 브랜치에서 버전에 대한 태그 추가
+
+#### Git, GitHub에 대한 설명
+
+- Git: 버전 관리 시스템, Git Repository라고 불리는 데이터 저장소에 소스 코드 등을 넣어서 이용
+- GitHub: Git Repository를 인터넷 상에서 제공하는 서비스(호스팅 서비스)
+  - GitHub 라는 호스팅 서비스가 없다면 우리는 인프라 + 서버를 개인이 각각 구성하고 Git Repository를 조작할 UI가 있는 웹페이지까지 제작을 해야 함

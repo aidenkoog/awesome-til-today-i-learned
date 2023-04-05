@@ -342,11 +342,67 @@
   - build
   - public / private
 - Container
-  - Container
-  - SizedBox
-  - Center
+  - **Container**
+    - color / alignment / padding / margin / width / height / child
+    - center: Alignment(0, 0) / x = 0, y = 0 => center
+    - 가운데가 0, 0이고 우측 또는 상단 쪽이 1, 좌측 또는 아래 쪽이 -1, 컨테이너 바깥에도 그림 그리기 가능
+    - Alignment(0.7, 1.3)와 같이 더 자세한 값 지정도 가능
+  - **SizedBox**
+    - 자식 사이즈 지정, 주로 텍스트의 가로/세로 길이를 지정할 때 사용 (텍스트 글꼴 사이즈는 텍스트의 style 속성 사용하여 지정)
+    - width / height / child
+  - **Center**
+    - Container 에서 alignment: Alignment.center를 설정한 것과 동일
+  - **Padding**
+    - padding / child
+    - EdgeInsets.symmetric(hotizontal: 100, vertical: 100)
+    - EdgeInsets.all(40)
+    - EdgeInsets.fromLTRB(10, 70, 50, 50)
+    - EdgeInsets.only(bottom: 50, top: 20)
+    - EdgeInsets.zero <== 특정 위젯은 기본적으로 패딩을 가지고 있는 경우가 있음, 여백 값을 없애고 싶을 때 사용
+  - **Align**
+    - alignment / child
+- Multiple Item Container
+  - **Column**
+    - children: [ Container(), Container() ]
+  - **Row**
+    - children: [ Container(), Container() ]
+    - mainAxisAlignment
+    - crossAxisAlignment
+    - mainAxisSize: MainAxisSize.min
+  - **Wrap**
+    - Overflow 발생 시 알아서 줄을 변경
+    - direction: Axis.vertical / Axis.horizontal
+  - **Stack**
+    - 위젯을 겹칠 때 사용
+    - alignment: Alignment.center
+    - children
+  - **Spacer**
+    - Spacer() 형태로 사용
+    - 위젯 아이템들 사이의 공간을 주고 싶을 때 사용
+    - flex 속성 (비율)
+    - 공간 차지 비율: flex값 / 각각의 스페이서들의 flex 값 총합
+  - **Expanded**
+    - child 속성 존재
+    - 나머지 영역 안에서 위젯을 그리고 싶을 때 사용
+    - 예를 들어 텍스트 값이 길어지는 경우 알아서 줄바꿈 처리
+- Button
+  - ElevatedButton
+  - OutlineButton
+  - TextButton
+  - GestureDetector
 
 #### 위젯 클래스 관련 설명
 
 - 특정 파일 내 특정 클래스를 외부에서는 사용을 하지 않고 파일 내부에서만 사용 가능하게 만들려면 클래스와 생성자 이름 앞에 언더바를 추가하면 됨
   - Ex. \_MyHomeWidget
+
+#### MediaQuery 사용 예 설명
+
+- 가로 스크린 사이즈를 가져오는 예제
+  - width: (MediaQuery.of(context).size.width) - (30 \* 5)
+
+#### 위젯 가운데 정렬 예 설명
+
+- Align 내 Container 위젯 배치 / alignment 설정
+- Center 내 Container 위젯 배치
+- Container 위젯 내 텍스트 위젯 배치 / alignment 설정

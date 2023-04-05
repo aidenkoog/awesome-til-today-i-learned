@@ -26,3 +26,11 @@
 - MVC 패턴
 - 블랙보드 패턴
 - 인터프리터 패턴
+
+#### MVVM 설명
+
+- 디자인 패턴 일종으로 Model-View-ViewModel로 구성
+- View 에는 Activity와 Fragment 등이 속함. 사용자의 액션을 받고 ViewModel의 데이터를 관찰하여 View를 갱신
+- ViewModel은 뷰가 요청한 데이터를 Model로 요청하고 Model한테 요청한 데이터를 받음
+- Model은 ViewModel이 요청한 데이터를 반환하고 DB 사용 또는 HTTP API 호출 등을 담당
+- 기능별로 모듈화가 잘 되므로 개발 및 유지 보수에 용이하고 UI 업데이트가 간편
