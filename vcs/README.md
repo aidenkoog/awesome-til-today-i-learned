@@ -56,3 +56,28 @@
 - Git: 버전 관리 시스템, Git Repository라고 불리는 데이터 저장소에 소스 코드 등을 넣어서 이용
 - GitHub: Git Repository를 인터넷 상에서 제공하는 서비스(호스팅 서비스)
   - GitHub 라는 호스팅 서비스가 없다면 우리는 인프라 + 서버를 개인이 각각 구성하고 Git Repository를 조작할 UI가 있는 웹페이지까지 제작을 해야 함
+
+#### fork와 clone 차이점
+
+- fork
+  - 다른 사람의 GitHub repository를 내 GitHub repository 즉, 나의 원격 저장소로 그대로 복제하는 기능
+  - fork한 저장소는 원본과 연결되어 있음
+  - 원본에 변경이 생기면 fork 저장소에서 fetch / pull 과정을 수행하면 변경 사항을 반영할 수 있음
+  - 소스코드 수정 후 원본 repository에 적용하고 싶다면 원본 저장소에 PR (Pull Request)를 보내야 함
+  - 원본 저장소 (GitHub 내 타 저장소들)에 권한이 없는 사용자가 저장소를 fork하고 자신의 저장소에 변경 사항을 적용한 후에 Push ==> 이 후 내 저장소에 있는 브랜치를 원본 저장소에 PR 요청 ==> 코드가 원작자에 의해 승인되면 코드가 병합됨.
+- clone
+  - 특정 원격 저장소 내용을 나의 로컬 저장소로 완전히 복사하는 기능
+  - 연결된 저장소는 로컬에서 remote 로 연결된 origin
+  - clone 한 프로젝트는 원본 저장소의 로그를 보는 것이 불가능
+
+#### pull과 fetch 차이점
+
+#### merge와 cherry-pick 설명
+
+#### HEAD에 대한 설명
+
+#### Git merge 대신 Git rebase 를 언제 사용하는 지에 대한 설명
+
+#### Git stash 명령 사용 시기 설명
+
+#### Git Upstream, Downstream 설명
