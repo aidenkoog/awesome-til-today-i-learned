@@ -72,12 +72,85 @@
 
 #### pull과 fetch 차이점
 
+- fetch
+  - 원격 저장소의 변경 사항들을 로컬로 가져오기 전에 변경 내용을 확인하고 싶은 경우에 사용하는 명령어
+  - 누가 특정 파일에 수정을 했는지 안했는지 확인하고 싶을 때 사용
+  - 로컬로 변경한 내용을 가져오지 않고 변경한 내역들만 확인
+  - 사용 방법
+    - 원격에서 (GitHub에서) 파일을 수정
+    - 로컬에서 git fetch origin
+    - git checkout origin/master
+    - 해당 파일을 열어보면 원격저장소에서 수정한 내용이 추가되었음을 확인 가능
+    - 즉, 로컬에는 저장되지 않고 브랜치로 체크아웃하여 변경된 내용들을 확인만 하는 것
+    - git log로 fetch한 commit 내역도 확인 가능
+    - fetch는 원격저장소에서 파일을 병합하기 전에 병합을 할지 말지 확인을 할수 있는 명령어
+- pull
+  - fetch랑 다르게 로컬에 변경내용을 병합
+  - 로컬에서 작업 중 변경된 애용을 pull 할 경우 conflict 발생 가능성이 있으므로 fetch 후 pull을 로컬이 깨끗한 상태에서 사용하는 게 바람직함
+
 #### merge와 cherry-pick 설명
+
+- git cherry-pick
+  - 다른 브랜치에 있는 Commit을 선택적으로 내 브랜치에 적용시킬 때 사용하는 명령어
+- git merge
+  - 브랜치를 다른 브랜치로 합치는 과정
+  - merge의 기본 단위는 브랜치
+  - Fast Forward Merge: 가장 기본적인 merge, 현재 브랜치의 HEAD가 대상 브랜치의 HEAD까지로 옮기는 merge
+- (참고) Conflict 상황 설명
+  - main 브랜치에서 a.file 안의 내용을 "test1" 이라고 작성하고 dev 브랜치에서 a.file 안의 내용을 "test2" 이라고 작성
+  - git switch main
+  - git merge dev
+  - Conflict 발생
+    - <<<<<< HEAD
+    - test1
+    - ======
+    - test2
+    - > > > > > > dev
 
 #### HEAD에 대한 설명
 
+- 모든 브랜치에 HEAD 값 존재
+- 해당 브랜치의 마지막 Commit을 의미
+- 특정 브랜치의 마지막 커밋에 대한 포인터
+- 현재 내가 바라보고 있는 Commit
+
 #### Git merge 대신 Git rebase 를 언제 사용하는 지에 대한 설명
+
+- merge
+  - 다른 브랜치에서 Commit한 내용을 하나의 Commit으로 합치는 것
+  - 실행한 브랜치로 병합 실행하고 새로운 커밋이력을 생성
+- rebase
+  - 어떤 특정 브랜치를 베이스로 커밋 이력을 재정렬하겠다는 명령어
+  - 재정렬되는 커밋 이력이기 때문에 재정렬되는 커밋 이력에는 이전과는 다른 새로운 Hash 아이디가 부여됨 (merge와 다른점)
 
 #### Git stash 명령 사용 시기 설명
 
+- 파일의 변경 내용을 일시적으로 기록해두는 것/영역
+- 현재 작업 중인 내용을 임시 저장해두고 다른 구현 또는 이슈를 수정해야 할 때 사용
+- stash 저장 명령
+  - git stash
+  - git stash push -m "message"
+  - git stash save "message"
+- stash 저장 목록 조회
+  - git stash list
+- stash 저장 내용 확인
+  - git stash show
+- stash 저장 내용 불러오기
+  - git stash pop
+  - git stash pop stash@{2}
+  - git stash apply <== pop 과는 다르게 목록에서 사라지지 않고 해당 stash를 불러옴
+- stash 제거
+  - git stash drop
+  - git stash clear
+
 #### Git Upstream, Downstream 설명
+
+- 저장소의 관계에 따라서 상대적으로 정해지는 이름들
+- upstream: 상대방의 원본 원격 저장소 의미 (최신 정보 보유)
+- downstream: 로컬 내 저장되어 있는 저장소, 주로 fetch로 가져온 다음 upstream/master를 origin/master로 merge하여 로컬 저장소도 최신으로 유지
+
+#### Git switch, checkout, restore 설명
+
+- 2019/08/16: Git은 checkout 기능을 switch와 restore로 분리
+- switch: 브랜치 변경 기능, 기존에 없는 브랜치인 경우 생성하면서 변경도 가능
+- restore: 작업 중인 파일 중 기존 마지막 커밋의 상태로 되돌리고자 할 때 사용, 변경 사항을 원래 상태로 되돌릴 수 있음
