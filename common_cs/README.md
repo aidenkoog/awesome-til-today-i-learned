@@ -474,10 +474,18 @@
 
 #### RESTful API 설명
 
+- HTTP 프로토콜을 기반으로 하는 웹 서비스 아키텍쳐
+- 자원, 메소드, 메시지 등을 정의하여 클라이언트-서버 간의 통신을 가능케 함
+- 표준 HTTP 메소드(GET, POST, PUT, DELETE)를 사용하여 서버와 통신
+- 웹 상에 존재하는 모든 자원에 URI (test.co.kr)를 부여하여 사용하는 방법
+- 비연결성, URI로 자원에 접근
+- HTTP 웹 표준을 이용하며 HTTP 캐싱 활용이 가능하다는 장점
+- 구조의 명확성 증대 => 서버, 클라이언트에서 개발해야 될 부분이 명확해짐
+- URI만 봐도 어떤 요청인지 파악 가능할 정도로 직관적
 - REST(REpresentational State Transfer)ful API는 HTTP 통신에서 어떤 자원에 대한 CRUD 요청을 Resource와 Method로 표현하여 특정한 형태로 전달하는 방식
 - 구성 요소
   - Resource(자원, URI)
-  - Method(요청 방식, GET or POST 등)
+  - Method(요청 방식/메소드, GET or POST 등)
   - Representation of Resource(자원의 형태, JSON or XML 등)
 
 #### 함수형 프로그래밍 특징 설명

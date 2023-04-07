@@ -25,6 +25,7 @@
     - Template Method
     - Chain of Responsibility
     - Command
+      - 특정 기능 / 요청들을 캡슐화 시키는 패턴
     - Iterator
     - Mediator
     - Memento

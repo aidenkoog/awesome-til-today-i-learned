@@ -27,21 +27,65 @@
 #### GC 설명
 
 - Garbage Collector
+- JVM의 Heap 영역에서 사용하지 않는 객체를 제거해주는 프로세스
 - 동적으로 할당했던 메모리 영역 중에 필요없어진 영역을 해제하는 기능
 - C는 사용자가 메모리를 사용 후 해제해줘야 하나 자바는 자동으로 메모리에서 제거
 - 제거 방식
   - Mark and Sweep 알고리즘 기반 동작
     - 스택의 모든 변수를 스캔
-    - 각각 어떤 오브젝트를 레퍼헌스 하고 있는 검색 / Mark
-    - Mark 되어 있지 않은 모든 오브젝트들을 힙에서 제거 (Sweep 과정)
+    - 각각 어떤 오브젝트를 레퍼런스 하고 있는 검색 / Mark
+    - Mark 되어 있지 않은 모든 오브젝트 (Unreachable) 들을 힙에서 제거 (Sweep 과정)
+    - GC 알고리즘에 따라 파편화된 메모리 정리를 위한 Compact 동작 수행
+      - Compact: Heap의 시작 주소로 모아서 메모리가 할당된 부분과 아닌 부분으로 나누는 과정 (조각모음의 느낌)
     - Marking 작업을 위해 모든 스레드는 중단되는데 이를 Stop the world라 함
 - Stop the world 설명
   - GC 실행 전 JVM 이 GC 실행 쓰레드를 제외하고 다른 쓰레드의 모든 작업을 멈추는 것
   - 어떤 GC 알고리즘을 사용하더라도 Stop the world는 발생. 이 시간을 줄이는 것이 관건
 
+#### Heap 구조
+
+- Young Generation
+  - 새로운 객체들이 할당되는 영역
+  - Eden, Survivor 0 / 1 영역 존재
+- Old Generation
+  - 오랫동안 계속 살아남은 객체들이 있는 영역
+- Meta Space
+  - GC 발생 시 필요한 클래스와 메소드의 메타 정보가 있는 영역
+
+#### GC 관련 객체들의 참조 방식의 종류
+
+- 힙 내에 있는 다른 객체에 의한 참조
+- 자바 스택, 즉, 메소드 내의 지역 변수나 파라미터들에 의한 참조
+- JNI에 의해 생성된 객체에 대한 참조
+- 메소드 영역의 Static 변수에 의한 참조
+- (참고) 유효한 참조가 있는 객체: Reachable 객체 (없는 경우: Unreachable 객체)
+
 #### GC 과정 설명
 
+- 새로운 객체 생성
+- Heap의 Young Generation 내 Eden에 삽입
+- Eden이 Full 상태가 되면 Minor GC 발생
+- Reachable 객체 판단 후 Reachable 객체들은 Survivor 0 영역으로 이동
+- Sweep 동작에 의해 Unreachable 객체들 제거
+- 살아남은 객체들의 Age 값 증가 (0 -> 1)
+- 또 다른 새로운 객체 생성 및 Eden 영역 Full 상태 발생
+- Minor GC 발생
+- Eden 영역 외 다른 영역에 대해서도 Mark 진행
+- Reachable 객체들을 Survivor 1 영역으로 이동
+- 반복하다보면 객체들의 Age가 임계점에 도달
+- 임계점에 도달한 객체들을 Old Generation 영역으로 이동 (Promoted)
+- 위 과정 반복되다가 Old Generation도 Full 상태가 되면 Major GC (Full GC) 수행
+- GC 발생 시 GC 수행하는 스레드 외 나머지 스레드들에 대해 JVM이 작업을 중단 시킴 (stop-the-world)
+- Minor GC 의 경우 잠깐 멈추나 Major GC 의 경우 소요되는 시간이 길므로 처리 중 앱에서 에러로 이어지는 경우 발생 (흔히 보는 GC에 의한 처리 에러)
+  - 개발 레벨에서 긴 참조 지양, 사용한 뒤에 초기화 등의 작업 반드시 필요
+
 #### GC 알고리즘 종류 설명
+
+- Serial GC
+- Parallel GC
+- Parallel Old GC
+- CMD(Concurrent Mark Sweep) GC
+- G1(Garbage First) GC
 
 #### 자바 메모리 구성 설명
 

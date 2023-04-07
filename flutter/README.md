@@ -24,18 +24,37 @@
 
 #### 플러터 장점 설명
 
-- 기본 제공되는 많은 위젯
-- 코드량 감소
+- 기본 제공되는 많은 위젯, 풍부한 UI Widget
+- 코드량 감소, 개발 시간 단축 (Hot Reload)
 - 크로스 플랫폼 개발 가능
-- 핫 리로드 기능 제공
+- Live and Hot Reloading 기능 제공
 - 네이티브 앱과 비슷한 성능
   - IC(중간 코드)와 해석에 의존 X, 기계코드에 직접 내장되어 해석 프로세스와 관련된 성능문제를 제거
-- 다양, 유연한 UI 제작 가능
+- 다양, 유연한 UI 제작 가능 (유연성)
+- 활발한 커뮤니티와 질 좋은 문서 보유
+
+#### 플러터 아키텍쳐 구조 설명
+
+- Framework (최상위 레이어, Dart): Dart 기반 플랫폼
+  - Material, Cupertino
+  - Widgets
+  - Rendering
+  - Animation, Painting, Gestures
+  - Foundation
+- Engine (C/C++): 새로 화면을 그릴 때마다 화면을 래스터화 (디스플레이 처리)
+  - Service Protocol, Composition, Platform Channels
+  - Dart isolate Setup, Rendering, System Events
+  - Dart Runtime Mgmt, Frame Scheduling, Asset Resolution
+  - Frame Pipelining, Text Layout
+- Embedder (Platform-specific)
+  - Render Surface Setup, Native Plugins, App Packaging
+  - Thread Setup, Event Loop Interop
 
 #### 플러터 단점 설명
 
 - 타사 라이브러리 적고 플러터의 일부 위젯은 하나의 플랫폼에서만 동작
-- 릴리즈 사이즈
+- 타사 라이브러리에 제한적
+- 릴리즈 사이즈 큼
 - 다트 언어 (오직 플러터를 위해 숙달시켜야 하는 언어)
 - 3D 모델링, Unity 통합 / 게임 엔진이 부족해 대부분의 광고 모바일 플랫폼도 지원하지 않음
 
@@ -44,8 +63,8 @@
 - 개발단계에 따라 3가지 모드로 코드 컴파일 가능
 - 종류
   - Debug Mode: Hot Reload 기능을 제공하는 모드
-  - Profile Mode: 성능을 분석할 때 사용하는 모드
-  - Release Mode: 앱을 최적화 시키고 작은 크기로 만드는 모드
+  - Profile Mode: 성능을 분석할 때 사용하는 모드, flutter run --profile
+  - Release Mode: 앱을 최적화 시키고 작은 크기로 만드는 모드, flutter run --release
 
 #### 플러터에서 위젯 설명
 
@@ -53,11 +72,28 @@
 - 사용자에게 보이는 인터페이스를 결정하는 부품
 - 위젯 조합으로 다양한 유저 인터페이스 구현 가능
 - 화면에 보이지 않는 부분도 모두 위젯으로 이루어져 있음
+- 빌드를 하려면 위젯 내부에 코드 작성 필요
 
 #### 위젯 타입 나열
 
 - StatelessWidget
+  - 화면이 로드될 때 한 번만 그려지는 상태가 없는 위젯
+  - 변경되지 않으며 이벤트 또는 사용자 상호 작용에 의해 동작하지 않음
 - StatefulWidget
+  - 이벤트 또는 사용자 상호 작용에 의해 위젯 모양 변경
+  - State 개체에 상태 저장되며 위젯의 상태와 모양을 구분
+  - 상태 변경 => setState() 호출 => Framework에 위젯을 다시 그리도록 지시
+
+#### Dart 설명
+
+- Google에서 개발한 프로그래밍 언어
+- JSX 또는 XML과 같은 별도의 선언적 레이아웃 언어 사용하지 않음
+- 선언적인 특성으로 가독성 높음
+- 클래스, 인터페이스, 함수 등의 기본 OOP 개념 지원
+- 배열은 직접 지원하지 않음 (컬렉션으로 지원)
+- 자바스크립트와 유사하나 코드 실행 속도가 더 빠름
+- 성능 향상과 코드 실행 시간을 줄이기 위해 Dart 가상 머신(VM)은 JIT(Just-in-Time) 및 AOT(Ahead-of-Time) 컴파일러 모두 사용
+- 객체 지향 프로그래밍 언어
 
 #### Stateful Widget Lifecycle (생명주기) 설명
 
@@ -77,9 +113,10 @@
 
 #### main()과 runApp() 차이점
 
-- main(): 프로그램 시작점
+- main(): 프로그램 시작점 역할
   - 플러터는 해당 함수 없이 실행 불가능
 - runApp(): 앱 위젯 트리의 루트로 사용될 최상위 위젯을 받아 화면에 보여주는 함수
+  - 주어진 위젯을 화면에 부착하는 역할
 
 #### 패키지와 플러그인에 대한 설명
 
@@ -347,9 +384,12 @@
     - center: Alignment(0, 0) / x = 0, y = 0 => center
     - 가운데가 0, 0이고 우측 또는 상단 쪽이 1, 좌측 또는 아래 쪽이 -1, 컨테이너 바깥에도 그림 그리기 가능
     - Alignment(0.7, 1.3)와 같이 더 자세한 값 지정도 가능
+    - height나 width가 지정되지 않으면 최대 크기로 지정
   - **SizedBox**
     - 자식 사이즈 지정, 주로 텍스트의 가로/세로 길이를 지정할 때 사용 (텍스트 글꼴 사이즈는 텍스트의 style 속성 사용하여 지정)
     - width / height / child
+    - 하나의 child 위젯만 가질 수 있음
+    - height나 width가 지정되지 않으면 child widget의 크기에 맞춤
   - **Center**
     - Container 에서 alignment: Alignment.center를 설정한 것과 동일
   - **Padding**
@@ -406,3 +446,82 @@
 - Align 내 Container 위젯 배치 / alignment 설정
 - Center 내 Container 위젯 배치
 - Container 위젯 내 텍스트 위젯 배치 / alignment 설정
+
+#### Stream 설명
+
+- 데이터나 이벤트가 들어오는 통로
+- 비동기 프로그래밍에서 데이터 시퀀스를 제공하는 데에 사용
+- 한 쪽에서 값을 넣고 반대쪽에서 리스너가 값을 받는 구조
+- 하나의 스트림에 여러 리스너 존재 가능하며 모두 동일 값 획득
+- Stream Controller를 통해 스트림 생성 / 관리 가능
+
+#### Stream 유형 설명
+
+- Single Subscription Streams (단일 구독 스트림)
+  - 이벤트를 순차적으로 전달 (수신 순서가 중요한 경우 사용)
+  - 수신자는 한명, 수신자가 없으면 이벤트 트리거 되지 않음
+  - 한번만 수신 가능
+- Broadcast Stream
+  - 여러 수신자가 동시에 구독할 수 있는 다용도 스트림
+  - 이전 구독을 취소한 후에도 다시 이벤트 수신 가능
+
+#### Hot Reload와 Restart 차이점
+
+- Hot Reload
+  - Dart VM에 변경된 코드를 불러오고 위젯트리를 재빌드
+  - 앱의 상태를 보전
+  - main(), initState() 재실행 하지 않음
+  - Reload 가능한 경우
+    - 새로운 라이브러리의 사용 / 변경
+    - 위젯의 구조변경 / 수정
+    - 이미지나 Assets 파일의 추가 사용
+- Hot Restart
+  - Dart VM에 변경된 코드를 불러오고 앱 재시작
+  - Full Restart 보다는 빠름
+  - 앱의 모든 상태 소실
+  - main()부터 호출
+  - Restart 필요한 경우
+    - initState() 변경
+    - 폰트 변경 / 추가
+    - 제네릭과 열거형 클래스 추가
+    - 코틀린, 자바, 스위프트 등의 네이티브 코드 변경
+    - 그 외에 앱 상태에 변경을 주는 코드 수정 시
+
+#### Build Context 설명
+
+- 위젯 트리에서 현재 위젯의 위치를 알 수 있는 정보
+- 각 위젯에는 고유한 BuildContext가 존재하며 이는 StatelessWidget.build 또는 State.build에 의해서 반환된 위젯의 상위 컨텍스트가 됨
+- 상위 위젯과 상호 작용하고 위젯 데이터에 접근하는데 사용 가능
+
+#### 위젯 테스팅
+
+- 단위 테스트 (Unit Tests)
+- 위젯 테스트 (Widget Tests)
+- 통합 테스트 (Integration Tests)
+
+#### pubspec.yaml 파일 설명
+
+- 프로젝트에 필요한 패키지 / 해당 버전, 글꼴 등과 같은 종속성에 대한 정보를 가진 파일
+- 포함된 내용
+  - 프로젝트 이름 / 버전 / 설명
+  - 종속성
+  - Assets (이미지 / 오디오 등)
+
+#### Provider 상태 관리 설명
+
+- 상태 관리 매니저
+- 생성 부분에서는 사용할 데이터 타입을 결정하고 해당 데이터에 대한 Provider를 만들고 소비 부분에서는 Provider를 통해 데이터를 불러오거나 수정 등의 작업 진행
+- 상세 정보
+  - ChangeNotifier: 데이터가 변경되면 Consumer에게 Notify
+  - ChangeNotifierProvider: 하위 위젯에 "ChangeNotifier"를 제공해주는 클래스
+  - Consumer: Provider의 데이터를 받아서 사용하는 클래스
+
+#### FutureBuilder와 StreamBuilder 설명
+
+- FutureBuilder
+  - 비동기처리
+  - 일회성 응답에 사용
+- StreamBuilder
+  - 비동기처리
+  - 데이터를 여러번 가져오는 데에 사용
+  - 계속해서 데이터의 변화를 모니터링하면서 처리할 때 적합

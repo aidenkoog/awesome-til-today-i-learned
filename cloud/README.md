@@ -9,10 +9,24 @@
   - 하이브리드 클라우드 (Hybrid Cloud)
 - 서비스 유형 (서비스 관리 주체와 수준에 따라)
   - IaaS (Infrastructure as a Service)
-    - 사용자가 관리할 수 있는 범위가 가장 넓은 클라우드 컴퓨팅 서비스
-    - 인프라 수준 환경 제공
-    - 서버 OS, 미들웨어, 런타임, 데이터, 어플리케이션까지 직접 구성 / 관리 가능
-    - CSP (Cloud Service Provider) 서비스 제공업체는 데이터센터를 구축해 다수의 물리 서버를 가상화해 제공하며 네트워크, 스토리지, 전력 등 모든 것을 CSP가 책임짐.
-    - Ex. AWS (Amazon Web Sevice) EC2와 Google의 Compute Engine(GCE) 등
   - PaaS (Platform as a Service)
   - SaaS (Software as a Service)
+
+#### AWS 로드 밸런서에 대한 설명
+
+- 대규모 트래픽 수신이 있을 때 자동으로 탄력적인 로드 밸런싱 담당
+- 3가지 유형의 로드 밸런서
+  - 네트워크 로드 밸런서
+  - 애플리케이션 로드 밸런서
+  - 클래식 로드 밸런서
+
+#### RTO 및 RPO에 대한 설명
+
+- RTO (복구 시간 목표): 재해 발생 후 애플리케이션과 프로세스를 복구하는 데 걸리는 목표 시간
+- RPO (복구 시점 목표): 비즈니스에서 손실을 감당할 수 있는 최대 데이터의 양
+
+#### AWS ECS 설명
+
+- Elastic Computer Cloud
+- 클라우드에서 확장 가능한 컴퓨팅 성능을 제공하는 웹 서비스
+- 클라우드 컴퓨팅 프로세스를 간단하고 쉽게 만들어 지원

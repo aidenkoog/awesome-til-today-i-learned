@@ -210,7 +210,6 @@
 - 함수를 단지 호출하는 대상이 아니라 변수로도, 혹은 인자로도 전달 가능
 - 함수형 언어의 도구들을 자유롭게 활용해야 함 (Java8의 람다 표현식)
 
-
 #### 안드로이드 상태 관리 방법 설명
 
 - State 패턴 사용한 UI 상태 관리
@@ -385,3 +384,111 @@
 - 정리
   - Realm은 데이터베이스 컨테이너의 인스턴스
   - SQLite 기반의 ORM 프레임워크
+
+#### WebView 설명
+
+- 안드로이드 프레임워크에 내장된 컴포넌트, View의 형태로 임베딩 가능한 형태
+- 웹페이지를 출력 또는 앱 안에서 HTML을 호출하여 앱을 구현하는 하이브리드 형태의 앱 개발하는 데에도 많이 사용
+
+#### 안드로이드의 Task에 대한 설명
+
+- 어플리케이션에서 실행되는 액티비티를 관리하는 스택
+- 액티비티를 보관/관리하고 스택 형태의 연속된 액티비티로 구성
+- FILO 형태로 나중에 적재된 액티비티가 가장 먼저 사용
+- 최초 적재된 액티비티는 Root Activity라고 하고 마지막에 적재된 액티비티는 Top Activity라 함
+- Flag 사용하여 액티비티의 흐름 제어 가능
+
+#### 안드로이드 인텐트 플래그 정리
+
+- AndroidManifest에서 플래그를 사용하는 방법과 Intent 소스코드로 사용하는 2가지 방법 존재
+- **AndroidManifest**
+  - standard
+  - singleTop
+  - singleTask
+  - singleInstance
+- **Intent**
+  - FLAG_ACTIVITY_BROUGHT_TO_FRONT
+  - FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET
+    - 테스크가 리셋될 때 플래그가 사용된 액티비티부터 위의 액티비티가 모두 삭제됨
+    - Ex. ABCD -> B call - > AB
+  - FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+  - FLAG_ACTIVITY_CLEAR_TOP
+  - FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+  - FLAG_ACTIVITY_FORWARD_RESULT
+  - FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
+  - FLAG_ACTIVITY_MULTIPLE_TASK
+  - FLAG_ACTIVITY_NEW_TASK
+  - FLAG_ACTIVITY_NO_ANIMATION
+  - FLAG_ACTIVITY_NO_HISTORY
+  - FLAG_ACTIVITY_NO_USER_ACTION
+  - FLAG_ACTIVITY_REORDER_TO_FRONT
+  - FLAG_ACTIVITY_SINGLE_TOP
+
+#### FCM 구동 원리 설명
+
+- 베경
+  - 서버 본래의 기능 수행하면서 복잡한 알림 기능까지 수행하려면 서버 속도는 많은 처리량으로 인해 느려질 가능성 존재
+- 전체 구조
+  - 알림의 기능은 다른 서버가 제공해주고 본 서버는 알림 기능을 제공하는 서버에 알림이 있는지 요청을 해서 정보를 가져오는 구조
+- 필요 사항
+  - HTTP / XMPP로 FCM과 통신하는 서버와 클라이언트 앱 필요
+- 동작 순서
+  - 앱 설치 후 최초 실행 시 고유 식별자 토큰 발급
+  - 토큰을 서버에 등록
+  - 앱 서버에서 FCM 연결 서버로 PUSH 알림을 요청 (토큰 + API 서버 키를 가지고)
+  - FCM 연결 서버는 토큰을 대상으로 알림 메세지를 PUSH
+
+#### 하이브리드 앱 설명
+
+- 네이티브 앱처럼 하드웨어 기능 사용 가능
+- 마켓 등록 가능
+- 배포 후에도 웹만 연결되어 있다면 수정/보완 가능
+- 하나의 소스로 iOS와 안드로이드에 맞게 패키징 가능
+- 핵심 부분은 웹 앱 기술로 빠르게 제작 가능하여 개발 비용 감소 효과
+- 실제 핵심 기능은 코드로 구현하고 지속적으로 업데이트 할 부분은 웹에서 관리하는 기능
+- Ex. 멜론챠트 등
+
+#### Looper 설명
+
+- 스레드간의 신호
+- 핸들러에 보낸다고 해서 바로 처리되는 것은 아님
+- 동시다발적인 메세지 발생 가능성으로 메세지 큐에 적재했다가 하나씩 처리
+- 큐에 들어 있는 내용을 하나씩 꺼내어 처리
+- 메인 스레드가 Looper를 가지고 있으며 무한 루프를 돌며 큐의 내용을 처리
+
+#### 안드로이드 스레드 간 통신 방법 설명
+
+- Java IO에서 제공하는 파이프 이용
+- 스레드 간 공유 메모리 통한 접근 (인스턴스 멤버변수 / 클래스 멤버 변수)
+- synchronized 이용한 시그널링
+- BlockingQueue 이용
+- 추가 지식
+  - 핸들러 - 루퍼 - 메세지 큐 - 메세지
+  - (참고) 생산자 스레드: 큐에 메세지 삽입
+  - (참고) 소비자 스레드: 데이터(메세지) 읽음
+  - android.os.Looper: UI 스레드 (메인 스레드)에 1개 존재, 메시지 발송자 (데이터를 읽는 역할)
+  - android.os.Handler: 생산자 스레드를 위한 인터페이스 / 소비자 스레드 메세지 처리 / Looper 객체는 많은 핸들러를 갖지만 모두 같은 큐에 메세지 삽입
+  - android.os.MessageQueue: 처리할 메세지들이 담긴 무제한의 연결 리스트 (모든 Looper와 스레드는 최대 하나의 메세지 큐를 가짐)
+  - android.os.Message: 실행 메세지
+
+#### 안드로이드 HTTP 라이브러리 히스토리 정리
+
+- 2007
+  - 안드로이드 발표, HttpClient, Apache의 DefaultHttpClient 등 사용
+  - HttpClient의 여러 버그 존재
+- 2011
+  - Google Developer 에서 HttpUrlConnection 사용 권장
+- 2012 ~ 2013
+  - Volley / Square의 OkHttp 등장
+- 2014
+  - Lolipop 버전 이후 HttpClient의 Deprecated
+  - HttpClient를 베이스로 하는 Volley도 Deprecated
+- 2014 ~ 현재
+  - OkHttp와 Wrapper인 Retrofit 인기
+  - Retrofit은 클라이언트 부분과 콜백 형식 등을 플러그인으로 변경할 수 있다는 점에서 장점
+
+#### PendingIntent에 대한 설명
+
+- Intent를 직접 보내지 않고 다른 클래스에서 인텐트를 위임해주기 위한 클래스
+- 보통 NotificationBar 와 상호작용하는 앱 작성 시 사용 (노티피케이션 클릭 시 PendingIntent에 작성된 액티비티로 이동)
+- 알림바 또는 다른 앱에서 startActivity, sendBroadCast, startService가 실행되게 하고 싶을 때 인텐트를 PendingIntent에 담아서 호출
