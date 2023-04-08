@@ -338,7 +338,7 @@
 - Map 형태로 구현된 데이터의 묶음
 - 데이터의 저장 객체로 상태 저장 및 복구에 사용
 
-#### ORM 설명
+#### OOM (Out Of Memory) 설명
 
 - Out Of Memory 약자
 - 메모리 릭이 발생 후 계속 증가하면 발생하는 오류
@@ -492,3 +492,151 @@
 - Intent를 직접 보내지 않고 다른 클래스에서 인텐트를 위임해주기 위한 클래스
 - 보통 NotificationBar 와 상호작용하는 앱 작성 시 사용 (노티피케이션 클릭 시 PendingIntent에 작성된 액티비티로 이동)
 - 알림바 또는 다른 앱에서 startActivity, sendBroadCast, startService가 실행되게 하고 싶을 때 인텐트를 PendingIntent에 담아서 호출
+
+#### Zygote 에 대해 설명
+- 자바로 작성되는 안드로이드 앱의 실행 속도를 빠르게 하기 위해서 앱이 실행되기 전에 가상 머신의 코드 / 메모리 정보를 공유함으로서 앱 실행을 단축
+- 안드로이드 프레임워크에서 필요로 하는 클래스와 자원을 미리 메모리에 로딩, 연결 정보를 구성
+- 달빅(Dalvik) 초기화 수행
+- System Server 실행
+- 자바로 작성되어 있음
+- app_process 역할
+  - 자바로 작성되어 있기 때문에 클래스가 동작하려면 Dalvik 가상 머신이 생성되어야 하고 생성된 가상 머신 위에서 ZygoteInit 클래스를 로딩하고 실행해야 함
+  - app_process 실행
+    - init (app_process 서비스 시작)
+    - app_process 에서 JNI_CreateJavaVM() 호출
+    - Dalvik VM 생성
+    - ZygoteInit.main() 호출
+      - ZygoteInit 클래스 기능 (main() 메소드 기능 요약)
+        - 새로운 안드로이드 앱의 실행 요청을 받기 위한 소켓 바인딩, registerZygoteSocket()
+          - dev/socket/zygote 소켓 바인딩
+        - 안드로이드 앱 프레임워크에서 사용할 클래스들과 리소스 로딩, preloadClasses() / preloadResources()
+        - SystemServer 시작, startSystemServer()
+          - zygote에서 달빅 가상 머신 구동 => 시스템 서버라는 자바 서비스를 실행하기 위해 새로운 달빅 가상 머신 인스턴스 생성
+          - Audio Flinger, Surface Flinger 네이티브 서비스 실행, 필요한 서비스를 실행하고 나면 안드로이드 프레임워크 서비스를 시작
+        - 새로운 안드로이드 앱 실행 요청에 대한 처리, runSelectLoopMode()
+- 안드로이드 초기 시작 과정 (Zygote 실행)
+  - init 실행
+  - Daemon (Native Services) 실행
+  - Zygote 실행
+
+#### 안드로이드 프레임워크 시작 과정
+
+- Native Service
+  - init
+  - daemons / runtime / Zygote
+  - runtime => Service Manager
+- Virtual Machine
+  - Zygote => Dalvik VM
+- System Server
+- Surface Flinger
+- Java Service
+  - WindowManager / ActivityManager / PackageManager / PowerManager / ContentManager / BluetoothManager / ...
+
+#### 새로운 안드로이드 앱 실행 시 내부적으로 이루어지는 과정 설명
+
+- Process 클래스에서 ZygoteInit 클래스 connect
+  - start() => startViaZygote() => zygoteSendArgsAndGetPid()
+  - zygoteSendArgsAndGetPid() 실행 시점에 connect
+  - framework/base/core/java/android/os/Process.java
+- ZygoteInit 클래스는 ZygoteConnection 벡터 배열을 가지고 있음
+- ZygoteConnection 객체 생성
+- Process 클래스의 zygoteSendArgsAndGetPid() 호출 때 Process 생성 arguments 를 ZygoteConnection 객체로 전달
+- ZygoteConnection 내 runOnce() 메소드 통해 새로운 프로세스 생성 (fork process)
+- Process 클래스에 생성된 프로세스 PID 정보 반환
+
+#### 바인더 (Binder) 설명
+
+- IPC (Inter Process Communication) 도구
+- 안드로이드에서 다른 프로세스에 있는 함수를 마치 현재 프로세스에 존재하는 함수처럼 사용 가능하게 해주는 RPC를 지원하는 데에 이용
+  - RPC: Remote Procedure Call
+- 안드로이드에서 Binder Driver를 추가해서 프로세스 간 통신 수행하는 이유
+  - 리눅스의 좋은 메모리 관리 기법 그대로 활용 목적
+  - 커널 공간을 통한 데이터 전달 시 데이터 신뢰성 확보 목적
+  - 사용자 공간에서 접근 불가능한 커널 공간 활용해 데이터 통신을 하기 때문에 IPC간 보안 문제 해결
+  - (참고) 안드로이드 커널
+    - Display Driver / Camera Driver / Bluetooth Driver / Shared Memory Drivers / Binder (IPC) Driver / USB Driver / Keypad Driver / WiFi Driver / Audio Drivers / Power Management
+
+#### 직렬화와 역직렬화 설명
+
+- 직렬화 (Serialization)
+  - 객체를 직렬화하여 전송 가능한 형태로 만드는 것
+  - 데이터를 연속적인 데이터로 변형하여 Stream을 통해 데이터를 읽도록 해줌
+- 역직렬화 (Deserialization)
+  - 직렬화된 파일 등을 역으로 다시 객체의 형태로 만드는 것
+  - 저장된 파일을 읽거나 전송된 Stream 데이터를 읽어 원래 객체의 형태로 복원
+
+#### Serializable와 Parcelable 설명
+
+- Serializable
+  - 표준 Java 인터페이스
+  - 자바 기본 타입과 java.io.Serializable 인터페이스를 상속 받은 객체는 직렬화를 위한 기본 조건을 충족
+  - 단순 마커 인터페이스 (직렬화 대상이라고 알려주는 역할)
+  - 내부적으로 Reflection을 사용 (처리 과정 중 추가 객체 생성함을 의미)
+    - 생성된 추가 객체들은 GC의 타겟이 되고 GC의 과도한 동작으로 성능 저하 및 배터리 소모 등으로 이어짐 (시스템 비용 발생)
+- Parcelable
+  - 직렬화를 위한 Android SDK 인터페이스
+  - Reflection 사용하지 않고 프로그래머가 직접 설정해주기 때문에 속도가 상대적으로 빠름
+  - IPC에 최적화된 기능 제공
+  - 구현 및 유지 보수 비용 발생
+
+#### 안드로이드에서 메모리 누수를 줄일 수 있는 방법 설명
+- 메모리 누수 발생 원인
+  - 정적 뷰에 Activity를 참조
+  - 작업 스레드에 대한 Activity 누수
+  - 스레드 자체 누수
+- 메모리 누수 줄이는 방법
+  - onDestroy에서 정적 변수 참조를 끊음 (Null로 초기화)
+  - Inner Class를 만들 때 가능한 한 정적으로 생성
+
+#### 안드로이드 APK 파일의 크기를 줄일 수 있는 방법 설명
+- 사용하지 않는 리소스 삭제
+- 불필요한 종속성 제거
+- 여러 개의 APK를 화면 밀도에 맞춰 생성
+  - Density 지정
+- 특정 ABI(Application Binary Interface)를 지원하는 하나의 APK 생성
+  - ARM, API, MIPS, NVS64
+- 사용하지 않는 선택적 리소스 삭제
+- 리소스 축소 사용
+  - minifyEnabled (소스코드를 난독화해서 보안을 강화하거나 앱의 크기를 줄이고 싶으면 true로 설정)
+  - shrinkResources 속성을 true로 하게 되면 minify 작업 후 사용하지 않는 리소스를 삭제
+- Shape Drawable 사용
+
+#### AsyncTask Deprecated 된 이유
+
+- Context Leak이나 콜백을 빼먹거나 설정 변화의 충돌로 많은 이슈 야기
+- AsyncTask가 동작 중일 때 UI의 변화, 즉, 완료된 시점에 UI가 존재하지 않을 때에 대한 문제가 있음 (NPE발생 등)
+  - onPostExecute에서 항상 View를 체크해야 되는 번거로움
+
+#### 프래그먼트 생성 시 기본 생성자 사용하는 이유
+- 프래그먼트 소스 코드 중 instantiate를 보면 새로운 인스턴스 생성 시 인자가 없는 생성자를 사용하여 초기화
+- 생성 시 파라미터를 전달하고 싶으면 Bundle에 담아 setArgument 함수를 호출하는 것이 일반적
+- 구글 공식 문서에서도 newInstance()를 통해 Fragment를 생성하는 것을 가이드 및 권장
+
+#### Gradle, Ant, Maven 설명 
+- Gradle
+  - Groovy 기반으로 한 빌드 도구
+  - Ant와 Maven 같은 이전 세대 빌드 도구의 단점을 보완, 장점 취합하여 만든 오픈소스로 공개된 빌드 도구
+  - XML이 아닌 JVM에서 동작하는 Groovy 기반의 DSL(Domain Specific Language)를 사용
+  - Groovy는 자바 문법과 유사, 자바 개발자에 한해서 러닝커브 낮음
+  - Gradle wrapper를 시용하면 Gradle이 설치되지 않은 시스템에서도 프로젝트 빌드 가능
+- Ant
+  - XML 기반으로 빌드 스크립트를 작성
+  - 자유로운 빌드 단위 지정 가능
+  - 간단, 사용 용이
+  - 유연하나 프로젝트 방대해지는 경우 스크립트 관리나 빌드 과정이 복잡
+  - 생명주기를 갖지 않아 각각의 결과물에 대한 의존관계 등을 정의해야 함
+- Maven
+  - XML 기반으로 작성
+  - 생명주기, 프로젝트 객체 모델 (POM, Project Object Model) 개념 도입
+  - 빌드 스크립트 개선
+  - Pom.xml에 필요한 라이브러리 선언하면 자동으로 해당 프로젝트로 불러옴
+  - 러닝 커브 높음
+  - 라이브러리가 서로 의존하는 경우 복잡해질 수 있음
+
+#### 안드로이드 Repository 패턴에 대한 설명
+  - DataSource 캡슐화
+    - 도메인과 연관된 모델을 가져오기 위해 필요한 DataSource가 무엇인지 Presenter 계층에서는 알 필요가 없음
+    - DataSource를 새롭게 추가하는 것이 부담이 없음
+    - DataSource 변경이 일어나도 다른 계층에 영향 없음
+    - Client는 Repository 인터페이스에 의존하기 때문에 테스트에 용이
+    - Presenter 계층과 Data 계층의 Coupling을 느슨하게 해줌

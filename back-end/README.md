@@ -161,3 +161,9 @@
     - ModelAndView:	컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보를 담음
     - ViewResolver	컨트롤러의 처리 결과를 생성할 뷰를 결정
     - View:	컨트롤러의 처리 결과 화면을 생성, JSP 또는 Velocity 템플릿 파일 등을 뷰로 사용
+
+  #### Spring Boot 환경 설정 방법
+
+  - Spring initializer (스프링 부트 스타터)에서 설정
+  - jar: 스프링 부트 내장 톰캣 사용
+  - war: 외부 톰캣 사용

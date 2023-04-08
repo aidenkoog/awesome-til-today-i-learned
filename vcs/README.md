@@ -158,3 +158,28 @@
 - switch: 브랜치 변경 기능, 기존에 없는 브랜치인 경우 생성하면서 변경도 가능
 - restore: 작업 중인 파일 중 기존 마지막 커밋의 상태로 되돌리고자 할 때 사용, 변경 사항을 원래 상태로 되돌릴 수 있음
 
+#### Git 내부구조 설명
+
+- .git/index
+  - git add를 하면 index 파일이 생성되고 이 후 git add를 할 때마다 index에 기록이 업데이트됨
+  - Commit이 이뤄질 준비가 된 파일의 내용들이 위치하는 영역
+  - Stage 영역 의미
+- .git/objects/
+  - 버전 관리를 하기 위해 필요로 하는 데이터들을 저장하는 곳
+  - Blob
+  - Commit
+  - Tree
+  - Tag
+- .git/refs/
+  - .git/refs/heads/{BRANCH}: 해당 브랜치의 가장 최신 Commit파일을 가리키는 포인터
+- .git/info/
+- .git/hooks/
+- .git/description
+- .git/config
+- .git/HEAD
+  - 현재 체크아웃되어 있는 브랜치의 포인터를 가리키는 포인터
+  - 브랜치의 포인터가 아닌 일반적인 Commit 파일을 가리키게도 가능 (detached HEAD)
+
+#### 원격 저장소 연결 방법
+
+- git remote add -f 원격저장소-별칭 원격저장소-실제주소
