@@ -640,3 +640,29 @@
     - DataSource 변경이 일어나도 다른 계층에 영향 없음
     - Client는 Repository 인터페이스에 의존하기 때문에 테스트에 용이
     - Presenter 계층과 Data 계층의 Coupling을 느슨하게 해줌
+
+#### Android.mk 작성법
+
+- LOCAL_PATH
+  - Ex. LOCAL_PATH := $(call my-dir)
+  - 개발 트리에 있는 소스 파일의 위치 표시
+  - 빌드 시스템이 제공하는 매크로 함수 my-dir은 현재 디렉토리 경로를 반환 (Android.mk 파일 자체를 포함한 디렉토리 경로)
+- include $(CLEAR_VARS)
+  - LOCAL_XXX 변수를 자동 삭제하는 GNU Makefile
+    - Ex. LOCAL_MODULE / LOCAL_SRC_FILES / LOCAL_STATIC_LIBRARIES 등
+  - LOCAL_PATH는 삭제하지 않음
+- LOCAL_MODULE
+  - Ex. LOCAL_MODULE := hello-jni
+  - 빌드하려는 모듈 이름
+  - 이름에 알맞는 접두사와 접미사를 자동으로 추가하여 so파일의 라이브러리 생성
+    - libhello-jni.xo 생성
+- LOCAL_SRC_FILES
+  - Ex. LOCAL_SRC_FILES := hello-jni.c hello2-jni.c
+  - 공백으로 여러파일 구분
+  - C / C++ 파일 목록 포함
+- include $(BUILD_SHARED_LIBRARY)
+  - 시스템이 모든 것을 하나로 연결하게 도와줌
+  - 빌드 시스템이 .so 확장자를 가진 라이브러리 파일을 생성
+- LOCAL-CFLAGS
+  - C / C++ 소스파일 빌드할 때 빌드 시스템에 전달할 컴파일러 플래그 설정
+  - C++ 용 플래그만 지정하려면 LOCAL_CPPFLAGS 사용
