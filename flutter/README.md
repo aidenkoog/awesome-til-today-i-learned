@@ -426,10 +426,29 @@
     - 나머지 영역 안에서 위젯을 그리고 싶을 때 사용
     - 예를 들어 텍스트 값이 길어지는 경우 알아서 줄바꿈 처리
 - Button
+  - ElevatedButton, OutlinedButton, TextButton
+    - 생성자 형태(속성값) 동일
+    - styleForm 사용
+    - disable 방법 (onPressed: null)
   - ElevatedButton
+    - onPrimary, primary 속성 존재
   - OutlineButton
+    - primary 속성 존재
+    - backgroundColor
+    - side (BorderSide)
   - TextButton
+    - primary 속성 존재
   - GestureDetector
+    - onTap
+    - onTapDown
+  - Button 내 차일드 아이템에 대한 스타일을 직접적으로 지정하는 방향은 지양 => 버튼이 비활성화 임에도 불구하고 텍스트 색상이 다른 색상으로 설정되는 문제 발생 등 => Button의 styleForm 에서 설정하는 것 권장
+  - onPressed: null 설정하면 버튼 비활성화
+  - onSurface와 onPressed: null 함께 사용시의
+  - Scaffold 안의 FloatingActionButton
+    - onPressed
+    - toolItip
+- BoxFit 속성
+- BottomNavigationBars
 
 #### 위젯 클래스 관련 설명
 
@@ -525,3 +544,17 @@
   - 비동기처리
   - 데이터를 여러번 가져오는 데에 사용
   - 계속해서 데이터의 변화를 모니터링하면서 처리할 때 적합
+
+#### 화면 Navigation 방법 (Code Level)
+
+- 각각의 화면 생성
+- 전환을 위한 코드 생성
+  - Navigator.push(context, MaterialPageRoute(builder: (context) => const Page2(),),);
+- push를 하면 push된 화면에서는 자동으로 AppBar에 뒤로가기 UI를 표시
+- AppBar 내 leading 속성 오버라이딩하면 자동 뒤로가기 기능 안됨
+  - Navigator.pop(context); 작성하면 뒤로가기 가능
+
+#### pub.dev
+
+- Dart / Flutter 앱을 위한 공식 패키지 저장소
+- 처음부터 모든 것을 개발하지 않아도 되기 때문에 앱 개발 속도를 올릴 수 있음
