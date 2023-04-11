@@ -33,6 +33,7 @@ It is a place where various knowledge related to software is organized.
 - 👉 sw engineering
 - 👉 uml
 - 👉 vcs
+- 👉 retrospective
 
 #### Link
 
