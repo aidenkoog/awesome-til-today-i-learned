@@ -1,0 +1,25 @@
+#### Work Experience
+
+- In charge of implementation to weather launcher for a while
+- Implemented multiple custom wizard app to meet customer's requirement
+- Packaged Webapp and arranged issues occurred from apps
+- Managed Jenkins tool. Mainly modified build script as model and created new jobs like daily, ci and release
+- In a short period of time, I participated in patching the entire source
+- Bring up AOSP build environment such as setup build script and makefile corresponding to each app
+- Developed radio app with new design and functions
+- Tested 3rd party app and shared Debugging point
+- Renewal Android Settings app with new design and multiple functions for customer's requirement
+- Involved in doing Google CTS
+- Implemented Android gallery app
+- Migrated the way communicate with server from API Polling to Websocket
+- Simply developed Media Player sample code
+- Shortly Review Wordpress (PHP) file / folder structure
+- Tested WebRTC Web Front-end Example
+- Made Flutter Webpage with Multiple Tabs
+- Created admin webpage by React (ui: Table, Map, Header, Footer, Route etc)
+- Integrated multiple apps into only ONE (Mobile App & Background service)
+- Implemented App having Bluetooth pairing + BLE Connection + read & write characteristics / descriptor setup features
+- Reviewed and maintained app store application
+- Made App which Communicates with IoT Device using TCP or MQTT
+- Review AWS Server Architecture
+- Review App work flow in IoT world
