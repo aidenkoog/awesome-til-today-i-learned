@@ -572,3 +572,26 @@
 - State의 initState()는 화면이 처음 호출될 때만 한번만 수행
 - build는 화면 변경 감지시 매번 호출
 - initState() 호출을 하게 만들기 위해서는 Hot reload 말고 Hot restart가 필요
+
+#### 알림 메세지 설명
+
+- Cloud Push Message
+- Local Alarm Message
+  - flutter_local_notifications
+  - Android 4.1+ / iOS 8.0+
+  - 주기적 알림 가능
+  - 매일 / 매주 지정된 날짜와 시간에 알림 표시 가능
+  - 예약된 보류 중이 알림 요청 목록 검색 가능
+  - ID 별 알림 취소 / 제거
+  - ID는 고유해야 함
+  - 알림 탭 했을 때 앱이 포그라운드, 백그라운드, 종료되었을 때 처리하는 기능 존재
+
+#### WidgetsFlutterBinding.ensureInitialized() 설명
+
+- Flutter Engine 과의 상호작용을 위해 사용
+
+#### await, async 관련 설명
+
+- await을 사용해야 하는 함수가 있다면 그것을 감싸고 있는 영역의 함수에 async 키워드를 추가해줘야 함
+- 비동기 함수에 대해 await 키워드를 붙였을 때와 안붙였을 때 반환값이 상이
+  - ex. bool or Future<bool>
