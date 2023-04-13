@@ -23,3 +23,5 @@
 - Made App which Communicates with IoT Device using TCP or MQTT
 - Review AWS Server Architecture
 - Review App work flow in IoT world
+- Assigned issues to developers through jira system
+- Implemented Web dashboard
