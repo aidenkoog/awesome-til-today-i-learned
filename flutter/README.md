@@ -605,13 +605,13 @@
   - Consumer를 이용해 상태값을 가져오고 Provider와 Context를 이용해 Controller의 비즈니스 로직을 불러옴
   - Stateful 위젯을 사용하거나 Context를 사용해야 함
   - MVVM 패턴 사용
-  - Notifier ==> 
+  - Notifier ==>
   - 내부적으로 bloc과 Provider 패턴을 구현
 - GetX
   - GetBuilder를 통해 상태값을 가져오고 Get.find를 통해 Controller의 비즈니스 로직을 가져옴
   - Context를 사용하지 않는 GetX 방식은 위젯으로 분리하여 사용 가능
   - 부모에서 Controller를 선언해줄 필요 없음
-  - UI 부분에서 바로 사용 가능 / 클래스가 생성될 때 바로 사용 가능 
+  - UI 부분에서 바로 사용 가능 / 클래스가 생성될 때 바로 사용 가능
   - 특정 Controller에 아이디를 부여함으로서 관리 가능
   - MVVM 패턴 사용
   - GetXController ==> bloc
@@ -619,3 +619,19 @@
   - MVVM 패턴 사용
   - Business Logic Component
   - 비즈니스 로직과 UI를 분리해서 유지보수하기 쉬운 앱을 만드는데에 목적
+
+#### Dartz 라이브러리
+
+- Dart 데이터 타입 외 확장된 데이터 타입도 지원
+- Either, right, left 개념
+- API 호출하여 데이터 반환받고 .fold 형태로 처리 가능 (.fold((left){}, (right){}))
+- .fold / foldLeft / foldRight / all / every / getOrElse 존재
+
+#### Equatable
+
+- 인스턴스가 서로 같은 인스턴스인지 판단을 쉽게 할 수 있게 해주는 플러그인
+- (Ref.) OOP 세계 내 모든 클래스는 기본적으로 Object를 상속.
+  - 대부분의 언어에서는 이 Object 라는 클래스에 한 인스턴스와 다른 인스턴스를 비교하는 알고리즘이 정의되어 있음
+- Dart에서는 operator라는 함수에 정의, 이를 오버라이딩하여 비교 알고리즘을 자유롭게 변경 가능
+- operator 오버라이딩 통한 수정은 필드가 많아질수록 작성해야될 코드도 많아지고 hashcode는 절대적으로 int 값을 반환해줘야 하는데 String같은 int로 환산되기 어려운 값들은 정의 방법이 애매
+  - 이러한 이유로 Equatable 이 필요
