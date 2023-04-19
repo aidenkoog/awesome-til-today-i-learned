@@ -680,3 +680,17 @@
 - 앱 간의 데이터 공유를 위해 표준화된 인터페이스를 제공
 - 앱 계층과 데이터 계층 분리하여 중간 가교 역할 담당
 - 앱은 컨텐트 프로바이더에 접근하면 필요한 데이터를 얻어 올 수 있음
+
+#### Hot / Cold Observable
+
+#### map, filter, reduce, flatMap
+
+#### interval, zip, combineLatest, switchMap
+
+#### subscribeOn, observeOn
+
+#### just, subscribe, create, fromArray
+
+#### fromIterable, fromCallable, fromFuture
+
+#### disposable, composite dispoable
