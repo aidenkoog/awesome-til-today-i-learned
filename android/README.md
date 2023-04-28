@@ -681,6 +681,15 @@
 - 앱 계층과 데이터 계층 분리하여 중간 가교 역할 담당
 - 앱은 컨텐트 프로바이더에 접근하면 필요한 데이터를 얻어 올 수 있음
 
+#### 안드로이드 멀티스레드
+
+- 기존 방식
+  - Thread를 직접 사용하는 방식
+  - Runnable을 만든 후, Thread에 Runnable을 넘겨서 실행하도록 한 방식
+  - Executor Service를 활용해 Thread Pool을 만들어 Runnable을 submit 하는 방식
+  - Rx 라이브러리를 이용하는 방식
+
+
 #### Hot / Cold Observable
 
 #### map, filter, reduce, flatMap
