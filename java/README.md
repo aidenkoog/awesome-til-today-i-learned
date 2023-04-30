@@ -292,3 +292,47 @@
     - NPE
     - 0으로 나누는 경우
     - 무한 루프
+
+#### String
+
+- Java.lang Package로 제공되는 자바 문자열 클래스
+- 별도 import 없이 사용 가능
+- 한번 인스턴스가 생성되면 수정 불가능 (immutable object)
+  - 배열로 접근하는 방법을 제공하지 않음.
+  - char[] char_arr 는 수정 가능
+- 수정하는 방법
+  - 새 문자열로 교체
+  - toCharArray() 함수 통해 수정 후 다시 new String(temp_arr) 사용하여 문자열로 변경
+  - substring 사용한 조합
+  - StringBuilder 사용한 조합
+- == 연산으로 비교 불가
+  - 참고. 자바 힙 영역이 있고 그 안에 Constant String Pool 영역이 있음
+  - 리터럴로 선언된 문자열, 리터럴 스트링은 Constant String Pool 영역에 저장
+  - new String("") 으로 생성한 문자열, 오브젝트 스트링은 자바 힙 영역에 저장
+- == 은 주소 비교, equals 는 주소 내 실제 값 비교
+
+#### String 함수
+
+- charAt(int index)
+- length()
+- equals
+- compareTo(String string)
+  - -1, 0, 1
+- toCharArray()
+- toLower / UpperCase()
+- contains(CharSequence s)
+- replace(target, replacement)
+- split(String regex)
+- substring(index, index)
+- indexOf
+
+#### 아스키 코드
+
+- 'A': 65, 'a': 97, 'Z': 90, 'z': 122, '9': 57
+- char x = 65;
+- println('Z' - 'A'); => 25
+- println(x); => A
+- println((int)x); => 65
+- println((char)x); => A
+- println(x + 25); => 90
+- println((char)(x + 25)); => Z
