@@ -494,6 +494,7 @@
 - 알림바 또는 다른 앱에서 startActivity, sendBroadCast, startService가 실행되게 하고 싶을 때 인텐트를 PendingIntent에 담아서 호출
 
 #### Zygote 에 대해 설명
+
 - 자바로 작성되는 안드로이드 앱의 실행 속도를 빠르게 하기 위해서 앱이 실행되기 전에 가상 머신의 코드 / 메모리 정보를 공유함으로서 앱 실행을 단축
 - 안드로이드 프레임워크에서 필요로 하는 클래스와 자원을 미리 메모리에 로딩, 연결 정보를 구성
 - 달빅(Dalvik) 초기화 수행
@@ -580,6 +581,7 @@
   - 구현 및 유지 보수 비용 발생
 
 #### 안드로이드에서 메모리 누수를 줄일 수 있는 방법 설명
+
 - 메모리 누수 발생 원인
   - 정적 뷰에 Activity를 참조
   - 작업 스레드에 대한 Activity 누수
@@ -589,6 +591,7 @@
   - Inner Class를 만들 때 가능한 한 정적으로 생성
 
 #### 안드로이드 APK 파일의 크기를 줄일 수 있는 방법 설명
+
 - 사용하지 않는 리소스 삭제
 - 불필요한 종속성 제거
 - 여러 개의 APK를 화면 밀도에 맞춰 생성
@@ -608,11 +611,13 @@
   - onPostExecute에서 항상 View를 체크해야 되는 번거로움
 
 #### 프래그먼트 생성 시 기본 생성자 사용하는 이유
+
 - 프래그먼트 소스 코드 중 instantiate를 보면 새로운 인스턴스 생성 시 인자가 없는 생성자를 사용하여 초기화
 - 생성 시 파라미터를 전달하고 싶으면 Bundle에 담아 setArgument 함수를 호출하는 것이 일반적
 - 구글 공식 문서에서도 newInstance()를 통해 Fragment를 생성하는 것을 가이드 및 권장
 
-#### Gradle, Ant, Maven 설명 
+#### Gradle, Ant, Maven 설명
+
 - Gradle
   - Groovy 기반으로 한 빌드 도구
   - Ant와 Maven 같은 이전 세대 빌드 도구의 단점을 보완, 장점 취합하여 만든 오픈소스로 공개된 빌드 도구
@@ -634,20 +639,21 @@
   - 라이브러리가 서로 의존하는 경우 복잡해질 수 있음
 
 #### 안드로이드 Repository 패턴에 대한 설명
-  - DataSource 캡슐화
-    - 도메인과 연관된 모델을 가져오기 위해 필요한 DataSource가 무엇인지 Presenter 계층에서는 알 필요가 없음
-    - DataSource를 새롭게 추가하는 것이 부담이 없음
-    - DataSource 변경이 일어나도 다른 계층에 영향 없음
-    - Client는 Repository 인터페이스에 의존하기 때문에 테스트에 용이
-    - Presenter 계층과 Data 계층의 Coupling을 느슨하게 해줌
+
+- DataSource 캡슐화
+  - 도메인과 연관된 모델을 가져오기 위해 필요한 DataSource가 무엇인지 Presenter 계층에서는 알 필요가 없음
+  - DataSource를 새롭게 추가하는 것이 부담이 없음
+  - DataSource 변경이 일어나도 다른 계층에 영향 없음
+  - Client는 Repository 인터페이스에 의존하기 때문에 테스트에 용이
+  - Presenter 계층과 Data 계층의 Coupling을 느슨하게 해줌
 
 #### Android.mk 작성법
 
 - LOCAL_PATH
-  - Ex. LOCAL_PATH := $(call my-dir)
+  - Ex. LOCAL_PATH := \$(call my-dir)
   - 개발 트리에 있는 소스 파일의 위치 표시
   - 빌드 시스템이 제공하는 매크로 함수 my-dir은 현재 디렉토리 경로를 반환 (Android.mk 파일 자체를 포함한 디렉토리 경로)
-- include $(CLEAR_VARS)
+- include \$(CLEAR_VARS)
   - LOCAL_XXX 변수를 자동 삭제하는 GNU Makefile
     - Ex. LOCAL_MODULE / LOCAL_SRC_FILES / LOCAL_STATIC_LIBRARIES 등
   - LOCAL_PATH는 삭제하지 않음
@@ -660,7 +666,7 @@
   - Ex. LOCAL_SRC_FILES := hello-jni.c hello2-jni.c
   - 공백으로 여러파일 구분
   - C / C++ 파일 목록 포함
-- include $(BUILD_SHARED_LIBRARY)
+- include \$(BUILD_SHARED_LIBRARY)
   - 시스템이 모든 것을 하나로 연결하게 도와줌
   - 빌드 시스템이 .so 확장자를 가진 라이브러리 파일을 생성
 - LOCAL-CFLAGS
@@ -672,7 +678,7 @@
 - OS로부터 발생하는 각종 이벤트와 정보를 받아와 핸들링하는 컴포넌트
 - 네트워크 끊김, 문자 메세지 수신 등과 같은 정보를 받아 처리해야 할 필요가 있을 때 동작
 - 이런 메세지를 받기 위해 브로드캐스트 리시버를 구현하면 되고 해당 정보가 오면 이벤트
- 처리 가능
+  처리 가능
 
 #### 컨텐트 프로바이더 (Content Provider) 설명
 
@@ -689,6 +695,58 @@
   - Executor Service를 활용해 Thread Pool을 만들어 Runnable을 submit 하는 방식
   - Rx 라이브러리를 이용하는 방식
 
+#### 안드로이드 화면 전환 시의 함수 호출
+
+- 화면 회전 시 onDestroy 호출 후 onCreate 가 호출
+
+#### Coroutine Flow
+
+- 순차적으로 값을 내보내고 정상적으로 또는 예외로 완료되는 비동기적인 데이터 스트림
+- 코루틴 상에서 리액티브 프로그래밍 지원하기 위한 구성요소
+- 추가 설명:
+  - 데이터 스트림: 리액티브 프로그래밍에는 하나의 데이터를 발행하는 발행자가 있고 해당 발행자는 데이터의 소비자에게 지속적으로 데이터를 전달하는 역할을 하는데 이것을 데이터 스트림이라 함
+  - 구성 요소
+    - Producer (생산자)
+    - Intermediary (중간 연산자)
+    - Consumer (소비자)
+- Producer (생산자) 는 flow {} 블록 내부에서의 emit()을 통해 데이터를 생성
+  - flow{} 블록 선언
+  - 실제 API 호출
+  - API Result를 emit()
+- Intermediary (중간 연산자) 에서는 생성된 데이터를 수정
+  - 연산자 예: 자바 8 스트림, RxJava와 유사한 쓰임새로 생각됨
+    - map (데이터 변형) / filter (데이터 필터링) / onEach (모든 데이터마다 연산 수행) 등
+- Consumer (소비자)
+  - collect 이용해 전달된 데이터를 소비 가능
+  - 안드로이드 상에서 데이터의 소비자는 보통 UI 구성요소
+
+#### Coroutine Flow 단점 / StateFlow 설명
+
+- Flow 단점
+  - Flow 는 데이터의 흐름이고 흐름을 발생시키기만 할 뿐 데이터가 저장되지는 않음
+  - UI 업데이트를 위해서는 2가지 방법 존재
+    - 화면 재구성 때마다 다시 서버 또는 DB에서 데이터 가져오기
+      - 비효율적 방법, 예를 들어 화면 회전 시 onDestroy 호출 후 다시 onCreate 가 호출되는데 이때마다 새로운 데이터를 가져와야 함
+    - Flow로부터 collect한 데이터를 ViewModel에 저장해놓고 사용
+      - 데이터를 저장하고 있으려면 별도의 데이터 홀더 변수 생성 필요
+      - 데이터 홀더 변수는 리액티브 하지 않기 때문에 UI에서 해당 데이터 홀더 변수를 구독하기 위해서는 별도의 fetching 로직 생성 필요
+      - 또 다른 방법은 ViewModel에서 데이터 홀더 변수와 flow를 같이 사용하는 것
+      - UI에서는 flow에서 값을 발행하기 전에는 마지막으로 발행한 데이터를 저장하고 있는 데이터 홀더 변수의 값을 사용하면 됨
+        - 단점: 보일러 플레이트 코드 양산, UIState가 여러가지 인데 모두를 구독하기 위해서 비슷한 코드를 매번 작성해 가독성 저하의 위험 있음
+- StateFlow
+
+  - 데이터 홀더 역할 + Flow의 데이터 스트림 역할까지 수행
+  - 구조
+    - 다수의 Flow 들 ==> StateFlow <== (구독 / 발행) ==> UI
+    - Flow를 StateFlow로 변환하는 로직 필요
+    - StateFlow가 항상 Flow를 구독하고 있으면 메모리 누수가 발생하므로 StateFlow가 살아있어야 하는 CoroutineScope를 명시할 수 있어야 함
+    - StateFlow는 Cold Stream이 아니라 Hot Stream, 마지막 홀딩하고 있는 데이터를 구독하는 구독자에게 전달할 뿐, 구독자가 구독할 때 발행을 위한 로직을 트리거하지는 않음
+  - stateIn 함수 사용을 통해 Flow를 StateFlow로 변환 가능
+    - scope: StateFlow가 Flow로부터 데이터를 구독받을 CoroutineScope를 명시
+    - started: Flow로부터 언제부터 구독을 할 지 명시 가능
+    - initialValue: StateFlow에 저장될 초기값 설정
+
+#### Cold / Hot Stream
 
 #### Hot / Cold Observable
 
