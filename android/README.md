@@ -746,6 +746,13 @@
     - started: Flow로부터 언제부터 구독을 할 지 명시 가능
     - initialValue: StateFlow에 저장될 초기값 설정
 
+#### Android Apollo GraphQL
+
+- 사용 관련 정보
+  - GraphQL 파일 저장을 위한 디렉토리 생성
+  - GraphQL 파일 생성 (예. result.graphql)
+  - Retrofit2에 비해 초기 설정 복잡하나 RxJava나 코루틴 같이 사용하는 것이 가능하며 Request 요청 부분이 간단하고 명시한 필요 데이터만 받을 수 있어서 효율적
+
 #### Cold / Hot Stream
 
 #### Hot / Cold Observable
