@@ -639,3 +639,27 @@
 #### InkWell 설명
 
 - 컨테이너와 같이 별도의 제스쳐 기능을 제공하지 않는 위젯에 제스쳐 기능을 추가하고자 할 때 InkWell 위젯을 사용
+
+#### GetX 사용법 정리
+
+- GetConnect: 네트워크 통신
+- 상태관리 방식
+  - 단순 상태 관리
+  - 반응형 상태 관리
+- Get Controller 사용하기 위해서는 Get.put()으로 컨트롤러를 등록
+- GetBuilder() 아래의 모든 위젯은 컨트롤러에서 변경되는 데이터를 실시간으로 반영 가능한 상태가 됨
+  - GetBuilder() 사용하지 않는다면 Get.find<XXXController>(). 방식으로 데이터 변경 / 반영 가능
+- 반응형 상태 관리의 경우 변수 타입 Prefix로 Rx를 추가하고 변수값은 .obs를 추가
+- Obx() 아래의 모든 위젯은 GetX와 마찬가지로 컨트롤러에서 변경되는 데이터를 실시간으로 반영 가능한 상태가 됨
+  - 사용 방식은 비슷하나 컨트롤러 이름 지정이 불가능하여 Get.find()의 형식으로 사용 필요
+- 그리고 추가적으로 worker 라는 것이 있음
+  - 컨트롤러 안에서 onInit() 함수를 오버라이드하고 그 안에 추가해서 사용
+  - Ever: 매번 변경될 때 실행
+  - Once: 처음 변경되었을 때만 실행
+  - Interval: 계속 변경이 있는 동안 특정 지정 시간 인터벌이 지나면 실행
+  - Debounce: 인터벌이 끝나고 나서 특정 지정 시간 이후에 한번만 실행
+- 사용법 관련 개선안
+  - Get.find<>(). 에서 간단하게 사용하려면 컨트롤러 내부에 getter를 생성해주면 간단해짐
+    - static SimpleController get to => Get.find(); => SimpleController.to.increase() 의 형태로 사용 가능
+  - Get.find() 사용하는 클래스에 StatelessWidget 대신 GetView를 상속하는 방식 사용
+    - extends GetView<SimpleController> 의 방식
