@@ -753,6 +753,19 @@
   - GraphQL 파일 생성 (예. result.graphql)
   - Retrofit2에 비해 초기 설정 복잡하나 RxJava나 코루틴 같이 사용하는 것이 가능하며 Request 요청 부분이 간단하고 명시한 필요 데이터만 받을 수 있어서 효율적
 
+#### 딥링크 (Deeplink)
+
+- 안드로이드에서 이 링크를 클릭하면 앱이 실행되지만 앱이 설치되어 있지 않으면 웹브라우저에서 실행
+- 사용 방법 설명
+  - intentfilter 설정
+    - action
+    - category BROWSABLE
+    - data host와 scheme 설정
+- 딥링크로 실행되지 않은 경우에 data 는 null이므로 앱에서 해당값으로 딥링크인지 앱인지 여부 핀단 가능
+- scheme://host/{parameter} 형식으로 추가적인 정보 전달도 가능
+- 사용 이유
+  - 딥링크가 없다면 사용자는 필수적으로 앱을 검색해서 설치하는 작업을 해야하는데 딥링크를 사용하면 한번의 클릭으로 앱의 원하는 페이지까지 바로 이동
+
 #### Cold / Hot Stream
 
 #### Hot / Cold Observable
