@@ -775,7 +775,7 @@
 
 #### RecyclerView 성능 개선 관련 정보
 
-- 
+-
 
 #### Cold / Hot Stream
 
