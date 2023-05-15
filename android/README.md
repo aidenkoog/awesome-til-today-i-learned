@@ -773,6 +773,21 @@
 - 앱의 UI 렌더링 속도가 느리면 시스템에서 프레임을 건너뛰게 되고 사용자는 앱에서 끊김을 인식
 - UI Thread 와 Render Thread(롤리팝 이후) 의 최상의 컨디션으로 초당 60프레임을 달성해야 함
 
+#### ExoPlayer
+
+- 안드로이드 어플리케이션 레벨의 미디어 플레이어
+- Android의 미디어 플레이어 대신 사용 가능
+- HTTP (DASH) / SmoothStreaming 같은 기능 지원
+- 커스터마이징 용이
+- 기본 요소
+  - ExoPlayer
+  - TrackSelector
+  - MediaSource
+  - DataSource
+  - Renderer
+  - LoadControl
+  - PlayerView
+
 #### RecyclerView 성능 개선 관련 정보
 
 -
