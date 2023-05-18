@@ -828,6 +828,13 @@
 - 불필요한 보일러 플레이트 코드 감소
 - 직관적인 코드로 UI 생성 가능
 - 클래스에서 실시간 미리보기 지원
+- 컴포즈 프로젝트 처음 진입법
+  - MainActivity 내 setContentView 제거 / XML 제거
+  - setContent 함수 사용 => setContent { TextCreate() }
+  - @Composable, @Preview 작성한 함수 내 Text, Image 등의 컴포넌트 작성
+- Modifier 설명
+  - 컴포즈의 UI 구성 요소들을 꾸미거나 행동을 추가하기 위한 요소들의 모음
+  - 크기(너비, 높이) 조절 / 패딩, 오프셋 설정 / 배경색 및 라운딩 설정 / 그라데이션 / 알파값 설정 / 보더 설정 등 지원
 
 #### RecyclerView 성능 개선 관련 정보
 
