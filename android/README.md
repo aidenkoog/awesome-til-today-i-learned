@@ -766,13 +766,6 @@
 - 사용 이유
   - 딥링크가 없다면 사용자는 필수적으로 앱을 검색해서 설치하는 작업을 해야하는데 딥링크를 사용하면 한번의 클릭으로 앱의 원하는 페이지까지 바로 이동
 
-#### UI 렌더링
-
-- 앱에서 프레임을 생성하여 화면에 표시하는 작업
-- 사용자와 앱의 상호작용이 원활하게 이루어지도록 하려면 앱이 16ms 미만으로 프레임을 렌더링하여 초당 60프레임을 달성해야 함
-- 앱의 UI 렌더링 속도가 느리면 시스템에서 프레임을 건너뛰게 되고 사용자는 앱에서 끊김을 인식
-- UI Thread 와 Render Thread(롤리팝 이후) 의 최상의 컨디션으로 초당 60프레임을 달성해야 함
-
 #### ExoPlayer
 
 - 안드로이드 어플리케이션 레벨의 미디어 플레이어
@@ -836,22 +829,134 @@
   - 컴포즈의 UI 구성 요소들을 꾸미거나 행동을 추가하기 위한 요소들의 모음
   - 크기(너비, 높이) 조절 / 패딩, 오프셋 설정 / 배경색 및 라운딩 설정 / 그라데이션 / 알파값 설정 / 보더 설정 등 지원
 
-#### RecyclerView 성능 개선 관련 정보
+#### UI 렌더링
 
--
+- 앱에서 프레임을 생성하여 화면에 표시하는 작업
+- 사용자와 앱의 상호작용이 원활하게 이루어지도록 하려면 앱이 16ms 미만으로 프레임을 렌더링하여 초당 60프레임을 달성해야 함
+- 앱의 UI 렌더링 속도가 느리면 시스템에서 프레임을 건너뛰게 되고 사용자는 앱에서 끊김을 인식
+- UI Thread 와 Render Thread(롤리팝 이후) 의 최상의 컨디션으로 초당 60프레임을 달성해야 함
+
+#### RecyclerView 성능 개선
+
+- ViewHolder 내부에서 뷰 애니매이션 사용 지양 (예. itemView.animate() 호출)
+- 변경이 된 데이터에 대해서만 Adapter 업데이트 지향 (예. notifyItemChanged(4))
+- NotifyItemRangeChanged()는 전체 뷰를 업데이트하므로 많은 사용은 지양 필요
+- DiffUtil 사용한 Adapter 성능 측정 가능
+- onBindViewHolder 내부에서 View.OnClickListener Set 지양
+- setHasStableIds와 getItemId 사용
+  - 성능향상의 핵심은 onBindViewHolder 호출을 최소화하는 것
+  - setHasStableIds(true) 사용 시 각각 아이템 position에 지정된 id를 기준으로 상황에 따라 onBindViewHolder() 호출을 제외시킴
+  - 값이 변경된 id만 onBindViewHolder를 호출하거나 호출된 아이템의 id가 이전 position 아이템에 이미 존재할 시 onBindViewHolder 함수를 호출하지 않고 이전에 같은 id를 가진 뷰를 대신 보여줌
+- 새로운 데이터 추가 / 삭제 시 특정 포지션 변경 함수 사용
+  - 데이터 변경: notifyItemChanged, notifyItemRangeChanged
+  - 데이터 추가: notifyItemInserted, notifyItemRangeInserted
+  - 데이터 삭제: notifyItemRemoved, notifyItemRangeRemoved
+  - 데이터 이동: notifyItemMoved
+- 위의 설명대로 구현 시 코드량 증가가 문제가 되므로 이를 해결하기 위해서는 DiffUtil을 사용
+  - DiffUtil을 사용한다면 setHasStableIds(true)와 getItemid()는 사용하지 않아도 됨
+- 고정된 크기의 아이템 UI를 사용한다면 setHasFixedSize를 true로 설정
+  - false 일 경우 requestLayout() 호출이 이루어져 아이템의 레이아웃 계산이 다시 이루어짐
+- setItemViewCacheSize 통한 캐시 크기 조정
+  - 스크롤을 통해 화면에서 UI가 사라졌을 때 사라진 뷰를 다시 사용하는 Recycled View Pool에 들어가지 않고, Cache에 저장되어 다시 화면에 나왔을 때 onBindViewHolder 호출없이 뷰가 보여짐
+  - 동일한 뷰를 다시 그리지 않음
+- 끝없는 스크롤을 해야하는 리스트라면 애니매이션을 제거
+  - recyclerView.setItemAnimator(null)
+- 중첩된 리싸이클러뷰를 사용한다면 서로간의 Pool을 공유하여 성능 향상 가능
+- onBindViewHolder 최적화
+  - 순수 데이터 Set만 하는 것이 가장 이상적
+  - 외부에서 데이터를 미리 가공해서 사용만 하는 뱡향 지향
+  - for, while 문 지양
+  - 콜백 / 리스너 정의 지양
+- viewHolder 및 onCreateViewHolder에서 가능하면 미리 값을 처리해놓는 방향 지향
+  - ViewHolder의 init{} 안 또는 onCreateViewHolder에서 미리 값을 처리
+- onBindViewHolder 내에서 Html.fromHtml() 사용 지양
+- ConstraintLayout 활용한 1Depth의 XML 작성 필요
+  - Depth가 깊어질 수록 UI 연산이 배로 증가
+- 부모 뷰 그룹이 스크롤 뷰 또는 리싸이클러 뷰인 경우
+  - recyclerView.setNestedScrollingEnabled(false) 설정
+- item에 복잡한 Drawable 사용 지양
+  - layout-list 로 이루어진 복잡한 drawable은 저가용 기기에서 GPU에 부하를 줌
+- ViewStub 사용
+- 투명색 사용 지양
+  - 저가용 기기에서 부하가 심함
+- Image 최적화
+  - 캐시 사용, Glide의 경우 기본적으로 캐시 처리되어 있음
+    - .skipMemoryCacheOf(false)
+  - RGB 565 사용
+    - 최근 이미지 라이브러리는 기본적으로 ARGB_8888 이 적용되어 있음
+    - 565로 변경한다면 메모리 효율을 50% 정도 증가 가능하나 이미지 색상 품질 저하 문제 발생함, 썸네일 수준의 정도면 565로 처리하는 것이 바람직함
+  - ImageView의 크기를 match_parent 또는 고정으로 지정
+  - 이미지 해상도에 대한 정보를 모를 때 .centerInside 사용
+  - .override(200, 200)를 통해서 직접 이미지 사이즈 조절하여 성능 개선 가능
+  - 리싸이클러뷰의 onViewDetachedFromWindow 함수 내에서 수동으로 Glide 이미지 로딩 취소 (.clear)
+  - OutOfMemory 방지를 위해 Application 클래스 내 onLowMemory, onTrimMemory를 오버라이드하여 .clearMemory 또는 trimMemory를 호출
 
 #### Cold / Hot Stream
 
+- Cold Stream
+  - 하나의 소비자에게 값을 전달
+  - 생성된 이후 소비하기 시작하면 데이터를 발행 시작
+  - 데이터베이스를 읽거나 URL을 통해 서버의 값을 읽는 경우가 대표적
+- Hot Stream
+  - 하나 이상의 소비자에게 값 전달
+  - 데이터 발행이 시작된 이후 부터 모든 소비자에게 같은 데이터를 발행하고 구독자가 없는 경우에도 데이터를 발행
+  - 상태가 변하는 값을 읽을 때 또는 네트워크 상태 정보 등의 값을 읽어올 때 사용 가능
+
 #### Hot / Cold Observable
+
+- Cold Observable
+  - Observable에 구독을 요청하면 아이템을 발행하기 시작
+  - 새로운 구독자로 다시 구독했을 때도 처음부터 다시 아이템을 발행함
+- Hot Observable
+  - 아이템 발행이 시작된 이후에 모든 구독자에게 동시에 같은 아이템을 발행
+  - 새로운 구독자가 구독을 시작했을 때 구독 전에 발행된 아이템을 놓칠 수 있음 (비슷한 예: 브로드캐스트 리시버)
 
 #### map, filter, reduce, flatMap
 
-#### interval, zip, combineLatest, switchMap
+- map: 데이터 변환 연산자, 원하는 Observable로 만드는 연산
+- flatMap: 데이터를 Observable로 변환시키는 함수를 받고, 각 변환된 Observable에서 나온 데이터를 하나로 취합하여 새로운 Observable을 만드는 함수
+- filter: if와 같은 분기 / 필터링하는 함수
+- reduce: Observable에서 나온 데이터를 순서대로 처리하여 하나의 값으로 만들어내는 함수
 
 #### subscribeOn, observeOn
 
-#### just, subscribe, create, fromArray
+- subscribeOn
+  - 최초 호출에만 적용, 그 뒤 호출은 무시
+  - Observable이 데이터 흐름을 발생시키고 연산하는 스레드 지정 가능
+  - 호출 시점 상위에 해당하는 부분의 스레드 설정
+- observeOn
+  - 횟수 제한 없이 호출 가능, 사용 위치가 중요
+  - Observable이 Observer에게 알림을 보내는 스레드 지정이 가능
+  - 호출 시점 하위 스트림의 스레드 설정
+
+#### just, subscribe, fromArray
+
+- fromArray
+  - 숫자, 객체까지 넣을 수 있음
+  - int[] 배열은 사용 불가, Integer[] 타입으로 변경하여 사용 가능
+- just
+  - 인자로 삽입된 데이터를 차례대로 발행하려고 Observable을 생성
+  - 최대 10개의 값 삽입이 가능하고 타입이 같아야지만 가능
+- subscribe
+  - RxJava는 내가 동작시키기 원하는 것을 사전에 정의해 둔 다음에 실제 그것이 실행되는 시점을 조절이 가능한데 이때 사용하는 것이 subscribe()
+  - 인자가 없는 경우: onNext(), onComplete 이벤트 무시, onError 이벤트가 발생했을 때만 onErrorNotImplementedException을 던짐
+    - 보통 작성한 코드를 테스트할 때 주로 사용
+  - 인자가 1 또는 2개 있는 경우: onNext와 onError 이벤트를 처리
+  - 인자가 3개 있는 경우: onNext, onError, onComplete 이벤트 모두 처리 가능
 
 #### fromIterable, fromCallable, fromFuture
 
-#### disposable, composite dispoable
+- fromIterable: ArrayList, HashSet처럼 Iterable을 구현한 모든 객체를 ObservableSource 로 변환하여 아이템을 순차적으로 발행
+- fromCallable: Callable을 Observable로 변환
+- fromFuture: Future 인터페이스를 지원하는 모든 객체를 ObservableSource로 변환하고 Future.get() 메소드를 호출한 값으로 변환
+
+#### Disposable, CompositeDisposable
+
+- Disposable
+  - 구독 해제도 가능케 하기 위한 인터페이스
+  - 인터페이스로 정의되어 있으며 2개의 메소드 정의 (dispose, isDisposed)
+  - 무한적으로 아이템을 발행하거나 오래 실행되는 Observable의 경우 제대로 종료하지 않으면 메모리 누수의 위험이 있으므로 명시적으로 Disposable.dispose()를 사용해서 언제든 아이템 발행을 중단 가능
+- CompositeDisposable
+  - 구독자가 하나가 아닌 여러명인 경우에 해당
+  - Disposable을 각각 일대일 대응되게 만들어서 처리하는 것이 번거로우므로 각각의 Disposable을 .add 해서 관리하기 위한 목적
+  - Retrofit과 RxJava를 같이 사용해서 서버 통신을 한 화면에서 여러 번 수행하는 경우 사용자가 화면 이탈 시 한꺼번에 구독 해제시키기 위해 CompositeDisposable에 넣고 onDestroy()에서 dispose()를 호출하는 방법 등이 존재
