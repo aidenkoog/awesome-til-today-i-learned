@@ -818,6 +818,17 @@
   - API 서비스 인터페이스를 구현하는 클래스 정의
   - UI Component에서 CoroutineScope 활용하여 HttpClient 함수를 요청하도록 구현 후 결과값 처리
 
+#### Android Compose
+
+- 2018년도에 구글 IO에서 처음 공개
+- 코틀린으로 제작되는 라이브러리
+- 기존 XML 방식은 findViewById, ViewBinding, DataBinding 등이 필수적으로 필요했음
+- 선언형 프로그래밍 사용
+- 리액트 등의 선언형 방식과 유사
+- 불필요한 보일러 플레이트 코드 감소
+- 직관적인 코드로 UI 생성 가능
+- 클래스에서 실시간 미리보기 지원
+
 #### RecyclerView 성능 개선 관련 정보
 
 -
