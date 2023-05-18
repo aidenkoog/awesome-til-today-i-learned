@@ -788,6 +788,36 @@
   - LoadControl
   - PlayerView
 
+#### Ktor
+
+- JetBrains에서 만들어진 Kotlin을 사용하여 연결된 시스템에서 비동기 서버 / 클라이언트를 구축하기 위한 Open Source Framework
+- 서버와 클라이언트 두 가지 모듈 제공 (안드로이드에서 사용할 것은 클라이언트)
+- Request를 만들고, Response를 처리하고 인증, JSON 직렬화 등과 같은 플러그인으로 기능을 확장할 수 있는 멀티플랫폼 비동기 HTTP 클라이언트가 포함되어 있음
+- JVM, Javascript, Android, iOS 등의 여러 플랫폼을 대상
+- 주요 기능
+  - 라우팅
+  - 요청, 응답 처리
+  - 템플릿
+  - 컨텐츠 Negotiation / 직렬화
+  - 인증 및 권한 부여
+  - ions
+  - HTTP
+  - Socket
+  - Monitoring
+  - 관리
+- 필요 종속성 예.
+  - implementation "io.ktor:ktor-client-core:1.6.3"
+  - implementation "io.ktor:ktor-client-android:1.6.3"
+  - implementation "io.ktor:ktor-client-serialization:1.6.3"
+  - implementation "io.ktor:ktor-client-logging:1.6.3"
+  - implementation "io.ktor:ktor-client-gson:1.6.3"
+- 사용 방법
+  - Request, Response 데이터 클래스 정의
+  - API URL 정의
+  - API 서비스, 즉, 인터페이스 정의 (HttpClient 생성, 로그 레벨 설정, 직렬화 설정, suspend 함수 정의)
+  - API 서비스 인터페이스를 구현하는 클래스 정의
+  - UI Component에서 CoroutineScope 활용하여 HttpClient 함수를 요청하도록 구현 후 결과값 처리
+
 #### RecyclerView 성능 개선 관련 정보
 
 -
