@@ -960,3 +960,13 @@
   - 구독자가 하나가 아닌 여러명인 경우에 해당
   - Disposable을 각각 일대일 대응되게 만들어서 처리하는 것이 번거로우므로 각각의 Disposable을 .add 해서 관리하기 위한 목적
   - Retrofit과 RxJava를 같이 사용해서 서버 통신을 한 화면에서 여러 번 수행하는 경우 사용자가 화면 이탈 시 한꺼번에 구독 해제시키기 위해 CompositeDisposable에 넣고 onDestroy()에서 dispose()를 호출하는 방법 등이 존재
+
+#### WorkManager
+
+- 앱이 종료되거나 기기가 다시 시작되어도 실행 예정인 지연 가능한 비동기 작업을 쉽게 예약할 수 있게 해줌
+- 안드로이드의 백그라운드 작업을 처리하는 방법 중 하나
+- Android Jetpack 아키텍처의 구성 요소 중 하나
+- 하나의 코드로 API Level 마다 비슷한 동작을 보장
+- 처리해야 하는 작업을 자신의 큐에 넣고 관리
+- 싱글턴으로 구현
+- Worker, WorkRequest, WorkState로 구성
