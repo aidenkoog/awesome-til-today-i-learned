@@ -970,3 +970,17 @@
 - 처리해야 하는 작업을 자신의 큐에 넣고 관리
 - 싱글턴으로 구현
 - Worker, WorkRequest, WorkState로 구성
+- Worker
+  - Abstract class
+  - 클래스를 상속받고 백그라운드에서 실행하고자 하는 코드를 doWork() 메소드에 정의
+  - 작업 상태를 나타내는 Result에 정의된 success(), failure(), retry() 등의 메소드를 통해 결과를 반환
+  - 반환된 값에 따라서 이후 동작 결정 가능 (재시도, 중단 등)
+  - Result.Sucesss / Result.Failure / Result.Retry
+- WorkRequest
+  - Worker에 정의된 task를 작동시키기 위한 request를 나타냄
+  - WorkRequest를 생성할 때 반복 여부, 제약 사항 등의 정보를 담음
+  - OneTimeWorkRequest: 한번만 실행할 작업 요청을 나타내는 WorkRequest
+  - PeriodicWorkRequest: 일정 주기로, 여러번 실행할 작업 요청을 나타내는 WorkRequest
+- WorkManager
+  - 실제로 WorkRequest를 스케줄링하고 실행하며 관리하는 클래스
+  - 인스턴스를 받아와 WorkRequest를 큐에 추가하여 실행되도록 함
