@@ -984,3 +984,31 @@
 - WorkManager
   - 실제로 WorkRequest를 스케줄링하고 실행하며 관리하는 클래스
   - 인스턴스를 받아와 WorkRequest를 큐에 추가하여 실행되도록 함
+
+#### Jetpack Paging 라이브러리
+
+- Android Jetpack에서는 페이징을 위한 Paging3 라이브러리를 제공
+- Paging3 라이브러리는 로컬 저장소에서나 네트워크를 통해 데이터를 나누어 효율적으로 로딩할 수 있게 도와줌
+- Paging3는 구글에서 권장하는 Android 앱 아키텍처에 맞게 설계되었으며, 다른 Jetpack 컴포넌트와 잘 동작할 수 있도록 설계됨
+- 페이징 된 데이터의 메모리 내 캐싱
+- 앱이 페이징 데이터로 작업하는 동안 시스템 리소스를 효율적으로 사용 가능
+- 요청 중복 제거 기능이 기본으로 제공되어 앱에서 네트워크 대역폭과 시스템 리소스를 효율적으로 사용 가능
+- 사용자가 로드된 데이터의 끝까지 스크롤할 때 구성 가능한 RecyclerView 어댑터가 자동으로 데이터를 요청
+- Kotlin 코루틴 및 Flow뿐만 아니라 LiveData 및 RxJava를 최고 수준으로 지원
+- 새로고침 및 재시도 기능을 포함하여 오류 처리를 기본으로 지원
+- 3개의 레이어로 구성
+  - Repository
+  - ViewModel
+  - UI
+- 주요 클래스
+  - PagingSource
+  - RemoteMediator
+  - Pager
+  - PagingConfig
+  - PagingData
+  - PagingDataAdapter
+
+#### Paging
+
+- 페이징이란 데이터를 가져올 때 한 번에 모든 데이터를 가져오는 것이 아니라 일정한 덩어리로 나눠서 가져오는 것을 의미. 
+- 페이징을 사용하면 성능, 메모리, 비용 측면에서 굉장히 효율적
