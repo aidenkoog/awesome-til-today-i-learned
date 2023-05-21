@@ -1012,3 +1012,35 @@
 
 - 페이징이란 데이터를 가져올 때 한 번에 모든 데이터를 가져오는 것이 아니라 일정한 덩어리로 나눠서 가져오는 것을 의미. 
 - 페이징을 사용하면 성능, 메모리, 비용 측면에서 굉장히 효율적
+
+#### Jetpack 자체에 대한 개념 재정리
+
+- Jetpack은 개발자가 관심 있는 코드에 집중할 수 있도록 권장사항 준수, 상용구 코드 제거, 모든 Android 버전과 기기에서 일관되게 작동하는 코드 작성을 돕는 라이브러리
+- 안드로이드 Jetpack은 개발에 자주 쓰이는 여러 라이브러리들과 툴들을 묶어놓은 모음집
+- 개발자들이 더욱더 편리하게, 빠르게, 쉽게 높은 퀄리티의 앱을 개발하도록 돕는 모음 도구
+- androidx.*로 패키지화되어 있기 때문에 안드로이드 기본 API와 분리되어 있음
+- 구성 요소
+  - Architecture
+    - Data Binding: xml파일에 Data를 연결해서 사용할 수 있게 도와줌
+    - Lifecycles: 안드로이드 activity 생명주기 관련 유틸리티
+    - LiveData: 데이터가 변경될때 실시간으로 view에 알려줌
+    - Navigation: activity, fragment간 이동을 쉽게 도와줌
+    - Paging: 대량의 데이타를 관리해주는 유틸리티
+    - Room: Database를 보다 쉽게 사용할 수 있게 도와줌
+    - WorkManager: 백그라운드 작업을 보다 쉽게 도와줌
+  - Foundation
+    - AppCompat: 하위 안드로이드 앱에서 최신버전 sdk를 사용할 수 있도록 도와줌
+    - Android KTX: 코틀린 코드를 더욱 간결하게 만들어 줌
+    - Multidex: dex 관리 관련 유틸리티
+    - Test: 안드로이드 테스티관련 유틸리티
+  - Behavior
+    - Download manager: 큰 파일 다운로드를 service 차원에서 관리함
+    - Media & Playback: 미디어 파일 재생 관련 유틸리티
+    - Permissions: 안드로이드 권한 관련 유틸리티
+    - Notifications: 안드로이드 notification 관련 유틸리티
+    - Sharing: Actionbar에서 데이터를 보다 쉽게 공유할 수 있도록 도와줌
+  - UI
+    - 앱에서의 다양한 애니메이션, 이모지 또는 다양한 플랫폼 (TV, 워치) 관련 유틸리티를 사용할 수 있는 컴포넌트.
+    - Jetpack의 컴포넌트는 안드로이드 API 플랫폼의 일부가 아니기 때문에 원하는 컴포넌트를만 androidx.* 패키지에서 선택해서 사용 가능
+
+
