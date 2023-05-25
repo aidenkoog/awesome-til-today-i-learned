@@ -300,6 +300,47 @@
 - 복잡한 비동기 에러 처리를 간단하게 구현
 - 다양한 플랫폼과 언어 지원 (크로스 플랫폼)
 - Observer Pattern + Iterator Pattern + Functional Programming
+- Java는 객체 지향(Object-Oriented)의 프로그래밍 언어이므로 객체 지향이 아닌 다른 프로그래밍을 하기 위해서는 별도의 도구가 필요
+- RxJava는 Java를 이용해 Reactive Programming을 할 수 있도록 도와주는 라이브러리
+- 리액티브 프로그래밍(Reactive Programming) 역시 함수형 프로그래밍의 일종
+- Reactive Programming이란 데이터의 흐름과 전달을 중심으로 하는 프로그래밍 패러다임으로, 프로그래머가 코드상으로 입력한 절차에 따라 순서대로 동작하는 명령형 프로그래밍과는 달리 데이터의 흐름을 먼저 작성하고 데이터의 흐름에서 발생하는 다양한 이벤트에 따라 수식이나 함수가 실행되는 방식
+- Model이나 UI의 이벤트에 따라 View를 자동으로 업데이트하기 위해 안드로이드 프로그래밍에서 주목받게 되었음
+- 특징
+  - RxJava는 넷플릭스 개발팀에 의해 만들어진 라이브러리
+  - 다음과 같은 이유로 만들었다고 함
+    - 동시성을 적극적으로 활용하기 위한 목적
+    - Java의 Future를 조합하기 어렵다는 점을 해결하기 위한 목적
+    - Callback 방식의 문제를 해결하기 위한 목적
+  - RxJava는 다양한 요청을 비동기로 생성하고 모든 값을 취합하여 최종 리턴하는 방식으로 진행
+  - 리액티브 연산자를 통해 비동기의 흐름을 조합할 수 있는 방법을 제공하며, Callback을 사용하지 않는 방향으로 설계되었음
+- 2가지 핵심 API
+  - 1. Observable
+    - Observable은 데이터의 흐름에 맞게 알림을 보내 구독자가 데이터를 처리할 수 있도록 함
+    - Observable은 동기적, 비동기적으로 모두 작동가능하고 아래와 같은 3가지의 알림을 구독자에게 전달
+      - onNext: 데이터의 발행을 알림
+      - onComplete: 모든 데이터의 발행이 완료되었음을 알림. 이후에 모든 구독은 끝나게 됨
+      - onError: 데이터의 흐름 중에 에러가 발생하였음을 알림. 이후에 Observable 동작이 끝남
+    - Observable의 다양한 함수들
+      - Just
+        - 기존에 존재하는 자료구조를 사용하여 데이터를 발행하는 함수
+        - 인자로 넣은 데이터를 차례로 발행하는 Observable을 생성
+        - 타입이 같은 데이터를 최소 1개부터 최대 10개까지 넣을 수 있음
+      - Subscribe
+        - 데이터의 흐름을 구독하는 함수
+        - onNext, onComplete, onError에 대한 리스너를 설정하고, 데이터의 흐름에서 일어나는 3개의 이벤트에 대한 로직을 실행하도록 만듬
+      - unsubscribe
+        - Fragment나 Activity에서 생명주기를 처리하던 Subscribe()를 중지하기 위해서는 이벤트를 만드는 Observable들을 모두 취소해야 함. 그렇지 않으면 Memory Leak이 생길 가능성 존재
+      - Disposable
+        - Subscribe()는 모두 Disposable Interface 객체를 반환하며, 이를 통해 데이터의 흐름을 중단 가능함
+        - Observable에서 onComplete가 실행되면 자동으로 dispose()를 호출하여 구동을 종료시킴
+      - subscribeOn, observeOn
+        - subscribeOn(): observable의 작업을 시작하는 쓰레드를 선택
+        - observeOn(): 이후에 나오는 Operator로, Subscribe()의 Scheduler를 변경 가능
+  - 2. Single
+    - Observable은 0~N개의 Item을 전파할 수 있는 작업 흐름.
+    - 하지만 작업이 종료되고, 1개의 Item 만을 전파하는 경우에는 Single을 사용하는데 (복잡하지 않은) 대부분의 작업을 처리하는 경우 
+    - ex) dao 등을 통해 데이터를 비동기로 불러오고자 하는 경우에 적절. 
+    - Single은 Observable과는 다르게 onSuccess(item)과 onError(throwable) 만을 가짐.
 
 #### 반응형 프로그래밍 특징
 
@@ -418,6 +459,10 @@
 - ViewModel은 뷰가 요청한 데이터를 Model로 요청하고 Model한테 요청한 데이터를 받음
 - Model은 ViewModel이 요청한 데이터를 반환하고 DB 사용 또는 HTTP API 호출 등을 담당
 - 기능별로 모듈화가 잘 되므로 개발 및 유지 보수에 용이하고 UI 업데이트가 간편
+- MVVM에서 가장 중요한 핵심은 DataBinding 기술
+- DataBinding을 이용함으로써 View는 ViewModel을 Observing하고 있다가, Model의 데이터가 변경되면 ViewModel로부터 알림을 받아 화면을 갱신
+- 이러한 구조를 통해 ViewModel은 View의 존재를 모르게 되어 의존성을 낮출 수 있고, 유지보수성을 높일 수 있게 됨
+- 이러한 MVVM 아키텍쳐 패턴은 Android에서 LiveData와 RxJava 등을 통해 구현 가능
 
 #### ViewModel 설명
 
