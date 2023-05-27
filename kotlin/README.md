@@ -6,11 +6,15 @@
 
 #### Kotlin Scope Function 설명
 
+- scope 함수는 어떠한 새로운 기술적인 능력을 가져다주는 것이 아닌, 코드를 좀 더 간결하고 읽기 쉽게 만들어주는 것
+- Scope Function에는 서로 다른 두 가지 주요 차이점
+  - Context Object를 참조하는 방법 (this, it)
+  - Return value
 - apply
-- also
 - with
 - run
 - let
+- also
 
 #### by lazy 와 lateinit 설명
 
