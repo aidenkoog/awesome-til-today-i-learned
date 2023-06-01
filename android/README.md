@@ -1427,3 +1427,16 @@
   - 보통은 데이터를 회복하는 코드를 onRestoreInstanceState() 에 많이 작성함
   - onCreate 에서 savedInstance를 받아 처리하는 경우에는 처음 실행이 되는지, 재생성되는 것인지 판단하기 위해서, 데이터의 null check 가 필요
     - null 이라면 처음 생성되는 것이고, 아니라면 재생성의 의미
+
+#### 안드로이드 인앱 리뷰 (In App Review)
+
+- Google Play In-App Review API를 사용하면 앱 또는 게임을 종료하는 불편함 없이 
+- Play 스토어 평점 및 리뷰를 제출하도록 요청하는 메시지를 사용자에게 표시 가능
+- 기기 요구 사항
+  - Google Play 스토어가 설치되었으며 Android 5.0(API 수준 21) 이상을 실행하는 Android 기기(스마트폰 및 태블릿)
+Google Play 스토어가 설치된 Chrome OS 기기
+- Play Core 라이브러리 요구사항
+  - 앱에 인앱 리뷰를 통합하려면 앱이 Play Core 라이브러리 1.8.0 이상 버전을 사용해야 함
+- play:review dependency 필요
+- ReviewManagerFactory 통한 ReviewManager 생성
+- Review 요청에 성공 시 ReviewInfo 객체 반환
