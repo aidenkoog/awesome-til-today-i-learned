@@ -1440,3 +1440,22 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - play:review dependency 필요
 - ReviewManagerFactory 통한 ReviewManager 생성
 - Review 요청에 성공 시 ReviewInfo 객체 반환
+  
+#### Coroutine supervisorScope / coroutineScope
+
+- 코루틴에서 Exception은 자식, 부모 양방향으로 전부 전달됨
+  - ex. UI component 에서 하나의 Job을 사용하면 UI 자체를 Destroy하거나 화면을 떠나는 경우 모든 자식들을 취소시킬 수 있음 (자식 중 하나가 실패하게 되면 모든 UI component가 취소되는 상황도 일어남)
+- 양방향으로 예외가 발생하는 것을 한 방향으로만 전달하기 위해 SupervisorJob 사용
+  - ex. launch 블럭 2개가 있다고 가정할 때 첫번째 launch에서 Exception이 발생을 해도 부모로 전달되지 않으므로 두번째 launch 블럭은 정상적으로 수행되며 첫번째 launche는 예외 발생과 관계없이 완료가 됨
+- SupervisorScope
+  - SupervisorScope 자체에서 예외가 발생하면 자식 코루틴을 모두 취소시킨 후 부모로 예외를 전달
+  - SupervisorScope의 자식 코루틴에서 예외가 발생하는 경우 자식 스스로 예외를 처리해야 함
+  - 자식이 핸들러 장착 또는 자식 내부에서 try-catch 처리 등
+  - 만약 자식이 핸들러 없이 예외를 발생시킨다면 외부에서는 try-catch로는 이 예외를 핸들링하는 것이 불가능
+  - 외부에서 CoroutineExceptionHandler를 이용해서 처리해야 함
+  - 여러개의 launch 블럭 즉, 여러개의 코루틴 빌더가 중첩되어 있고 이 중 안쪽에서 예외가 발생하는 경우 핸들러는 가장 바깥쪽에 위치해있어야만 예외를 전달받는 것이 가능
+- coroutineScope
+  - Exception 발생 시 자식 코루틴을 모두 취소 후 부모로 예외를 전달시킴
+  - 부모로 전달된 예외는 try-catch로 처리해야 함 (Exception Handler로는 처리 불가능)
+  - 단, try-catch 는 해당 스코프 내부에 존재하면 예외 핸들링이 불가능
+  - 실패가 부모 스코프로 전달되는 특성 때문에 try-catch 하는 부분은 예외 발생한 곳과 다른 coroutineScope이어야 함
