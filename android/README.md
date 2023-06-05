@@ -1503,3 +1503,17 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - CoroutineDispatcher 활용한 처리, 기본 디스패처 사용하면 백그라운드 스레드로 작업을 옮길 수 있음
 - 재사용 가능한 간단한 비즈니스 로직 생성 가능
 - Repository 들의 결합 가능
+
+#### SuspendCancellableCoroutine
+  
+- 코틀린의 코루틴 라이브러리 내에서는 일시중단 기능과 함께 콜백함수를 Wrapping하여 사용할 수 있도록 많은 코루틴 빌더들을 제공하고 있음
+- 주요 API들
+  - suspendCoroutine()
+  - suspendCancellableCoroutine() (권장, 양방향으로 취소를 핸들링 가능하므로 사용 추천)
+- (참고 지식) 비동기 작업이 펜딩될 때 코루틴은 취소될 수 있음
+  - 코루틴이 현재 작업하고 있는 스코프 단위에 의존적이고, 코루틴은 뷰가 계층 구조에서 제거되는 경우 취소될 수 있음
+  - 예. 프래그먼트가 스택으로부터 제거될 때 이때 비동기 작업을 취소할 수 있고 진행 중인 리소스들을 정리할 수 있음
+- 작업이 취소될 때 추가적인 처리를 수행하는 invokeOnCancellation api 제공
+  - 파일 시스템을 사용하거나 리소스의 해제, 소켓 닫기 등의 처리를 위해서는 SuspendCancellableCoroutine을 사용하는 것이 안정적
+- (참고) resumeWithException
+  - Continuation에서 제공되는 api로 block을 해제하고 외부로 Exception을 Throw 해주는 역할 담당
