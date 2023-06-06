@@ -152,5 +152,16 @@
 - ->를 기준으로 왼쪽은 파라미터(인자), 오른쪽은 리턴값을 의미
 - 리턴값이 없으면 Unit으로 표기
 
+#### 코틀린 runCatching
 
+- inline 키워드가 붙어 있고 내부적으로 try-catch를 쓰고 있음
+- 리턴 타입은 매개변수로 받은 함수 타입이 반환하는 값과 같은 값을 갖는 Result 타입
+- 성공 시 Result.success() 안에서 함수 타입 매개변수를 실행해 리턴하고 실패 시 Result.failure()로 Throwable을 넘김
+- runCatching {} 안에는 예외가 발생할 수 있는 코드를 삽입
+- 그리고 뒤에 잇따르는 onSuccess, onFailure 블록에선 각각 성공, 실패한 경우 수행할 처리들을 삽입
+- 마지막에 result 변수를 출력하면 Success()에 감싸여 있는 걸 볼 수 있음
+- 위에서 말한 대로 호출이 성공해서 Result 타입으로 캡슐화된 응답이 반환된 것임
+- try-catch 보다 간결한 형태로 예외처리 코드를 쓸 수 있어 상대적으로 가독성이 좋음
+- onSuccess, onFailure, getOrElse 등의 함수를 연달아 쓸 수 있는 함수 체이닝이 가능
+- Result 타입을 사용해 성공 / 실패를 리턴하기 때문에 try-catch보다 상대적으로 성능 저하가 일어날 수 있음
 
