@@ -96,6 +96,50 @@
 - 코틀린은 불변성을 권장
 - 불변성이 중요한 함수형 프로그래밍을 돕기 위해 사용
 
+#### 코틀린 기본 문법 정리
+
+- 함수
+  - 함수는 모두 리턴형을 가지는데 특별한 지정이 없으면 기본적으로 Unit을 반환 (void)
+  - 오버로딩 필요 시 자바처럼 오버로딩 할 필요없이 매개변수에 디폴트 값을 지정하면 됨
+    - fun test(a: Int, b: Int = 3, c: Int = 4) : Int
+    - val result = test(1, c = 5)
+  - 플러터나 리액트처럼 어떤 변수에 어떤 값을 넣을 것인지에 대한 작성이 가능하여 전달하는 인자의 순서를 맞출 필요 없음
+    - 마치 네임드 아규먼트처럼 사용 가능
+    - 마지막 위치에 ,가 있어도 컴파일 에러 발생하지 않음
+  - fun testCal(a: Int, b: Int) { return a + b } => fun testCal(a: Int, b: Int) = a + b 형태의 Single expression 가능
+- 변수 정의
+  - val = value, var = variable (변경가능한) 줄임말
+  - 타입 추론 (val name = "이름")
+- 클래스
+  - 구현부가 없으면 생략 가능 (class TestClass(val name: String))
+  - 디폴트 값 지정 가능
+  - 상속
+    - open을 사용하면 변수 재사용이 가능
+    - open class User(open val name) / class Kid(override val name: String): User(name)
+    - 기본적으로 상속은 닫혀있음. 상속을 하고자 할 때 명시적으로 클래스 앞에 open을 붙여줘야 함
+    - 주 생성자, 부 생성자 개념 존재
+    - init (클래스 안에서 가장 먼저 호출되는 곳) - init 호출 후 부 생성자 호출됨
+- 조건식
+  - 조건문 작성 후 변수에 저장 가능
+  - 자바에서는 조건문이고 코틀린에서는 조건식이라 이해 (Statement가 아니라 Expression임)
+  - switcha문: when, -> else
+  - Expression으로 사용할 경우는 else 키워드 반드시 정의 필요
+  - when에서 변수 선언 / 초기화 가능 (when (val data = 3))
+  - when in <-- 범위를 나타낼 때 사용 (when (data) { in 2..4 })
+- 반복문
+  - for(i in 1..10)
+  - IntRange(1, 10) == in 1..10
+  - until
+    - for (i in 1 until 10), until은 끝 숫자를 포함하지 않음
+  - for (i in 1..10 step(2))
+  - for (i in 10 downTo 1) 내림차순
+  - for (i in 10 downTo 1 step(2)) - step 안에는 양의 정수만 가능
+  - while 
+
+#### 코틀린 컬렉션 재정리
+
+- 
+
 #### 코틀린 장점 설명
 
 - 기존의 자바 코드의 보일러 플레이트 구문 최소화 가능
@@ -168,4 +212,9 @@
 #### Android Studio 팁 재정리
 
 - Kotlin Bytecode 통해 코틀린으로 짠 코드를 자바로 보는 것이 가능
+  - Tool > Kotlin > Show Kotlin Bytecode
 - Java Snippet 복사 시 코틀린 코드로 변경 가능
+
+#### 코틀린 로깅
+
+- println("logging")
