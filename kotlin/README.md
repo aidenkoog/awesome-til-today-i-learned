@@ -165,3 +165,7 @@
 - onSuccess, onFailure, getOrElse 등의 함수를 연달아 쓸 수 있는 함수 체이닝이 가능
 - Result 타입을 사용해 성공 / 실패를 리턴하기 때문에 try-catch보다 상대적으로 성능 저하가 일어날 수 있음
 
+#### Android Studio 팁 재정리
+
+- Kotlin Bytecode 통해 코틀린으로 짠 코드를 자바로 보는 것이 가능
+- Java Snippet 복사 시 코틀린 코드로 변경 가능
