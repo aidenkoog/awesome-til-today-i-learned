@@ -138,7 +138,22 @@
 
 #### 코틀린 컬렉션 재정리
 
-- 
+- mutableListOf
+  - add 가능
+- listOf
+  - add 불가능 (함수 보이지 않음)
+- joinToString(",") 로 각 요소들을 출력 가능
+  - list.joinToString(",")
+- mapOf((1 to "Hello"), (2 to "Hi"))
+  - 추가 불가능
+- mutableMapOf((1 to "Hello"), (2 to "Hi"))
+  - put 사용 가능 / map[3] = "" <= 맵도 배열처럼 사용 가능 (인덱스 오퍼레이터 사용)
+- list.get(0) => list[0]로 배열처럼 사용 가능
+- 자바와 다르게 다양한 타입의 값을 리스트에 삽입 가능
+  - listOf("test", 1, 0.77)
+- 다양한 확장함수 존재 (스트림처럼 사용가능한 함수도 존재)
+  - list.first { id = 10 }
+  - list.map { it * 10 }.joinToString("/")
 
 #### 코틀린 장점 설명
 
