@@ -143,15 +143,23 @@
       - 저장된 번들 데이터는 액티비티가 다시 시작될 때 onCreate와 onRestoreInstanceState 메소드에 전달됨
       - 동적 상태 데이터가 저장될 필요가 있다는 것을 런타임이 알 경우에만 이 메소드가 호출됨
   - 액티비티 Lifetime
-    - 전체 Lifetime: onCreate ~ onDestroy 사이
-    - 가시적 Lifetime: onStart ~ onStop 사이 (액티비티는 자신을 사용자에게 화면으로 표시 가능)
-    - 포그라운드 Lifetime: onResume ~ onPause 사이
+    - [전체] Lifetime: onCreate ~ onDestroy 사이
+    - [가시적] Lifetime: onStart ~ onStop 사이 (액티비티는 자신을 사용자에게 화면으로 표시 가능)
+    - [포그라운드] Lifetime: onResume ~ onPause 사이
   - 호출 순서 정리
     - onCreate --> onStart --> onRestoreInstanceState --> onResume --> onSaveInstanceState --> onPause --> onStop --> onDestroy
     - onStop --> onRestart --> onStart --> ...
   - 용어 정리
     - 영속적 상태: 앱이 실행되는 동안 파일 / 데이터베이스 등에 저장해야 하는 데이터
     - 동적 상태: 현재 화면에 보이는 사용자 인터페이스와 관련되는 데이터 및 액티비티 내부에서만 보존해야 하는 변수들의 데이터를 의미
+  - 추가 설명
+    - 홈 버튼 누를 때: onPause => onStop / 다시 진입하면 onRestart => onStart => onResume
+    - 다른 액티비티 실행 시
+      - 기존: 1. onPause => 5. onStop
+      - 신규: 2. onCreate => 3. onStart => 4. onResume
+    - 다른 액티비티 보이는 상태에서 다시 백키 눌러서 원래 화면으로 돌아갈 때
+      - 기존: 1. onPause => 5. onStop => 6. onDestroy
+      - 신규: 2. onRestart => 3. onStart => 4. onResume
 
 #### 라이센스 종류 / 설명
 
