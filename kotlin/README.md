@@ -308,3 +308,23 @@
 #### 코틀린 로깅
 
 - println("logging")
+
+#### Coroutine Context, Dispatcher
+
+- 코루틴은 항상 코틀린 표준 라이브러리에 정의되어 있는 CoroutineContext 타입의 특정 Context 안에서 실행됨
+  - 대표적으로 Job, Dispatcher 로 구성되어 있음
+- CoroutineContext는 내부적으로 4개의 메소드를 가짐
+- CoroutineContext 를 구성하는 Element
+  - CoroutineId
+  - CoroutineName
+  - CoroutineDispatcher
+  - CoroutineIntercepter
+  - CoroutineExceptionHandler
+    - 이 요소들은 Element 인터페이스를 구현하고 있음
+    - 각각의 키를 기반으로 CoroutineContext에 등록 가능
+- Dispatcher
+  - ContinuationInterceptor 인터페이스를 구현하고 있고 이 인터페이스가 CoroutineContext의 Element
+  - Default, Main, Unconfined, IO 디스패처 존재
+  - launch 파라미터로 Dispatcher 넣는 것 가능 (CoroutineContext를 구성하는 Element에 디스패쳐도 포홤되기 때문)
+
+
