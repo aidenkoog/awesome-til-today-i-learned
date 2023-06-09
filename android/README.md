@@ -1064,7 +1064,7 @@
 #### Android Compose 개요
 
 - 2018년도에 구글 IO에서 처음 공개
-- 코틀린으로 제작되는 라이브러리
+- 코틀린으로 제작되는 라이브러리 (자바에서는 사용 불가능)
 - 기존 XML 방식은 findViewById, ViewBinding, DataBinding 등이 필수적으로 필요했음
 - 선언형 프로그래밍 사용
 - 리액트 등의 선언형 방식과 유사
@@ -1078,10 +1078,34 @@
 - Modifier 설명
   - 컴포즈의 UI 구성 요소들을 꾸미거나 행동을 추가하기 위한 요소들의 모음
   - 크기(너비, 높이) 조절 / 패딩, 오프셋 설정 / 배경색 및 라운딩 설정 / 그라데이션 / 알파값 설정 / 보더 설정 등 지원
+- UI와 기능을 한번에 코딩 => 옵저빙하여 상태 갱신하는 컨셉은 장점
+- 기존에 주로 사용되던 라이브러리와 함께 사용 가능
+  - 이미지 라이브러리: Glide / Coil
+  - DI: Dagger, Hilt
+  - 비동기 처리: Coroutines, Flow
+  - 네트워크: Retrofit, Ktor
+  - 애니매이션: Lottie
 
 #### Android Compose 실제 사용에 관련된 내용 정리
 
-- 
+- Surface
+- Text
+  - style / maxLines / overflow
+- @Composable
+- @Preview
+- Modifier
+  - Modifier.padding
+- Column
+- Divider
+- Compose는 기존의 옵저버 패턴과 같이 앱 데이터의 변경 사항을 관찰하기 위한 도구를 제공하여 자동으로 기능을 호출하는데 이를 recomposing이라 함
+- Compose는 데이터가 변경된 구성 요소만 재구성, 영향을 받지 않은 구성 요소를 건너뛸 수 있도록 개별 구성 가능에 필요한 데이터를 확인함
+- remember (데이터가 변경될 때의 상태를 유지 가능)
+- State hoisting (내부 상태를 호출한 함수에 의해 제어 가능하게 만드는 방법?)
+- Modifier.weight, Modifier.fillMaxHeight 
+- Button (colors 속성, ButtonDefaults.buttonColors)
+- LazyColumn (RecyclerView와 동일한 기능, 뷰를 재활용하지는 않음)
+  - 스크롤할 때 새로운 Composable을 내보내고 그것이 기존 방법인 View를 인스턴스화하는 것에 비해 상대적으로 효율적
+- animateColorAsState
 
 #### UI 렌더링
 
