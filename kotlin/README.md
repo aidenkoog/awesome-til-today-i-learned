@@ -395,10 +395,20 @@
   - Dispatcher는 async, withContext와 같은 코루틴 빌더에서도 사용 가능
   - launch 때 CoroutineContext를 명시하지 않는 경우엔 EmptyCoroutineContext 가 적용
 
-#### Coroutine Exception Handler 개념
+#### Coroutine Exception Handler 개념 (더 스터디하고 개념 정리 필요)
 
-- 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨
+- exception을 핸들링할 때 기본적으로 수행해야 하는 로직들을 처리하기에 수월함
+- 예외가 전파되는 것을 막지는 않으나 예외 발생했을 때 수행해야 할 로직들을 설정 가능 (로깅 등)
+- 보통 CoroutineExceptionHandler + SupervisorJob 조합으로 예외 전파를 막고 로깅을 하는 방법을 사용
 - Exception Propagation
+  - 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨 (전파와 노출의 차이)
+    - Exception을 외부로 전파 (Propagation): launch, actor
+    - Exception 노출: async, produce
+- launch의 경우 exception이 발생하면 바로 예외 발생
+- async의 경우 exception이 있더라도 실제로 exception이 발생되는 부분은 await()를 만날 때임
+- 전파와 노출 둘 다 콘솔에 exception 발생, 이를 방지하기 위해 CoroutineExceptionHandler를 이용하여 코루틴 내부의 기본 catch block으로 사용 가능
+  - Java 스레드에 사용하는 Thread.defaultUncaughtExceptionHandler 와 유사
+  - 참고. 안드로이드에서는 기본으로 uncaughtExceptionPreHandler가 코루틴의 exception 처리를 할 수 있도록 설정되어 있음
 
 #### Kotlin Data Class / Sealed Class
 
