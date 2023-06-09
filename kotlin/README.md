@@ -195,6 +195,7 @@
 
 - 코틀린 표준 라이브러리에서 제공하는 함수
 - 객체에 쉽게 접근할 수 있도록 해주는 함수
+- 어떤 사람이 풍선을 크게 불면 그 안에서는 그 사람을 누구인지 몰라도 그 사람이 가진 정보를 사용할 수 있는 개념
 - 코드가 간결해지고 가독성, 유지보수 용이성 증대 효과
 - 객체의 컨텍스트 내에서 실행 가능한 코드 블럭을 만드는 함수, 호출 시 임시 범위가 생성되며, 이 범위 안에서는 이름 없이 객체에 접근 가능
 - 수신 객체: 확장 함수가 호출되는 대상이 되는 값 (객체)
@@ -204,22 +205,32 @@
 - Scope Function에는 서로 다른 두 가지 주요 차이점
   - Context Object를 참조하는 방법 (this, it)
   - Return value
-- apply
+- [apply]
   - this로 Context 객체 참조
+    - val user = User("tester", 10, 10)
+    - val name = user.apply { name }
+    - val tester = User("tester", 20, false, true)
+    - val testerValue = tester.apply { hasTool = false } <= 변수 (var 타입) 초기화 용도
+    - println(testerValue.hasTool)
   - Context 객체 반환
-  - 객체의 상태를 변화시키고 그 객체를 다시 반환할 때 사용
+  - 객체의 상태를 변화시키고 그 객체를 다시 반환할 때 사용 (자기 자신 즉, 수신객체 반환)
   - 객체 초기화 할 때 사용
-- with
+- [with]
   - this로 Context 객체 참조
+    - with(수신객체) { } <= 마지막 줄 반환
+    - val result = with(tester) { hasTool = false true }
   - 람다식 결과 반환
   - 인수로 전달되는 자기자신을 this로 참조.
   - this 키워드를 생략할 수도 있고, 리턴값 생략을 권장
   - let은 리시버의 확장함수로 쓰이지만 with은 그렇지 않음.
   - 리시버객체는 with(리시버객체){람다함수}로 인자로만 전달 가능
   - 객체 초기화, 람다 리턴 값이 필요 없을 때 사용
-- run
+- [run]
   - this로 Context 객체 참조
-  - 람다식 결과 반환
+    - val user = User("tester", 10, 10)
+    - val age = user.run { this.age }
+    - println(age)
+  - 람다식 결과 반환 (맨 마지막 줄 결과 반환)
   - with과 다르게 확장함수로 쓸 수 있음
   - 리시버객체를 리시버객체.run{람다함수}처럼 함수처럼 사용 가능
   - run()함수는 람다함수에서 여러값을 초기화하고, 리턴값을 어떤 객체의 초기값으로 사용
@@ -227,18 +238,25 @@
     - ex. run {}
   - run()함수는 익명함수처럼 사용하거나 객체에서 호출하는 방법 모두 제공
   - 객체를 초기화하고 리턴 값이 있을 때 사용
-- let
+- [let]
   - it으로 Context 객체(리시버) 참조 (전달 인자명 지정 안하면 it)
-  - 람다식 결과 반환
+    - .let { user -> user.name }
+    - val age = user.let { user -> user.gender }
+  - 람다식 결과 반환 (맨 마지막 줄 결과 반환)
   - 한번에 여러 함수를 호출할 때 사용
   - ?키워드와 같이 쓰이면서 널이 아닐 때만 리시버가 동작하도록 할때 사용
   - 널 체크를 해야할 때, 지역 변수를 명시적으로 표현해야 할 때 사용
-- also
+    - var user: User? = User("tester", 10, 10)
+    - val age = user?.let { it.age }
+- [also]
   - it으로 Context 객체(리시버) 참조 (전달 인자명 지정 안하면 it)
+    - val male = User("tester", 10, false, true)
+    - val maleValue = male.also { user -> user.name user.hasTool = false }
+    - println(maleValue) <= 수신객체 반환
   - Context 객체 반환
-  - let()과 기능은 비슷하지만, apply처럼 객체의 상태를 변화시키고 그 객체를 다시 반환할때 사용
+  - let()과 기능은 비슷하지만, apply처럼 객체의 상태를 변화시키고 그 객체(자기 자신 즉, 수신객체)를 다시 반환할때 사용
   - 리시버 스스로를 리턴하기 때문에 연속적으로 객체 호출 가능
-  - 수신 객체를 명시적으로 사용하고자 할 때, 로그를 남길 때 사용
+  - 수신 객체를 명시적으로 사용하고자 할 때, 로그를 남길 때 사용 (권장사항, 초기화할 때는 잘 사용하지 않음)
 
 #### 코틀린 장점 설명
 
@@ -350,5 +368,6 @@
   - Dispatcher는 async, withContext와 같은 코루틴 빌더에서도 사용 가능
   - launch 때 CoroutineContext를 명시하지 않는 경우엔 EmptyCoroutineContext 가 적용
 
+#### Coroutine Exception Handler 개념
 
-
+- 
