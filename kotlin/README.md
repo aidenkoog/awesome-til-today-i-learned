@@ -383,3 +383,30 @@
 
 - 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨
 - Exception Propagation
+
+#### Kotlin Data Class / Sealed Class
+
+- Data Class
+  - toString() / hashCode() / equals() / copy() 메소드를 자동으로 생성
+    - 오버라이딩하면 직접 구현한 코드 사용 가능
+  - 1개 이상의 프로퍼티가 있어야 함
+  - 데이터 클래스는 abstract, open, sealed, inner 붙이는 것이 불가능
+  - 상속 불가능
+  - 사용 예
+    - val testObj = TestObj("tester", 10)
+    - testObj.copy(age = 3) <= 일부 프로퍼티만 바꾼 객체를 얻고 싶을 때 사용
+- Sealed Class
+  - 추상 클래스, 상속받은 자식 클래스의 종류를 제한
+  - 컴파일러가 sealed 클래스의 자식 클래스가 어떤 것인지 인지
+  - when과 함께 쓰일 때 장점 부각
+  - 실 사용 예
+    - 에러 케이스 체킹
+    - 리사이클러뷰에서 뷰타입 체킹
+  - abstract class 와의 차이점
+    - abstract class Test를 상속한 A, B, C가 있다고 가정
+    - val test: Test = A()
+    - when(test) { is TestObj1 -> "1" is TestObj2 -> "2" else -> "None" }
+    - 컴파일러는 Test가 어떤 자식들을 가지고 있는 지 알 수 없으므로 when 문을 사용할 때 else 문이 반드시 필요
+    - sealed class 를 사용하면 else 문 불필요 (else 라는 모호한 부분 사용을 안해도 됨)
+    - 컴파일러가 sealed class의 자식을 인지하고 있으므로 구현되지 않은 when case 문이 있으면 컴파일 오류가 발생하고 else 문은 제거 가능
+  
