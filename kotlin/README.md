@@ -4,17 +4,28 @@
 - 코틀린은 컴파일 시 바이트 코드를 생성하므로 자바와 100% 상호 운용 가능
 - 따라서 자바 <-> 코틀린 코드 간 상호 참조 / 호출 가능
 
-#### by lazy 와 lateinit 설명
+#### 코틀린 초기화 지연 개념 (by lazy 와 lateinit 설명)
 
-- lateinit: var 에서만 사용 가능
+- 변수를 선언할 때 값을 지정하지 않고 나중에 지정할 수 있는 방법
+- 메모리 효율적 사용을 위해서 또는 널 세이프한 값을 사용하지 위한 목적
+- 일반적인 방법
+  - var text: String? = null
+  - fun main() { text = "tester" }
+  - 문제점
+    - 타입이 널이 아닌 것이 좋은 방향, 초기화가 반드시 된다는 보장이 있다면 굳이 널로 초기화할 필요가 있을까?
+    - 사용할 때 변수 뒤에 ?를 계속 붙여줘야 하는 이슈 있음
+- lateinit: var 에서만 사용 가능, 반드시 타입 명시 필요
   - 언제든 초기화 변경 가능
   - null 통한 초기화 불가능
   - 초기화 전 접근 불가능 (lateinit property subject has not been initialized 에러)
+    - UninitializedPropertyAccessException 발생
   - 변수에 대한 setter/getter 프로퍼티 정의 불가능
-  - 원시 타입에 대해서는 활용 불가능
+  - 원시 타입 (Primitive Type)에 대해서는 활용 불가능
+    - Int 불가능 => Integer로 사용해야 함
   - 초기화 확인 방법 => ::변수.isInitialized
-- by lazy: val 에서만 사용 가능
+- by lazy: val 에서만 사용 가능, 반드시 변수 타입 지정 필요
   - lazy {}에 생성과 동시에 값을 초기화 하는 방법 사용
+    - val test : Int by lazy { println("initializing...") 100 }
   - 호출 시점에 by lazy 정의에 의해 초기화 진행
   - val 에서만 사용 가능
   - 값 교체 불가능
@@ -169,7 +180,7 @@
   - 아래와 같이 함수의 아규먼트 그리고 리턴값으로도 활용 가능
     - fun hello(a: Int, b: (Int) -> Int) : (Int) -> Int { return b }
   - 한 번 사용되고, 재사용되지 않는 함수 만들 때 사용
-    - SAM 개념
+    - SAM 개념 (추가 스터디 및 개념 정리 필요)
       - Single Abstract Method 단일 추상 메소드
       - 코틀린에는 SAM Conversions 가 제공됨
       - 하나의 추상 메서드에 대해서 함다식을 제공, 단, 자바에서 작성한 인터페이스 정의와 이를 활용하는 setOnClickListener를 코틀린에서 부르는 경우에만 이에 해당함
@@ -332,7 +343,7 @@
 - 코루틴은 항상 코틀린 표준 라이브러리에 정의되어 있는 CoroutineContext 타입의 특정 Context 안에서 실행됨
   - 대표적으로 Job, Dispatcher 로 구성되어 있음
 - CoroutineContext는 내부적으로 4개의 메소드를 가짐
-- CoroutineContext 를 구성하는 Element
+- [CoroutineContext] 를 구성하는 Element
   - CoroutineId
   - CoroutineName
   - CoroutineDispatcher
@@ -342,7 +353,7 @@
     - 각각의 키를 기반으로 CoroutineContext에 등록 가능
   - plus 메서드 사용을 통해 각각의 Element를 + 로 매핑 가능, 이 병합된 Context는 CombinedContext를 생성
     - ex. launch(B + C)
-- Dispatcher
+- [Dispatcher]
   - 스레드에 코루틴을 보냄 => 코루틴에서는 스레드 풀을 생성, Dispatcher를 통해 코루틴을 배분
   - 코루틴을 Dispatcher에 전송하면 Dispatcher는 자신이 관리하는 스레드풀 내의 스레드의 부하 상황에 맞춰 코루틴을 배분
   - 상세 스텝
@@ -370,4 +381,5 @@
 
 #### Coroutine Exception Handler 개념
 
-- 
+- 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨
+- Exception Propagation
