@@ -322,9 +322,33 @@
   - CoroutineExceptionHandler
     - 이 요소들은 Element 인터페이스를 구현하고 있음
     - 각각의 키를 기반으로 CoroutineContext에 등록 가능
+  - plus 메서드 사용을 통해 각각의 Element를 + 로 매핑 가능, 이 병합된 Context는 CombinedContext를 생성
+    - ex. launch(B + C)
 - Dispatcher
+  - 스레드에 코루틴을 보냄 => 코루틴에서는 스레드 풀을 생성, Dispatcher를 통해 코루틴을 배분
+  - 코루틴을 Dispatcher에 전송하면 Dispatcher는 자신이 관리하는 스레드풀 내의 스레드의 부하 상황에 맞춰 코루틴을 배분
+  - 상세 스텝
+    - 유저가 코루틴을 생성 후 디스패쳐에 전송
+    - 디스패처는 자신이 잡고 있는 스레드 풀에서 자원이 남는 스레드가 어떤 스레드인지 확인한 후 해당 스레드에 코루틴을 전송
+    - 분배받은 스레드는 해당 코루틴을 수행
+  - 코루틴은 스레드 풀을 만들지만 직접 스레드 풀을 제어하지 않음 (디스패쳐를 통해 제어 / 스레드 풀 제어는 모두 디스패처에게 위임)
+    - 디스패쳐에 코루틴을 보내기만 하면, 디스패쳐는 스레드에 코루틴을 분산시킴  
+  - 안드로이드 특이사항
+    - 안드로이드에는 이미 디스패쳐가 생성되어 있어서 별도로 생성 / 정의할 필요 없음
+    - Main (UI), IO (파일 / 네트워크), Default (CPU 부하가 있는 작업을 기본 스레드 외부에서 실행, 정렬 또는 JSON 파싱) 존재
   - ContinuationInterceptor 인터페이스를 구현하고 있고 이 인터페이스가 CoroutineContext의 Element
   - Default, Main, Unconfined, IO 디스패처 존재
   - launch 파라미터로 Dispatcher 넣는 것 가능 (CoroutineContext를 구성하는 Element에 디스패쳐도 포홤되기 때문)
+    - Dispatcher 없는 경우: 부모 컨텍스트 상속하여 수행, runBlocking 컨텍스트에서 수행
+    - Default: DefaultDispatcher에서 수행, 메인이 아닌 워커 스레드를 통해 동작, 코어 수에 비례하는 쓰레드 풀에서 수행
+    - IO: DefaultDispatcher에서 수행, 워커 스레드를 통해 동작, 코어 수보다 훨씬 많은 스레드를 갖는 쓰레드 풀에서 수행
+      - Default, IO는 워커 스레드를 사용하지만 얼마만큼 스레드를 생성할 지에 대한 정책적인 차이가 있음
+      - Default는 IO 보다 더 복잡한 연산 수행 가능 (JSON 파싱 / 정렬) - 여러 개의 스레드를 만들면 효율적이지 않음
+      - IO는 CPU 소모가 덜 한 연산에 적합 (파일 / 네트워크, 스레드를 여러 개 만들더라도 영향이 크지 않음)
+    - Unconfined: 메인 스레드에서 동작, 부모가 메인에서 동작하면 메인에서 수행, 어떤 스레드에서 실행될 지는 예측 불가능
+    - Main: 메인 스레드에서 코루틴 실행, 뷰와 상호작용하는 작업 실행할 때 사용
+  - Dispatcher는 async, withContext와 같은 코루틴 빌더에서도 사용 가능
+  - launch 때 CoroutineContext를 명시하지 않는 경우엔 EmptyCoroutineContext 가 적용
+
 
 
