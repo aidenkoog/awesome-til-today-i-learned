@@ -45,6 +45,12 @@
 - Companion Object 는 변수에 할당 가능, 변수를 통해 멤버 참조도 가능
 - 객체 생성 없이 변수와 메소드 등을 선언하여 사용하기 위해 사용
 - 클래스 내에 하나만 생성 가능
+- 사용법
+  - companion object { const val NAME = "koo" fun mockBook() = Book() }
+- 추가 설명
+  - import 해보면 Book.Companion.NAME 으로 import 됨
+  - 실제로는 companion object => object Companion { }
+  - 만약에 companion object 뒤에 이름을 명시적으로 지정하면, 예를 들어 companion object Test 라고 명시하면 Book.Test.NAME 으로 import 됨
 
 #### object 설명
 
@@ -54,6 +60,7 @@
   - 생성자 사용 불가능
   - 프로퍼티, 메소드, 초기화 블록은 사용 가능
   - 다른 클래스나 인터페이스를 상속받을 수 있음
+- 에러 코드를 정의할 때 주로 많이 사용됨
 - 사용법
   - object Counter { init { } var count = 0 fun countUp() { count++ } }
   - Counter.count / Counter.countUp()
