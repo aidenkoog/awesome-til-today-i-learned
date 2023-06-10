@@ -1598,3 +1598,22 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - 파일 시스템을 사용하거나 리소스의 해제, 소켓 닫기 등의 처리를 위해서는 SuspendCancellableCoroutine을 사용하는 것이 안정적
 - (참고) resumeWithException
   - Continuation에서 제공되는 api로 block을 해제하고 외부로 Exception을 Throw 해주는 역할 담당
+
+#### Repository 패턴 재정리
+
+- 데이터의 출처에 관계없이 동일한 인터페이스로 데이터에 접근할 수 있도록 하는 패턴
+- 데이터 소스를 캡슐화 (데이터 레이어를 캡슐화 시키는 것이 주된 목적)
+- Repository의 Interface는 Domain Layer에 존재하지만, 실제로 데이터는 Data Layer에 존재하기 때문에 Interface의 구현부는 Data Layer에서 작성이 되어야 함
+- 왜 구현부와 Repository가 다른 부분에 선언하여 사용하는지?
+  - Clean Architecture 구조에서 Domain Layer는 참조를 당할 뿐, 다른 계층을 참조하지 않아야 함
+    - View => Domain <= Data
+  - Repository가 Domain Layer외에 존재하게 되면 해당 모듈을 참조 받아야하는데, 상호참조가 발생하기 때문에 다른 모듈에 선언할 수 없음
+- 주된 장점
+  - Data Layer에 대한 의존성을 줄일 수 있음
+    - 즉, Data Layer와 Presentation Layer 간의 Coupling이 줄어듬
+  - Presentation Layer에서 Data Layer에 직접 접근하지 않으므로, 새로운 Data의 추가가 용이함
+  - Presentation Layer에서는 Repository에 데이터 요청만 하면 되므로, 일관된 인터페이스로 데이터를 요청 가능
+  - Unit Test를 통한 검증이 수월함
+- 단점
+  - 하나의 허브를 추가하는 것과 마찬가지이기 때문에 관리가 필요한 코드와 파일들이 증가
+
