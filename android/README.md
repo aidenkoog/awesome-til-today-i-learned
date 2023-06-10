@@ -1608,6 +1608,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - Clean Architecture 구조에서 Domain Layer는 참조를 당할 뿐, 다른 계층을 참조하지 않아야 함
     - View => Domain <= Data
   - Repository가 Domain Layer외에 존재하게 되면 해당 모듈을 참조 받아야하는데, 상호참조가 발생하기 때문에 다른 모듈에 선언할 수 없음
+- Repository의 구현부는 Data Layer에 존재해야 하는데, 그 이유는?
+  - Repository가 Domain에 존재해야 하는 이유를 생각해보면 간단히 알 수 있음
+  - 구현부는 직접 데이터를 가져와서 Control해야 하는데, Domain Layer에서는 Data Layer에 있는 데이터를 가져올 수 없으며 그 반대는 가능
+  - Data Layer에 선언하여 Domain Layer에 존재하는 Repository를 상속 받아서 사용하도록 구현을 해야하
 - 주된 장점
   - Data Layer에 대한 의존성을 줄일 수 있음
     - 즉, Data Layer와 Presentation Layer 간의 Coupling이 줄어듬
@@ -1616,4 +1620,9 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - Unit Test를 통한 검증이 수월함
 - 단점
   - 하나의 허브를 추가하는 것과 마찬가지이기 때문에 관리가 필요한 코드와 파일들이 증가
-
+- ViewModel에서는 직접적으로 DataSource에 접근하지 않고 Repository를 통해 DataSource에 접근하여 데이터를 가져옴
+- Usecase에서 Repository를 통해 DataSource에 접근하여 데이터를 가져옴
+- Repository를 호출하는 UseCase는 Repository에서 어떠한 데이터를 사용해서 가져오는지 알 필요 없으며, 원하는 데이터만 Return받으면 됨
+- ViewModel에서 데이터를 가져와서 UI에 뿌려주는 부분을 보면 단순히 UseCase를 호출하여 return된 값으로만 UI를 뿌려주고 있음
+  - Repository의 구현부분을 어떻게 변경하여도 Return 타입에 문제가 발생하지 않으면 빌드 시 오류는 발생하지 않으며, 정상적인 데이터만 return 해준다면 구현 부분은 어떤게 추가/삭제 되어도 영향이 없음
+- Presentation Layer와 Data Layer간의 의존성이 낮아지도록 하여 다양한 이점을 얻을 수 있는 디자인 패턴이 Repository Pattern
