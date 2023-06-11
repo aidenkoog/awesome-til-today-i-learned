@@ -1638,4 +1638,12 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - var userName = client.username.toString()
   - client.signOut()
  
- 
+#### 안드로이드 Hilt
+
+- 구글의 Dagger를 기반으로 만든 DI 라이브러리
+- implementation과 annotation을 위해서 사용할 kapt를 추가
+- Hilt를 사용하기 위해서는 ApplicationClass가 필요
+- Hilt라이브러리는 ApplicationClass와 ApplicationContext에 접근해서 많은 일들을 뒤에서 수행함
+- Custom Application 클래스에 "@HiltAndroidApp" 이라는 Annotation을 추가해 주어야 함
+- 앱이 살아있는 동안 Dependency를 제공하는 역할을 하는, 애플리케이션 레벨의 Component
+- 
