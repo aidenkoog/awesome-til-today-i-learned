@@ -1626,3 +1626,16 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - ViewModel에서 데이터를 가져와서 UI에 뿌려주는 부분을 보면 단순히 UseCase를 호출하여 return된 값으로만 UI를 뿌려주고 있음
   - Repository의 구현부분을 어떻게 변경하여도 Return 타입에 문제가 발생하지 않으면 빌드 시 오류는 발생하지 않으며, 정상적인 데이터만 return 해준다면 구현 부분은 어떤게 추가/삭제 되어도 영향이 없음
 - Presentation Layer와 Data Layer간의 의존성이 낮아지도록 하여 다양한 이점을 얻을 수 있는 디자인 패턴이 Repository Pattern
+
+#### Android AWS Amplify
+
+- 설정 필요한 빌드 그래들 의존성
+  - implementation('com.amazonaws:aws-android-sdk-mobile-client:2.8.+@aar') { transitive = true }
+  - implementation('com.amazonaws:aws-android-sdk-auth-userpools:2.8.+@aar') { transitive = true }
+  - implementation('com.amazonaws:aws-android-sdk-auth-ui:2.8.+@aar') { transitive = true }
+- AWS 모바일 클라이언트 생성 및 사용법 예
+  - var client = AWSMobileClient.getInstance()
+  - var userName = client.username.toString()
+  - client.signOut()
+ 
+ 
