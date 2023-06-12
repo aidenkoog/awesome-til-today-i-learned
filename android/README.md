@@ -1133,6 +1133,17 @@
   - 스크롤할 때 새로운 Composable을 내보내고 그것이 기존 방법인 View를 인스턴스화하는 것에 비해 상대적으로 효율적
 - animateColorAsState
 - Scaffold
+  - modifier
+  - scaffoldState: 화면 상태 기억, drawer 및 snackbarHost에 대한 정보가 포함
+  - floatingActionButtonPosition: floating action 버튼의 위치, 가능한 값은 Center / End
+  - isFloatingActionButtonDocked: Boolean 매개 변수
+  - drawerGestureEnabled
+  - drawerShape
+  - drawerElevation
+  - drawerScromColor
+  - topBar: AppBar
+  - bottomBar
+  - Scaffold는 무조건 content가 들어가야만 함. content()를 만들어 줘야 하는데 람다로 전달함
 - Snackbar
 
 #### UI 렌더링
@@ -1710,4 +1721,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
         - 즉, 지정된 샘플링 주기에 해당하는 데이터를 수집한다는 방향으로 이해
       - throttleFirst 구현에 대한 건
         - 마지막 발행 시간과 현재 시간 비교하여 데이터 발행하고 나머지 데이터 무시하는 방향의 구현 방법
-    
+
+#### 안드로이드 환경설정 재정리
+
+- 
