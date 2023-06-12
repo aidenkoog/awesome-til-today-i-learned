@@ -1724,4 +1724,13 @@ Google Play 스토어가 설치된 Chrome OS 기기
 
 #### 안드로이드 환경설정 재정리
 
-- 
+- ktlint
+  - lint: 코드 분석하여 프로그램 오류, 버그, 스타일 오류, 구조적 문제점을 확인하는 도구
+    - 코딩 컨벤션에 따라 코드를 작성했는지 확인해주는 도구
+    - 공식 코틀린, 안드로이드 코틀린 스타일 가이드에 따라 만들어짐
+    - 참고. Android lint: 폴더 선택 > 마우스 우클릭 > Analyze > Inspect Code
+  - 적용법
+    - configurations { ktlint } 추가
+    - dependencies 내 com.pinterest.ktlint:0.47.1 추가
+    - task 정의 (task ktlintFormat(type:...))
+    - task 부분에서 ktlint 실행 가능
