@@ -206,10 +206,22 @@
 
 - Button, TextView, ImageView 등의 위젯을 작성하는데 사용되는 기본 클래스이자 이 모든 것이 View
 - View의 서브 클래스인 ViewGroup은 보이지 않는 컨테이너로써 다른 View들을 다른 View (또 다른 ViewGroup)에 포함 가능
-- 라이프사이클
-  - 노말 케이스
+- [라이프사이클]
+  - 노말 케이스: onMeasure -> onLayout -> onDraw
     - Constructors
     - onAttachedToWindow()
+    - #measure() <-- 핵심 메소드 1: 뷰 크기 계산
+    - onMeasure()
+    - #layout() <-- 핵심 메소드 2: 뷰 크기와 위치 할당
+    - onLayout()
+    - dispatchToDraw()
+    - #draw() <-- 핵심 메소드 3: 뷰를 실제로 그리는 단계
+    - onDraw()
+  - invalidate 호출 <-- 런타임에 뷰를 다시 그리게 하는 함수, invalidate -> onDraw
+    - dispatchToDraw()
+    - draw()
+    - onDraw()
+  - requestLayout 호출 <-- 런타임에 뷰를 다시 그리게 하는 함수
     - measure()
     - onMeasure()
     - layout()
@@ -217,18 +229,32 @@
     - dispatchToDraw()
     - draw()
     - onDraw()
-  - invalidate 호출
-    - dispatchToDraw()
-    - draw()
-    - onDraw()
-  - requestLayout 호출
-    - measure()
-    - onMeasure()
-    - layout()
-    - onLayout()
-    - dispatchToDraw()
-    - draw()
-    - onDraw()
+- 추가 설명
+  - 부모부터 자식 순서로, 탑 다운 순서로 뷰 렌더링
+  - [measure]
+    - 뷰의 크기 계산 / 모든 뷰는 각각 자신의 가로, 세로 (width, height) 계산
+    - measure 과정에서 부모 - 자식 뷰 간의 크기 정보 전달을 위해 2가지 클래스 사용
+      - ViewGroup.LayoutParams: 자식 뷰가 부모 뷰에게 자신이 어떻게 측정되고 위치를 정할 지를 요청할 때 사용
+        - dp, px: 자식이 원하는 사이즈
+        - Match parent: 부모 뷰 사이즈와 똑같이 사이즈 지정
+        - Wrap content: 부모 뷰 안에서 컨텐츠를 표현할 수 있는 fit한 사이즈 지정
+      - ViewGroup.MeasureSpecs : 부모 뷰가 자식 뷰에게 요구사항을 전달할 때 사용
+        - UNSPECIFIED: 자식이 원하는 사이즈로 결정
+        - EXACTLY: 자식의 사이즈를 정확히 지정
+        - AT_MOST: 자식 뷰의 최대 사이즈를 지정
+  - [layout]
+    - 부모 기준의 상대적 위치 (left, top, right, bottom)을 계산
+  - [draw]
+    - 뷰를 실제로 그리는 단계
+      - Canvas, Paint
+    - measure에서 측정한 크기로, layout에서 계산한 위치에 뷰를 렌더링
+    - onDraw 는 언제든 다시 호출 가능
+      - 스크롤 / 스와이프 동작 시 뷰는 onDraw 호출
+      - 주의: 객체 할당 또는 리소스 소모가 심한 로직 추가는 지양
+  - [invalidate]
+    - 뷰에 변화 발생하여 다시 그려야 할 때 (color 변화 등)
+  - [requestLayout]
+    - 크기가 변화해서 measure부터 다시 수행해야 할 때
 
 #### Intent 설명
 
@@ -1106,6 +1132,8 @@
 - LazyColumn (RecyclerView와 동일한 기능, 뷰를 재활용하지는 않음)
   - 스크롤할 때 새로운 Composable을 내보내고 그것이 기존 방법인 View를 인스턴스화하는 것에 비해 상대적으로 효율적
 - animateColorAsState
+- Scaffold
+- Snackbar
 
 #### UI 렌더링
 
