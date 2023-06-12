@@ -1724,8 +1724,8 @@ Google Play 스토어가 설치된 Chrome OS 기기
 
 #### 안드로이드 환경설정 재정리
 
-- ktlint
-  - lint: 코드 분석하여 프로그램 오류, 버그, 스타일 오류, 구조적 문제점을 확인하는 도구
+- [ktlint]
+  - lint: 코드 분석하여 프로그램 오류, 버그, 스타일 오류, 구조적 문제점을 확인하는 도구, 정적 프로그램 분석
     - 코딩 컨벤션에 따라 코드를 작성했는지 확인해주는 도구
     - 공식 코틀린, 안드로이드 코틀린 스타일 가이드에 따라 만들어짐
     - 참고. Android lint: 폴더 선택 > 마우스 우클릭 > Analyze > Inspect Code
@@ -1734,3 +1734,14 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - dependencies 내 com.pinterest.ktlint:0.47.1 추가
     - task 정의 (task ktlintFormat(type:...))
     - task 부분에서 ktlint 실행 가능
+- [detekt]
+  - 정적 프로그램 분석 (static program analysis): 프로그램을 실행하지 않고 소프트웨어를 분석하는 것
+  - ktlint와의 차이점
+    - ktlint는 코딩 컨벤션을 중점적으로 보고, detekt는 코드의 전체적인 질을 높이기 위한 분석 수행
+    - 예. 메소드 길이, 메소드 Depth 등의 분석 수행 (코드 스멜)
+  - 적용법
+    - configurations { detekt } 추가
+    - dependencies 내 io.gitlab.arturbosch.detekt: detekt-cli:1.22.0-RC3 추가
+    - task 정의
+    - ROOT/detekt.yml <-- 설정파일, task에서 def config: GString = "$rootDir/detekt.yml" 로 설정 가능
+      - lint를 더 강화하거나 아니면 불필요한 체크 항목을 해제도 가능
