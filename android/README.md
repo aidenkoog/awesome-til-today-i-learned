@@ -1627,7 +1627,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - Repository의 구현부분을 어떻게 변경하여도 Return 타입에 문제가 발생하지 않으면 빌드 시 오류는 발생하지 않으며, 정상적인 데이터만 return 해준다면 구현 부분은 어떤게 추가/삭제 되어도 영향이 없음
 - Presentation Layer와 Data Layer간의 의존성이 낮아지도록 하여 다양한 이점을 얻을 수 있는 디자인 패턴이 Repository Pattern
 
-#### Android AWS Amplify
+#### Android AWS Amplify (더 검토 필요)
 
 - 설정 필요한 빌드 그래들 의존성
   - implementation('com.amazonaws:aws-android-sdk-mobile-client:2.8.+@aar') { transitive = true }
@@ -1638,7 +1638,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - var userName = client.username.toString()
   - client.signOut()
  
-#### 안드로이드 Hilt
+#### 안드로이드 Hilt 재정리
 
 - 구글의 Dagger를 기반으로 만든 DI 라이브러리
 - implementation과 annotation을 위해서 사용할 kapt를 추가
@@ -1646,4 +1646,40 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Hilt라이브러리는 ApplicationClass와 ApplicationContext에 접근해서 많은 일들을 뒤에서 수행함
 - Custom Application 클래스에 "@HiltAndroidApp" 이라는 Annotation을 추가해 주어야 함
 - 앱이 살아있는 동안 Dependency를 제공하는 역할을 하는, 애플리케이션 레벨의 Component
-- 
+
+#### Debounce, Throttle 이해
+
+- 사전 백그라운드 지식 / 상황 정리
+  - 안드로이드 / 프론트엔드 개발 시 사용자 작용작용에 따른 이벤트 처리가 중료
+  - 상호작용 시 마다 API 서버 호출해야하는 경우 모든 이벤트를 그대로 전달하면 서버 리소스 낭비와 과부하로 이어질 가능성 존재
+  - 자주 발생하는 이벤트들을 필터링해서 처리할 필요성 존재
+- debounce
+  - Debouncing
+    - Debounce는 발생하는 이벤트를 그룹화하여, 일정 시간동안 이벤트가 발생하지 않으면 마지막 이벤트를 전달하는 기법
+    - 이벤트가 발생하다가 잠시 멈추는 시점이 일정 딜레이 만큼의 텀을 갖게 되면 마지막 이벤트를 전달
+      - 자바에서 핸들러, postDelayed 처리 방법과 유사
+    - 사용 예시
+      - 순간 검색 기능 또는 회원가입 필드 유효성 검사 (딜레이 통한 마지막 이벤트만 처리하도록 구성)
+      - KOO 를 검색한다면 K -> O -> O 의 방식이 아닌 KOO만 전달하는 방식으로 이해
+    - Flow는 debounce 메소드를 자체적으로 제공
+      - 파라미터로 타임아웃을 명시적으로 지정 가능 또는 방출되는 데이터에 따라 타임아웃을 다르게 지정도 가능
+      - 내부적으로 debounceInternal을 통해 동작
+- throttle
+  - Throttling
+    - Throttle은 일정 주기마다 이벤트를 캐치해 전달하는 기법
+    - 이벤트와 관계없이 타이머가 이미 돌고 있는 상태에서 그 주기 안에서 발생하는 이벤트를 처리하는 방식
+    - 주기를 1000ms로 설정한 타이머를 돌린다면 해당 주기동안 여러 이벤트가 발생하더라도 단 한나의 이벤트만 전달
+    - 구현 방식 종류
+      - throttleFirst (발생하는 이벤트 중 첫 번째 이벤트만 전달)
+      - throttleLast (마지막 이벤트 전달)
+    - 사용 예시
+      - 버튼 중복 클릭 방지 및 활성화 처리
+      - 메세지 전송 기능에서 전송 버튼이 항상 활성화되어 있으면 빈 텍스트가 전송될 가능성 존재
+      - 불필요한 API 호출로 인해 리소스를 낭비하게 될 수도 있는데 throttleLast를 이용해 텍스트 입력의 마지막 이벤트를 받아서 해당 텍스트가 비어 있으면 전송 버튼 비활성화, 유효한 텍스트가 있는 경우는 전송 버튼을 활성화하여 불필요한 API 호출을 방지하고 사용자에게 더 좋은 UX 제공도 가능
+    - throttle은 Flow에서 자체적으로 지원하지 않음 (RxJava에는 throttle 관련 메소드 존재)
+      - sample 이라는 메소드 사용 통한 throttleLast 대체 가능, 이는 직접 확장 함수 형태로 구현 필요
+      - 시간을 파라미터로 넘기나 debounce와는 달리 해당 시간 파라미터를 기반으로 ticker(timer)를 만들어 동작시킴
+        - 즉, 지정된 샘플링 주기에 해당하는 데이터를 수집한다는 방향으로 이해
+      - throttleFirst 구현에 대한 건
+        - 마지막 발행 시간과 현재 시간 비교하여 데이터 발행하고 나머지 데이터 무시하는 방향의 구현 방법
+    
