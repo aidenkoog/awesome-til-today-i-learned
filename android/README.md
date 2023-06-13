@@ -81,6 +81,7 @@
 - 통상적으로 하위 버전과의 호환성을 고려하여 만든 AppCompatActivity 또는 FragmentActivity 중 하나의 서브 클래스로 생성
 - 리눅스 커널 프로세스로 실행
 - 하나의 UI (단위 기능의 화면)
+- 사용자가 앱과 상호작용하기 위한 진입점
 - 여러 개의 액티비티 연계 시 인텐트 사용하여 처리
 - 하나의 액티비티에서 여러 개의 프래그먼트를 가지는 것도 가능
 - Activity 클래스 종류
@@ -983,7 +984,7 @@
 
 - 화면 회전 시 onDestroy 호출 후 onCreate 가 호출
 
-#### Coroutine Flow
+#### Coroutine Flow (코틀린, 코루틴 플로우)
 
 - 순차적으로 값을 내보내고 정상적으로 또는 예외로 완료되는 비동기적인 데이터 스트림
 - 코루틴 상에서 리액티브 프로그래밍 지원하기 위한 구성요소
@@ -993,15 +994,15 @@
     - Producer (생산자)
     - Intermediary (중간 연산자)
     - Consumer (소비자)
-- Producer (생산자) 는 flow {} 블록 내부에서의 emit()을 통해 데이터를 생성
+- [Producer] (생산자) 는 flow {} 블록 내부에서의 [emit()]을 통해 데이터를 생성
   - flow{} 블록 선언
   - 실제 API 호출
   - API Result를 emit()
-- Intermediary (중간 연산자) 에서는 생성된 데이터를 수정
+- [Intermediary] (중간 연산자) 에서는 생성된 데이터를 수정
   - 연산자 예: 자바 8 스트림, RxJava와 유사한 쓰임새로 생각됨
     - map (데이터 변형) / filter (데이터 필터링) / onEach (모든 데이터마다 연산 수행) 등
-- Consumer (소비자)
-  - collect 이용해 전달된 데이터를 소비 가능
+- [Consumer] (소비자)
+  - [collect] 이용해 전달된 데이터를 소비 가능
   - 안드로이드 상에서 데이터의 소비자는 보통 UI 구성요소
 
 #### Coroutine Flow 단점 / StateFlow 설명
@@ -1753,7 +1754,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - ROOT/detekt.yml <-- 설정파일, task에서 def config: GString = "$rootDir/detekt.yml" 로 설정 가능
       - lint를 더 강화하거나 아니면 불필요한 체크 항목을 해제도 가능
 
-#### TextView
+#### TextView 기초 내용 정리
 
 - textStyle
   - ex. "bold|italic"
@@ -1763,15 +1764,30 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - layout_margin / padding
 - layout_marginStart / layout_marginLeft (아랍 또는 타 국가의 글자 읽기 순서에 따른 UI 마진 지정 방법)
 
-#### UI 크기 단위
+#### UI 크기 단위 재정리
 
-- dp
+- [dp]
   - 밀도가 서로 다른 즉, 픽셀이 서로 다른 화면에서 UI 표시 크기를 유지하려면 밀도 독립형 픽셀 (DP)을 측정 단위로 사용해서 UI 디자인 필요
   - 1dp는 중밀도 화면 (160dpi 기준 밀도)의 1픽셀과 거의 동일한 가상 픽셀 단위
-- px
+- [px]
   - 픽셀
-- sp
+- [sp]
   - scalable pixel
   - sp, dp 는 기본적으로 동일
   - sp, dp 차이
     - 안드로이드 시스템 설정에서 폰트 크기를 설정했을 때 dp는 글자 크기가 변경되지 않고 시스템 폰트 크기 설정에 따라 sp로 지정한 글자는 크기가 변경됨
+
+#### viewModelScope 설명
+
+- 코루틴도 더 이상 작업이 필요없을 때 cancel 동작을 해줘야 하는데 이렇 때 viewModel과 연계되어 있으면 ViewModel 라이프사이클에 맞추어서 코루틴도 관리 가능
+- 참고. 코루틴의 관리 단위: Scope, Scope가 끝나면 그 안의 코루틴들도 끝남
+- View가 onDestroy 일 때 ViewModel도 onClear가 되는데 이때 Scope도 Cancel 해주어야 함
+- 위의 작업을 도와주는 라이브러리가 viewModelScope임
+- 사용 예. viewModelScope.launch { }
+- 특별히 관리해주지 않아도 ViewModel onClear가 호출될 때 코루틴 리소스 정리가 이루어짐
+- 내부적으로 Closable을 구현하고 있어서 close 호출 시 coroutineContext를 cancel 시킴
+- 기본적으로 Main에 바운드 되어 있으며 다른 스레드에서 실행을 원하면 withContext 메소드를 사용하면 됨
+- ViewModelScope는 앱의 각 ViewModel을 대상으로 함
+- 이 범위에서 시작된 모든 코루틴은 ViewModel이 삭제되면 자동으로 취소
+- 코루틴은 ViewModel이 활성 상태인 경우에만 실행해야 할 작업이 있을 때 유용
+- viewModelScope를 사용하지 않으면 ViewModel onCleared()를 오버라이딩해서 그 안에서 코루틴 Job을 cancel 시켜줘야 함
