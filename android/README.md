@@ -1012,6 +1012,12 @@
     - map (데이터 변형) / filter (데이터 필터링) / onEach (모든 데이터마다 연산 수행) 등
 - [Consumer] (소비자)
   - [collect] 이용해 전달된 데이터를 소비 가능
+    - Flow는 emit을 통해서 데이터를 발행하는 역할
+    - Flow에서 발행하는 데이터들은 collect의 action에서 데이터를 순차적으로 받아 suspend fun을 실행하도록 구성되어 있음
+    - collect: 새로운 데이터가 발행되더라도 이전 데이터의 처리가 끝날 때까지 대기
+    - collectLatest: 새로운 데이터가 발행되면 이전 데이터의 처리를 취소하고 새로운 데이터의 처리 시작
+      - Android 공식 문서 상 UI에 보여줘야 하는 데이터의 경우 collectLatest 사용을 권장
+    - collectIndexed: 새로운 데이터가 들어오면 데이터와 인덱스 값도 발행
   - 안드로이드 상에서 데이터의 소비자는 보통 UI 구성요소
 
 #### Coroutine Flow 단점 / StateFlow 설명
@@ -1230,11 +1236,18 @@
 - Cold Stream
   - 하나의 소비자에게 값을 전달
   - 생성된 이후 소비하기 시작하면 데이터를 발행 시작
+    - Flow의 경우 collect로 값을 요청하지 않는 한 값을 방출하지 않음
   - 데이터베이스를 읽거나 URL을 통해 서버의 값을 읽는 경우가 대표적
+  - collect() 또는 subscribe를 호출할 때마다 flow block 이 재 실행됨
+    - 1~10까지 emit 하는 로직이라 가정한다면 collect 할 때마다 매번 1~10을 전달 받음
+    - 1개의 스트림에는 1명의 구독자 존재
 - Hot Stream
   - 하나 이상의 소비자에게 값 전달
   - 데이터 발행이 시작된 이후 부터 모든 소비자에게 같은 데이터를 발행하고 구독자가 없는 경우에도 데이터를 발행
+    - 요청이 있건 없건 간에 계속 값을 방출하는 것을 의미
   - 상태가 변하는 값을 읽을 때 또는 네트워크 상태 정보 등의 값을 읽어올 때 사용 가능
+  - collect() 또는 subscribe를 호출할 때마다 flow block이 호출되지 않고 collect()가 한번 실행된 이후에 emit된 데이터를 전달받게 됨
+    - 한개의 스트림에서 다중 구독자한테 전달, 구독자가 없어도 전달 가능
 
 #### Hot / Cold Observable
 
@@ -1800,3 +1813,85 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 이 범위에서 시작된 모든 코루틴은 ViewModel이 삭제되면 자동으로 취소
 - 코루틴은 ViewModel이 활성 상태인 경우에만 실행해야 할 작업이 있을 때 유용
 - viewModelScope를 사용하지 않으면 ViewModel onCleared()를 오버라이딩해서 그 안에서 코루틴 Job을 cancel 시켜줘야 함
+
+#### Flow vs LiveData
+
+- LiveData
+  - 생명주기를 가진 데이터 홀더
+  - 메인 스레드에서 동작, 워커 스레드에서 작업을 처리해야 하는 데이터 레이어에서는 사용하기 적절치 않음
+  - 자바 / 코틀린 레이어 (도메인)가 아니고 안드로이드에 종속성이 있기 때문에 테스트가 까다로움
+- Flow
+  - Coroutine Scope
+    - Flow는 코루틴 스코프 내에서 동작
+    - viewModelScope나 lifeCycleScope와 함께 사용하면 라이브 데이터처럼 뷰모델 또는 액티비티나 프래그먼트 라이프사이클을 감지하고 맞춰서 동작 실행 또는 정제가 가능
+  - Operator
+    - 라이브 데이터에는 연산자들이 많이 없으나 Flow에는 많은 연산자들이 있어서 데이터를 필요에 따라 유연하게 변환 가능
+    - 예. 다양한 함수 활용 가능 => zip, flatMapMerge 등
+  - Android 의존성
+    - Flow는 코틀린 언어에 내장된 기능이므로 안드로이드 의존성으로부터 자유로움
+  - Cold Stream (Collect가 되어야만 값을 방출함)
+  - 상태가 없음
+    - 상태가 없으므로 value를 통해 값 가져오는 것이 불가능
+
+#### SharedFlow로 LiveData 대체하는 과정 중 필요한 SharedFlow, StateFlow 개념 정리
+
+- SharedFlow
+  - Hot Stream으로 동작하게 하는 Flow의 종류
+  - value 값 존재하지 않고 replayCache가 존재
+  - replayCache는 몇 개의 값을 저장해 두고 받을지에 대해 설정 가능
+  - Flow => SharedFlow => StateFlow
+  - emit 시 바로 collect 되므로 클릭 이벤트, 전환 등의 이벤트 처리에 적합
+- StateFlow
+  - 현재 상태와 새로운 상태 업데이트를 Collector에 내보내는 Observable한 상태 홀더 Flow
+    - LiveData처럼 값을 가지고 있음
+  - StateFlow 내부 코드 내 value 라는 값을 가지고 있으며 이전에 있던 값과 다른 값이 들어왔을 때 collect로 수집이 가능해진다는 특정 존재, 오직 한가지 값을 가짐
+  - 초기값이 존재해야 함
+  - collector의 수에 상관없이 항상 구독하고 있는 것의 가장 최신 값을 가져올 수 있음
+  - Hot Stream 데이터 홀더 클래스
+  - 상태 값, 화면을 구성하는 데이터들에 대해서 사용하는 것이 좋을 것 같음
+  - SharedFlow에 상태를 부여해서 현재 값을 얻을 수 있게 제한을 적용한 것
+  - 뷰가 Stopped 상태가 되면 LiveData.observe()는 Consumer를 자동으로 등록 취소하는 반면, StateFlow 또는 다른 Flow에서 수집하는 경우는 자동으로 수집을 중지하지 않음
+  - 라이브 데이터처럼 동일하게 동작을 만드려면 Lifecycle.repeatOnLifecycle 블록에서 흐름을 수집해야 함
+  - stateIn (Scope, SharingStarted, InitialValue) <= Flow를 StateFlow로 변환하는 작업
+    - SharingStarted
+      - SharingStarted.Eagerly
+        - collector가 존재하지 않더라도 바로 sharing이 시작되고 중간에 중지되지 않음
+      - SharingStarted.Lazily
+        - collector가 등록된 이후부터 sharing이 시작되며 중간에 중지되지 않음
+      - SharingStarted.WhileSubscribed
+        - collector가 등록되면 바로 sharing을 시작하며 collector가 전부 없어지면 바로 중지됨
+        - 구글에서는 WhileSubscribed(5000)을 권장 (Flow의 중단 타이밍과 관련)
+        - 화면 방향 전환 및 기타 이유로 액티비티가 onDestroy 되었다가 다시 생성되는 경우 등을 구분하기 위해 딜레이를 5초로 주면 어떤 상황인지 구분이 가능해 Flow를 중지할 지 말지 결정할 수가 있어서 권장하고 있음
+
+#### Flow => StateFlow 변환
+
+- stateIn: Flow를 StateFlow로 변환하는 작업
+- scope: StateFlow가 Flow로부터 데이터를 받을 CoroutineScope
+  - scope = lifecycleScope
+- started: Flow로부터 언제부터 데이터를 받을 지 멈출 지를 명시
+  - started = SharingStarted.WhileSubscribed(1000),
+- initialValue: StateFlow에 저장될 초기값
+
+#### Flow => SharedFlow 변환
+
+- sharedIn: Flow를 SharedFlow로 변환하는 작업
+- scope: SharedFlow가 Flow로부터 데이터를 받을 CoroutineScope
+- started: Flow로부터 언제부터 데이터를 받을지 멈출 지를 명시
+- replay: 이전 이벤트를 방출
+
+#### Flow 관련 라이프사이클 인식 문제를 위해 나온 키워드
+
+- launchWhenStarted
+- repeatOnLifeCycle
+  - 시작 => 정지 => 재시작
+- launchWhenResumed
+- launchWhenCreated
+
+#### LiveData => Flow 마이그레이션에 대한 고찰
+
+- 라이브데이터 활용
+  - 뷰 => 뷰모델 (LiveData) => 뷰모델 (MutableLiveData) => Repository (suspend fun...)
+- Flow 활용
+  - 뷰 => 뷰모델 (StateFlow) => 뷰모델 (MutableStateFlow) => Repository (suspend fun...)
+- StateFlow는 라이브데이터와 가장 유사
+- UI 상태를 뷰에 노출시킬 때는 StateFlow 사용 (UI 상태를 유지하도록 설계된 가장 안전하고 효율적인 옵저버)
