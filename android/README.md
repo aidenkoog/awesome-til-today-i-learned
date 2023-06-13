@@ -453,8 +453,15 @@
 - ViewGroup: 다른 View를 포함 가능한 View, 컨테이너 역할 수행
 - LinearLayout
   - 여러 View 위젯들을 가로/세로 방향으로 나열할 때 사용하는 레이아웃
-  - orientation 속성 통한 가로, 세로 방향 설정 가능
+  - orientation 속성 통한 가로, 세로 방향 설정 가능 (vertical, horizontal)
   - 자식 뷰들은 중첩이 아닌 지정한 방향으로 차례대로 쌓이는 형태
+  - layout_width, layout_height 속성은 필수 속성
+  - Linear : 선형
+  - layout_gravity 제공
+  - 자식 뷰에서 layout_weight 속성 지정 가능 (float 값 범위)
+    - 상대적인 값
+    - 자식이 2개가 있을 때 두개 다 웨이트값을 2로 설정하면 둘 다 같은 크기를 가짐
+    - weight 값을 지정하고 나면 width 또는 height 값을 0dp로 지정해야 weight 값이 잘 지정됨 (orientation 에 따라 width를 0으로 할지, height를 0으로 할지 결정)
   - Weight 속성으로 가중치 설정 가능 (비율)
     - 다양한 디바이스 환경에 dp가 아닌 비율에 따른 대응이 가능하나 onLayout()을 자주 호출하여 서로 간의 상관관계를 파악하므로 (내부적으로) 성능 상 좋지 않음
 - RelativeLayout
@@ -1729,7 +1736,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - 코딩 컨벤션에 따라 코드를 작성했는지 확인해주는 도구
     - 공식 코틀린, 안드로이드 코틀린 스타일 가이드에 따라 만들어짐
     - 참고. Android lint: 폴더 선택 > 마우스 우클릭 > Analyze > Inspect Code
-  - 적용법
+  - 적용법 
     - configurations { ktlint } 추가
     - dependencies 내 com.pinterest.ktlint:0.47.1 추가
     - task 정의 (task ktlintFormat(type:...))
@@ -1745,3 +1752,26 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - task 정의
     - ROOT/detekt.yml <-- 설정파일, task에서 def config: GString = "$rootDir/detekt.yml" 로 설정 가능
       - lint를 더 강화하거나 아니면 불필요한 체크 항목을 해제도 가능
+
+#### TextView
+
+- textStyle
+  - ex. "bold|italic"
+- gravity: 텍스트 정렬 속성
+  - ex. center_horizontal, center_vertical, center etc.
+  - ex. center_horizontal | center_vertical => center
+- layout_margin / padding
+- layout_marginStart / layout_marginLeft (아랍 또는 타 국가의 글자 읽기 순서에 따른 UI 마진 지정 방법)
+
+#### UI 크기 단위
+
+- dp
+  - 밀도가 서로 다른 즉, 픽셀이 서로 다른 화면에서 UI 표시 크기를 유지하려면 밀도 독립형 픽셀 (DP)을 측정 단위로 사용해서 UI 디자인 필요
+  - 1dp는 중밀도 화면 (160dpi 기준 밀도)의 1픽셀과 거의 동일한 가상 픽셀 단위
+- px
+  - 픽셀
+- sp
+  - scalable pixel
+  - sp, dp 는 기본적으로 동일
+  - sp, dp 차이
+    - 안드로이드 시스템 설정에서 폰트 크기를 설정했을 때 dp는 글자 크기가 변경되지 않고 시스템 폰트 크기 설정에 따라 sp로 지정한 글자는 크기가 변경됨
