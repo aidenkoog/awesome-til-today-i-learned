@@ -461,7 +461,7 @@
 
 - Layout: View 위젯들을 그룹화하여 배치하기 위한 용도로 사용되는 ViewGroup
 - ViewGroup: 다른 View를 포함 가능한 View, 컨테이너 역할 수행
-- LinearLayout
+- [LinearLayout]
   - 여러 View 위젯들을 가로/세로 방향으로 나열할 때 사용하는 레이아웃
   - orientation 속성 통한 가로, 세로 방향 설정 가능 (vertical, horizontal)
   - 자식 뷰들은 중첩이 아닌 지정한 방향으로 차례대로 쌓이는 형태
@@ -474,12 +474,12 @@
     - weight 값을 지정하고 나면 width 또는 height 값을 0dp로 지정해야 weight 값이 잘 지정됨 (orientation 에 따라 width를 0으로 할지, height를 0으로 할지 결정)
   - Weight 속성으로 가중치 설정 가능 (비율)
     - 다양한 디바이스 환경에 dp가 아닌 비율에 따른 대응이 가능하나 onLayout()을 자주 호출하여 서로 간의 상관관계를 파악하므로 (내부적으로) 성능 상 좋지 않음
-- RelativeLayout
+- [RelativeLayout]
   - 자식 뷰 위젯들이 서로 간의 상대적 배치 관계에 따라 화면에 표시될 위치가 결정되도록 만들어주는 레이아웃
   - 상대적인 배치 기준 설정이 없으면 내부에서 중첩되어 표시됨
   - 특정 위젯을 기준으로 배치
   - 아무런 조작하지 않으면 왼쪽 상단부터 위젯이 쌓임
-- ConstraintLayout
+- [ConstraintLayout]
   - 레이아웃에 배치되는 뷰들에 여러 제약을 적용하여 각 뷰의 위치와 크기를 결정하는 레이아웃
   - RelativeLayout의 상대적 위치 관계에 따른 배치 + LinearLayout의 가중치 설정 + Chain 사용을 다른 레이아웃 없이 요소들을 그룹화 가능
   - 성능 향상 장점 (Depth 1로 모든 레이아웃 구성이 가능)
@@ -491,10 +491,24 @@
     - 0: 시작점
     - 1: 끝점
     - 0.5: 가운데 위치
-- FrameLayout
+  - constraintBaseline_toBaselineOf
+- [FrameLayout]
   - 주로 하나의 자식 뷰 위젯만 표시할 때 사용하는 레이아웃
   - 추가된 순서대로 쌓이므로 마지막에 추가된 뷰가 가장 상단에 표시
   - 여러 프래그먼트를 동일한 위치 내에서 교체하여 표시하고자 할 때, 프래그먼트의 컨테이너 역할로써 프레임 레이아웃을 주로 사용 (통상적인 예: 로딩 중 프로그레스 바를 보여주고자 할 때 등)
+
+#### EditText
+
+- TextView를 상속받으므로 gravity 등의 TextView에서 사용하는 속성들을 사용 가능
+- inputType 설정 가능
+  - ex. inputType="number" / numberDecimal로 하면 소수점까지 표시 가능
+- hint
+- textColorHint
+- textStyle
+
+#### 이미지 아이콘
+
+- File => New => Vector Asset
 
 #### ListView 와 RecyclerView 차이점
 
