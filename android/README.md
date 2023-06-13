@@ -342,6 +342,7 @@
 - Observer 패턴 활용
 - 항상 최신 데이터를 보증
 - 액티비티나 프래그먼트의 라이프사이클을 따라 메모리 릭 발생하지 않음
+  - 액티비티, 프래그먼트, 서비스 등 다른 앱 구성요소의 생명 주기를 고려
 - 라이프사이클 내에서 관찰할 수 있는 데이터 홀더 클래스
 - Observer, LifecycleOwner와 쌍으로 추가 가능
 - Observer에서 래핑된 데이터의 수정에 대해 알림을 받음
@@ -350,6 +351,14 @@
 - 수동으로 removeObserver로 옵저버 제거 가능
 - 메모리 누수의 위험 없음
 - 라이프사이클에 추가된 관찰다는 Lifecycle.State.DESTROYED 로 이동되면 옵저버가 즉시 구독 취소됨
+- LiveData는 아키텍처 패턴의 일부
+- 기본적으로 기본/컬렉션(primitive/collection) 타입을 포함하는 데이터 홀더
+- 뷰의 변경 사항을 관찰하고 ACTIVE일 경우에만 뷰를 업데이트하는 데 사용
+- Android LiveData는 생명주기를 인식한다는 걸 빼면 RxJava와 다소 유사
+- 뷰가 백그라운드에 있으면 뷰의 데이터를 업데이트하지 않음
+  - IllegalStateException 같은 예외를 피하는 데 도움
+- MutableLiveData 클래스는 LiveData 객체의 값을 설정할 수있는 두 개의 공용 메서드인 setValue(T) 및 postValue(T)를 추가
+- MutableLiveData는 일반적으로 ViewModel에서 사용되며 ViewModel은 관찰자에게 변경 불가능한 LiveData 개체만 노출
 
 #### 안드로이드 앱 만들 때 중요 파일과 폴더에 대해 설명 (과거 버전)
 
