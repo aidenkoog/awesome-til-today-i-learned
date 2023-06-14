@@ -450,9 +450,21 @@
 
 #### 코루틴 기초 설명
 
-- runBlocking 코루틴 빌더의 수신객체는 코루틴
+- 코루틴 빌더
+  - 코루틴을 만드는 함수
+- runBlocking 
+  - 코루틴 빌더의 수신객체는 코루틴
   - 수신객체는 extension 람다
+  - 코드블럭이 마치 코루틴을 확장한 것처럼 사용할 수 있는 개념 <== 이 말은 즉, 이 코드 블럭에서 코루틴의 모든 기능들을 사용할 수 있다는 의미
+  - 코루틴을 만들고 코드 블록 수행이 끝날 때까지 runBlocking 다음의 코드를 수행하지 못하게 막음 (Blocking)
+  - 참고. 코루틴 블록 내에서 스레드 이름 출력 방법
+    - Thread.currentThread().name
+  - 참고. 일반적으로 함수는 중괄호가 있는 형태이나 함수 안에 단 한줄밖에 없다면 Expression 바디 타입으로 지정해서 코드를 간결화 시키는 것이 가능
+    - 예. test() = runBlocking { }
+  - BlockingCoroutine은 CoroutineScope의 자식, 코틀린 코루틴을 사용하는 모든 곳에는 코루틴 스코프 (CoroutineScope)가 있음. 
+- 코루틴의 시작은 코루틴 스코프
 - CoroutineContext
+  - 코루틴 스코프는 코루틴을 처리하기 위해서 필요 정보를 가지고 있는데 이를 코루틴 컨텍스트라 함
 - launch 코루틴 빌더
   - runBlocking이 메인 스레드를 수행하고 있다면 runBlocking 안에 있는 launch 빌더는 runBlocking이 끝날 때까지 기다림
 - delay: 양보의 개념으로 이해, suspension point (중단점)
