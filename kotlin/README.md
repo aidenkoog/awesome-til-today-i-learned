@@ -447,3 +447,22 @@
   - bps, mips 단위, 1mips = 초당 100만개 명령어 처리 가능
   - 비선점형 멀티태스킹, 선점형 멀티태스킹 (도구: 프로세스, 스레드) - OS는 1개 이상의 프로세스를 시분할에 의해 번갈아서 동작 시킴, 코드, 데이터, 힙, 스택 등의 자료구조 가짐
   - SMP (Symmetric Multiprocessor)와 가시성
+
+#### 코루틴 기초 설명
+
+- runBlocking 코루틴 빌더의 수신객체는 코루틴
+  - 수신객체는 extension 람다
+- CoroutineContext
+- launch 코루틴 빌더
+  - runBlocking이 메인 스레드를 수행하고 있다면 runBlocking 안에 있는 launch 빌더는 runBlocking이 끝날 때까지 기다림
+- delay: 양보의 개념으로 이해, suspension point (중단점)
+- sleep과 delay의 차이
+  - delay는 양보, sleep은 양보하지 않음
+  - sleep은 잠시 쉴뿐 다른 코드에게 스레드를 넘겨주지 않음
+- 상위 코루틴은 하위 코루틴을 책임짐 (계층적, 구조적)
+  - 하위 코루틴이 모두 다 끝날때까지 기다림 즉, 상위 코루틴 바로 아래 코드는 상위 코루틴이 완료되어야만 호출됨
+  - 상위 코루틴을 Cancel하면 하위 코루틴도 같이 Cancel 됨
+- suspend 함수 (중단 가능한 함수라는 뜻)
+  - delay는 코루틴이나 suspend 함수 안에서만 사용 가능
+  - 코루틴 내부가 복잡할 때 suspend 함수로 로직을 나눠서 유지보수가 용이하게 만드는 작업 필요
+- runBlocking<Int>의 형식으로 반환값 지정도 가능, 반환값이 없다면 <Unit>
