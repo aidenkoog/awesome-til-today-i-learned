@@ -499,6 +499,14 @@
   - Method(요청 방식/메소드, GET or POST 등)
   - Representation of Resource(자원의 형태, JSON or XML 등)
 
+#### RESTful API 에서 POST, PUT 그리고 PATCH 차이점
+
+- POST는 Create(생성), PUT은 Update(수정)에 매칭
+- 자원에 대한 생성은 POST가 담당 (리소스의 생성을 담당), 자원에 대한 수정은 PUT이 담당 (리소스의 생성과 수정을 담당)
+- PUT은 요청 시마다 같은 리소스를 반환 (리소스 안에 속성은 변경될 수 있음)
+- POST는 요청 시마다 새로운 리소스가 생성
+- PATCH도 수정을 담당하는 메소드인데 PUT과 다르게 리소스의 일부분만 수정할 때 사용하고 PUT은 리소스의 모든 속성을 수정하기 위해 사용
+
 #### 함수형 프로그래밍 특징 설명
 
 - immutable data와 first class citizen으로서의 함수
