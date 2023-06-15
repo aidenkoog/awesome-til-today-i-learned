@@ -449,6 +449,16 @@
   - trySend() 이용한 성공과 실패일 때 각각 데이터를 전달하도록 처리의 예
   - trySend()는 코루틴 1.5.0부터 offer 를 대신하는 API, buffer가 꽉 찬 상태에서는 false 리턴
 
+#### Coroutine - Dispatchers.Main, Dispatchers.Main.immediate
+
+- 호출 순서를 보장해야 할 경우에는 Dispatchers.Main.immediate 사용
+- Dispatchers.Main은 단순히 Context Switching에서 필요할 경우 사용
+  - Dispatchers.IO를 사용하는 경우 CoroutineScope 내에서는 withContext를 사용하여 Context Switching이 가능한데 이 때 withContext(Dispatchers.Main)을 사용하나 withContext(Dispatchers.Main.immediate)을 사용하나 결과는 동일하므로 이런 단순 스위칭의 상황에서는 그냥 Dispatchers.Main 사용하면 됨
+- lifecycleScope을 사용하면 Dispatchers.Main.immediate를 사용했을 때와 동일 결과 출력됨
+  - Lifecycle.kt 파일 참고 시 LifecycleScope는 Dispatchers.Main.immediate에 묶여 있다고 설명되어 있음
+- 결론
+  - LifecycleScope를 사용하던지 Dispatchers.Main.immediate를 사용해서 코드의 순차적인 호출을 보장하는 방향 지향
+
 #### 코루틴 사용 이유
 
 - 동시성, 비동기, 병렬성
