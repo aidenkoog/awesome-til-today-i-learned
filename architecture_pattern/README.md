@@ -83,10 +83,52 @@
 
 #### MVI (Model-View-Intent) 설명
 
+- 요소들 설명
+  - Model: UI에 반영될 상태
+  - View: UI 자체 (액티비티 / 프래그먼트 / 뷰 / 컴포즈 등)
+  - Intent: 사용자 액션 / 시스템 이벤트에 따른 결과 의미
+- 상관관계
+  - 순수함수 형식 : view ( model ( intent() ) )
+  - view에서 UI events 들을 Intent로 전달
+  - Intent 로 부터 Model을 변경
+  - 변경된 Model을 가지고 view 변경
+  - 단방향 순환구조
+    - View => User => Intent => Model => View
 - Intent가 User를 관찰하고, Model이 Intent를 관찰하고, View가 Model을 관찰하고 User가 View를 관찰하는 Reactive 요소로 구성
 - 안드로이드에서는 RxJava 등의 Observable한 외부 라이브러리 사용 필수적
 - UI 이벤트 발생 => 모델로 액션 전달 => 새 모델 생성 => 새 모델을 뷰에 표시
 - Model은 미들웨어의 개념, 앱 상태와 비즈니스 로직 관리
-- Model은 불변의 신규 모델 생성
+- Model은 불변의 신규 모델 생성 (변경 불가한 데이터)
+  - 단방향 흐름에서 Intent로부터 Model을 생성할 때만 새로운 Model 객체를 생성
+  - 예측 가능하도록 상태 설정이 가능하고 이로 인해 디버깅이 수월해지는 효과 발생
 - 단방향(Uni-directional) 데이터 흐름과 불변성(Immutability)으로 예측 가능한 상태 생성 가능 => 유지보수 용이
+- 디버깅 / 테스트 용이
+- 스레드 안정성 보장
+- 상태 관리 용이
 - 각 파트 간 의존성 없음
+- View => ViewModel (Intent => Model) => View
+- 작은 변경도 Intent로 처리해야 하는 단점 존재
+- Intent, State, Side Effect 등 모든 상태에 대한 객체를 생성해야 하므로 파일 / 메모리 관리에 유의 필요
+  - 상태를 변경할 필요가 없는 이벤트 즉, 화면 전환 / 로깅 / Analytics / 토스트 표시 등의 이벤트 처리를 위해서는 Side Effects 개념을 사용해야 함
+  - 실제 함수 호출을 위한 Flow 변수 외에 Side Effects 처리용 채널 변수 추가 정의하여 필요한 부분에서 _sideEffects.send("...") 의 방식으로 호출을 해주어야 함
+- 실 예제
+  - 1. Event 발생 => State 변경 => View 반영 순서
+    - StateFlow 정의
+    - 함수 호출될 때 StateFlow 변수 값을 업데이트
+    - 동시성 오류 발생
+  - 2. 동시성 오류 개선을 위한 코드 작성
+    - StateFlow 정의
+    - 이벤트 채널 정의 후 이벤트 Flow 셋업
+    - 함수 호출될 때 이벤트 채널 변수 활용하여 send 함수 호출
+    - 기존에 이벤트 Flow 셋업된 코드에서 정의된 함수 호출
+    - 함수 내에서 이벤트에 따라 해당하는 값을 StateFlow에 업데이트
+    - 동시성, 즉, 스레드 안정성 보장됨
+    - StateFlow 변수 접근이 특정 함수 통해서만 되는 것이 아닌 함수 바깥에서도 접근이 가능하다는 이슈 발생
+  - 3. State Reducer 개념 적용
+    - Reducer = (State, Event) -> State
+      - 현재 상태와 전달받은 이벤트를 참고하여 새로운 상태를 만드는 것
+      - 이벤트 채널 정의
+      - 이벤트 채널 Flow 셋업 (State Reducer 셋업)
+      - State Reducer 셋업된 코드에서 정의된 함수가 호출되면
+      - 현재 상태와 전달된 이벤트를 참고하여 새로운 상태 생성
+        - ex. state.copy(count = state.count + 1)
