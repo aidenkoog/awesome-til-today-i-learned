@@ -436,6 +436,19 @@
     - sealed class 를 사용하면 else 문 불필요 (else 라는 모호한 부분 사용을 안해도 됨)
     - 컴파일러가 sealed class의 자식을 인지하고 있으므로 구현되지 않은 when case 문이 있으면 컴파일 오류가 발생하고 else 문은 제거 가능
 
+#### callbackFlow
+
+- Flow라기 보다는 Flow 빌더라고 이해하는 것이 좋은 방향
+- callback을 flow로 변경
+  - 여타 라이브러리들이나 SDK들이 콜백으로 응답을 주는 경우가 많기 때문에 이를 중간에서 Flow로 변환하기 위해 사용
+- callbackFlow에 전달되는 block은 ProducerScope
+  - 즉, 내부적으로 Channel을 생성한다는 의미, block은 CallbackFlowBuilder()의 인자로서 들어감
+  - buffer는 기본값 사용 (64개)
+  - BufferOverflow.SUSPEND 옵션에 따라 Channel에 쌓여진 데이터가 64개가 넘어가면 suspending 되어 send가 block됨
+- callbackFlow로 생성되는 CoroutineScope는 ProducerScope이므로 기본적인 Channel API를 사용하여 데이터의 방출을 처리
+  - trySend() 이용한 성공과 실패일 때 각각 데이터를 전달하도록 처리의 예
+  - trySend()는 코루틴 1.5.0부터 offer 를 대신하는 API, buffer가 꽉 찬 상태에서는 false 리턴
+
 #### 코루틴 사용 이유
 
 - 동시성, 비동기, 병렬성
