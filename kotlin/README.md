@@ -506,3 +506,10 @@
   - 사용 예
     - runCatching {}.onSuccess {}.onFailure {e -> }.also { Log.d("tag", "xxx")}
     - runCatching { value ?: throw NullPointerException("Value is NULL")}.mapCatching { "Value is $value}.recoverCatching { e -> when(e) { is NullPointerException -> "good" else -> throw e}}.onSuccess {}.onFailure { e -> }
+
+#### 코루틴 trySendBlocking
+
+- send와 유사, 일시중단 대신에 블로킹 처리
+- suspend 함수가 아닌 일반 함수에 사용 가능
+- sendBlocking은 채널이 닫혔거나 더 일반적으로 취소된 경우 예외 발생하고 non-blocking 코드의 취소 예외는 예상치 못한 것이며 자주 내부 오류를 유발
+  - 위의 오류를 잡아주도록 개발된 코드가 trySendBlocking
