@@ -600,7 +600,7 @@
     - 결과를 받아야 한다면 async, 결과를 받지 않아도 된다면 launch 선택 가능
   - await를 만나면 async 블록이 끝났는지 확인하고 아직 진행 중이면 suspend 되었다가 나중에 다시 깨어나고 반환값을 받아옴
   - this: 코루틴
-  - await: job.joib() + 결과도 가져옴
+  - await: job.join() + 결과도 가져옴
   - 늦게 수행되었으면 할때?
     - val value = async(start = CoroutineStart.LAZY)는 코루틴이 만들어는 지지만 수행 예약까지는 이루어지지 않음
     - value.start()를 해줘야 수행 예약 즉, 수행 처리를 위한 큐에 쌓이게 됨 (큐에 수행 예약을 함)
