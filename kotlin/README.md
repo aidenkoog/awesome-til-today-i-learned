@@ -544,8 +544,24 @@
 - suspend fun 내 launch 사용 불가능
   - launch는 코루틴 안에서만 사용 가능, 만약 사용하고 싶다면 launch 밖에 코루틴 정의를 해야 사용 가능
   - suspend fun 은 중단 가능한 함수 / 잠들 수 있는 함수 (suspension point) 라는 뜻일 뿐이고 코루틴 함수 즉, delay와 같은 함수는 사용 가능하나 launch 코루틴 사용은 불가능
+  - coroutineScope expression 사용해서 launch 사용 가능하게 하는 방법 존재 (coroutineScope 는 코루틴 빌더를 수행하기 위해 존재)
 - 참고.
   - 10만개의 코루틴 생성 시 스레드를 10만개 생성하지 않고 양보의 개념으로 동작
+    - 코루틴은 협력적으로 동작하기 때문에 여러 코루틴을 만드는 것이 큰 비용이 들지 않음
+
+#### runBlocking 과 CoroutineScope 간 차이점
+
+- runBlocking, withContext는 현재 쓰레드를 멈추게 만들고 기다림
+- coroutineScope는 현재 스레드를 멈추게 하지 않고 호출한 쪽이 suspend 되고 시간이 되면 다시 활동함
+
+#### 코루틴 - Job을 이용한 제어
+
+- 코루틴 빌더 launch 는 Job 객체를 반환하며 이를 통해 종료될 때까지 기다릴 수 있음
+  - 예. val job = launch { }
+  - 예. job.join() <= join은 기다리게 하는 것 (suspension point)
+    - join한 job은 잠시 중단되고 잠에서 깨어나면 그 다음 코루틴 빌더가 수행됨 (양보가 가능한 delay가 있다 하더라도 아래 빌더들은 수행이 끝날 때까지 기다림)
+    - join이 된 시점 부터는 기다린다라고 이해
+- 여기서도 부모 코루틴은 자식 코루틴이 끝날 때까지 기다림
 
 #### 코루틴 trySendBlocking
 
