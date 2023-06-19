@@ -497,7 +497,7 @@
 
 #### 코루틴 기초 설명
 
-- 코루틴 빌더
+- 코루틴 빌더 (함수)
   - 코루틴을 만드는 함수
 - runBlocking 
   - 코루틴 빌더의 수신객체는 코루틴
@@ -523,6 +523,7 @@
     - 현재 스레드를 다른 코드가 수행할 수 있도록 양보를 하는 형태로 되어 있음
   - sleep은 양보하지 않음
     - sleep은 잠시 쉴뿐 다른 코드에게 스레드를 넘겨주지 않음
+  - 참고. delay도 역시 suspend function
 - 상위 코루틴은 하위 코루틴을 책임짐 (계층적, 구조적)
   - 하위 코루틴이 모두 다 끝날때까지 기다림 즉, 상위 코루틴 바로 아래 코드는 상위 코루틴이 완료되어야만 호출됨
   - 상위 코루틴을 Cancel하면 하위 코루틴도 같이 Cancel 됨
@@ -537,6 +538,14 @@
   - 사용 예
     - runCatching {}.onSuccess s{}.onFailure {e -> }.also { Log.d("tag", "xxx")}
     - runCatching { value ?: throw NullPointerException("Value is NULL")}.mapCatching { "Value is $value}.recoverCatching { e -> when(e) { is NullPointerException -> "good" else -> throw e}}.onSuccess {}.onFailure { e -> }
+
+#### 코루틴 추가 기초 내용
+
+- suspend fun 내 launch 사용 불가능
+  - launch는 코루틴 안에서만 사용 가능, 만약 사용하고 싶다면 launch 밖에 코루틴 정의를 해야 사용 가능
+  - suspend fun 은 중단 가능한 함수 / 잠들 수 있는 함수 (suspension point) 라는 뜻일 뿐이고 코루틴 함수 즉, delay와 같은 함수는 사용 가능하나 launch 코루틴 사용은 불가능
+- 참고.
+  - 10만개의 코루틴 생성 시 스레드를 10만개 생성하지 않고 양보의 개념으로 동작
 
 #### 코루틴 trySendBlocking
 
