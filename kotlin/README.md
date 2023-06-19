@@ -686,3 +686,24 @@
   - supervisorScope를 가지는 suspend 함수 내의 코루틴 빌더에서는 반드시 CEH가 등록되어 있어야 하거나 try-catch 블럭을 필수적으로 구현해줘야 함
     - 등록되어 있지 않으면 에러 발생
     - supervisorScope 에서 에러 발생 시 에러를 처리하지 않으면 외부에 에러를 전파하게 됨
+
+#### 공유 객체 문제
+
+- 사전 지식
+  - withContext: 수행이 완료될 때까지 기다리는 코루틴 빌더
+  - 예제
+    - runBlocking { withContext(Dispatchers.Default) {}}
+      - withContext 빌더가 실행되면 runBlocking 블럭은 잠이 들게 되고 withContext 빌더 수행이 완료가 되면 runBlocking 블럭 내용이 다시 수행되는 구조
+  - withContext와 runBlocking 차이점
+    - withContext는 바깥의 코루틴을 잠들게 함
+    - runBlocking은 블럭 내용 수행될 때까지 스레드 자체를 잡고 있음
+- 동시성 문제 해결
+  - 1. [volatile]: 가시성을 제공해주는 어노테이션 (@Volatile)
+    - 가시성이라는 것은 한쪽에서 수정했을 때 다른쪽에서 그 값을 제대로 볼 수 있는 것을 의미
+    - 동시에 읽고 수정해서 생기는 문제는 해결하지 못함
+  - 2. 스레드 안전한 자료구조 사용 방법 ([AtomicInteger])
+    - incrementAndGet() 함수 이용
+  - 3. 스레드 한정 ([newSingleThreadContext])
+    - 스레드를 생성해서 연산을 할 때 그 스레드만 사용하게 하는 방법
+    - 예. val counterContext = newSingleThreadContext("CounterContext")
+    - 예. withContext(counterContext) { counter++ }  
