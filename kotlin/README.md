@@ -563,6 +563,33 @@
     - join이 된 시점 부터는 기다린다라고 이해
 - 여기서도 부모 코루틴은 자식 코루틴이 끝날 때까지 기다림
 
+#### 코루틴 - 취소와 타임아웃
+
+- 취소
+  - job.cancel
+  - ex. var job = launch {} / job.cancel()
+- 취소 + Join
+  - job.cancel()
+  - job.join() <= 취소에 시간이 걸리는 경우에도 코루틴을 기다림
+    - job.cancelAndJoin() 으로 대체 가능
+- 취소가 불가능한 코루틴 로직을 취소 가능하게 만드는 방법
+  - 코루틴 로직 내 while 등의 루프가 있는 경우 취소되지 않음
+  - 실제 루프 로직 내 isActive 사용하면 취소 가능
+    - ex. while (i <= 10 && isActive) {}
+- 취소를 할 때 자원 해제를 해야 하는 경우
+  - suspend 함수들은 취소가 되었을 때 jobCancellationException을 발생시키기 때문에 표준 try catch finally로 대응 가능
+- 취소 불가능한 블록 설정
+  - launch { withContext(NonCancellable) { } }
+  - finally 절 수행 중에도 취소가 될 수 있기 때문에 finally 블럭 안에서도 withContext(Noncancellable){} 사용 가능
+- 타임아웃
+  - withTimeout()
+    - ex. runBlocking { withTimeout(500L) { }}
+    - TimeoutCancellationException 발생
+  - withTimeoutOrNull
+    - try, catch 문 사용 없이 예외처리 가능
+    - ex. val result = withTimeoutOrNull(500L) {} ?: false
+    - println(result)
+
 #### 코루틴 trySendBlocking
 
 - send와 유사, 일시중단 대신에 블로킹 처리

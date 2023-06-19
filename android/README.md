@@ -1864,6 +1864,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - StateFlow
   - 현재 상태와 새로운 상태 업데이트를 Collector에 내보내는 Observable한 상태 홀더 Flow
     - LiveData처럼 값을 가지고 있음
+  - SharedFlow의 한 종류임
   - StateFlow 내부 코드 내 value 라는 값을 가지고 있으며 이전에 있던 값과 다른 값이 들어왔을 때 collect로 수집이 가능해진다는 특정 존재, 오직 한가지 값을 가짐
   - 초기값이 존재해야 함
   - collector의 수에 상관없이 항상 구독하고 있는 것의 가장 최신 값을 가져올 수 있음
