@@ -416,6 +416,20 @@
   - Dispatcher는 async, withContext와 같은 코루틴 빌더에서도 사용 가능
   - launch 때 CoroutineContext를 명시하지 않는 경우엔 EmptyCoroutineContext 가 적용
 
+#### 코루틴 - 부모가 있는 Job과 없는 Job 설명
+
+- 코루틴 스코프, 코루틴 컨텍스트는 구조화되어 있고 부모에게 계층적으로 구성
+- 코루틴 컨텍스트의 Job 또한 부모에게 의존적
+- 만약 코루틴 빌더에서 Job을 새로 생성하면 그 Job은 누가 부모인지 모르는 새로운 Job이 되며 코루틴 구조적인 특성을 지니지 않게 됨 (부모는 해당하는 자식을 기다리지 않음)
+
+#### 코루틴 엘리먼트 결합
+
+- 여러 코루틴 엘리먼트 (컨텍스트 엘리멘트)를 한번에 결합하여 사용 가능 (+ 연산 사용)
+- 기본적으로 부모 컨텍스트와 자식 컨텍스트는 합쳐짐
+- 사용법 예
+  - launch (Dispatchers.IO + CoroutineName("TestThread"))
+  - 조회할 때: coroutineContext[CoroutineDispatcher] / coroutineContext[CoroutineName] 사용
+
 #### Coroutine Exception Handler 개념 (더 스터디하고 개념 정리 필요)
 
 - exception을 핸들링할 때 기본적으로 수행해야 하는 로직들을 처리하기에 수월함
