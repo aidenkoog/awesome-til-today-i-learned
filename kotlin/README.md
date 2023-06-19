@@ -706,4 +706,22 @@
   - 3. 스레드 한정 ([newSingleThreadContext])
     - 스레드를 생성해서 연산을 할 때 그 스레드만 사용하게 하는 방법
     - 예. val counterContext = newSingleThreadContext("CounterContext")
-    - 예. withContext(counterContext) { counter++ }  
+    - 예. withContext(counterContext) { counter++ }
+  - 4. 액터 사용
+  
+#### 뮤텍스 (Mutual exclusion)
+
+- 상호배제
+- 공유 상태를 수정할 때 Critical Section을 이용하게 하며, 임계 영역을 동시에 접근하는 것을 허용치 않음
+- 사용법 (Mutex Block 사용)
+  - val mutex = Mutex()
+  - mutex.withLock { counter++ }
+
+#### 액터 (Actor)
+
+- Actor가 독점적으로 자료를 가지며 그 자료를 다른 코루틴과 공유하지 않고 액터를 통해서만 접근하게 만드는 것
+- 구현 순서
+  - sealed class 생성 (sealed class CounterMsg)
+  - 값 변경을 위한 object 정의 (object IncCounter: CounterMsg())
+  - 값을 읽어올 때 사용할 GetCounter 정의 (Deferred 오브젝트 response 인자 사용)
+  - Actor 내에서는 channel을 사용하여 신호를 받음
