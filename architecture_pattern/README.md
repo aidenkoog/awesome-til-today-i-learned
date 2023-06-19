@@ -87,11 +87,13 @@
   - Model: UI에 반영될 상태
   - View: UI 자체 (액티비티 / 프래그먼트 / 뷰 / 컴포즈 등)
   - Intent: 사용자 액션 / 시스템 이벤트에 따른 결과 의미
+    - Facebook Flux, Javascript Redux에서의 Action과 의미 유사
+    - 데이터 방향 흐름: View -> Intent -> Model 순으로 순환
 - 상관관계
   - 순수함수 형식 : view ( model ( intent() ) )
   - view에서 UI events 들을 Intent로 전달
-  - Intent 로 부터 Model을 변경
-  - 변경된 Model을 가지고 view 변경
+  - Intent로 부터 Model을 변경 (Actions to manipulate model)
+  - 변경된 Model을 가지고 view 변경 (New model to display)
   - 단방향 순환구조
     - View => User => Intent => Model => View
 - Intent가 User를 관찰하고, Model이 Intent를 관찰하고, View가 Model을 관찰하고 User가 View를 관찰하는 Reactive 요소로 구성
@@ -132,3 +134,14 @@
       - State Reducer 셋업된 코드에서 정의된 함수가 호출되면
       - 현재 상태와 전달된 이벤트를 참고하여 새로운 상태 생성
         - ex. state.copy(count = state.count + 1)
+
+#### 단방향 아키텍쳐 (Data Uni-Directino-Architecture) 특징
+
+- View는 State를 통해 변경되며 오직 한 방향으로만 수정 가능
+- 상태는 불변적인 특성을 지님
+- Model은 State를 변화시키며 View는 State만 참조
+- 여러 입력 또는 이벤트에 대해서 한 곳에서 관리 가능
+- State가 명확하므로 디버깅 수월
+- 간단한 토스트 메세지 표시 등의 작업에도 상태를 순환해야 하는지에 대한 의문 존재
+- 데이터 흐름 제어를 위한 라이브러리 필요 (Rx, Coroutine Flow 등)
+- 물리적인 클래스 개수의 증가
