@@ -590,6 +590,28 @@
     - ex. val result = withTimeoutOrNull(500L) {} ?: false
     - println(result)
 
+#### 코루틴 서스펜딩 함수 활용
+
+- measureTimeMillis
+  - block을 실행하는데 소요된 시간을 Long 형식으로 반환
+- async 코루틴
+  - 동시에 다른 블록 수행 가능하며 await 키워드를 통해 결과를 받을 수 있음 (동시에 수행한다는 점이 중요)
+    - 예. runBlocking 블럭안에서 suspend 함수 2개를 단순히 순차적으로 호출하는 것과 async 사용하여 호출하는 경우 퍼포먼스 차이가 나타남 (전자: 2초, 후자: 1초)
+    - 결과를 받아야 한다면 async, 결과를 받지 않아도 된다면 launch 선택 가능
+  - await를 만나면 async 블록이 끝났는지 확인하고 아직 진행 중이면 suspend 되었다가 나중에 다시 깨어나고 반환값을 받아옴
+  - this: 코루틴
+  - await: job.joib() + 결과도 가져옴
+  - 늦게 수행되었으면 할때?
+    - val value = async(start = CoroutineStart.LAZY)는 코루틴이 만들어는 지지만 수행 예약까지는 이루어지지 않음
+    - value.start()를 해줘야 수행 예약 즉, 수행 처리를 위한 큐에 쌓이게 됨 (큐에 수행 예약을 함)
+- async를 사용한 구조적인 동시성
+  - 코드 수행하다 보면 예외 발생할 수 있음. 예외가 발생하면 위쪽과 아래쪽 코루틴 스코프가 취소됨 (부모, 자식에게 전파)
+  - async 1, 2가 있을 때 2에서 예외 발생 시 1도 취소됨
+  - 
+   
+
+
+
 #### 코루틴 trySendBlocking
 
 - send와 유사, 일시중단 대신에 블로킹 처리
