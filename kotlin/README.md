@@ -569,3 +569,16 @@
 - suspend 함수가 아닌 일반 함수에 사용 가능
 - sendBlocking은 채널이 닫혔거나 더 일반적으로 취소된 경우 예외 발생하고 non-blocking 코드의 취소 예외는 예상치 못한 것이며 자주 내부 오류를 유발
   - 위의 오류를 잡아주도록 개발된 코드가 trySendBlocking
+
+#### 코루틴 Basic 재정리
+
+- 어느 한 스레드에 종속되지 않고 이리저리 옮겨다니면서 실행되는 suspend 기능을 갖춘 인스턴스
+- launch 는 코루틴을 생성하는 빌더. 코드 블록 내에서 launch 블록은 독립적으로 동작
+- runBlocking은 coroutine 블록이 아닌 공간에 코루틴이 동작하는 다리 역할을 하는 코루틴 빌더
+- runBlocking은 비용 문제가 있음. 주로 어플리케이션 Top Level에서 주로 사용 가능하며 코드 내부에서 사용하는 것은 지양
+- suspend function은 코루틴 블록 내에서 동작하며 다른 suspend 함수 사용 가능
+- runBlocking 함수는 작업이 끝날 때까지 현재 스레드를 Blocking 함
+- coroutineScope는 다른 사용을 위해 스레드를 Blocking 하지 않고 단지 suspend만 시키므로 coroutineScope는 suspending function의 어디에서든 사용 가능
+- coroutineScop 안에서 launch 된 것은 동시에 실행됨
+- launch block은 Job을 반환하며 외부에서 이를 호출 가능
+- 코루틴은 경량 쓰레드이므로 다수의 코루틴 Block을 launch해도 문제 없음
