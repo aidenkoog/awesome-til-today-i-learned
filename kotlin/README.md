@@ -725,3 +725,25 @@
   - 값 변경을 위한 object 정의 (object IncCounter: CounterMsg())
   - 값을 읽어올 때 사용할 GetCounter 정의 (Deferred 오브젝트 response 인자 사용)
   - Actor 내에서는 channel을 사용하여 신호를 받음
+
+#### Flow
+
+- 코루틴으로 만들어진 코틀린에서 사용할 수 있는 비동기 스트림
+- 반환 타입은 Flow<Type>
+- emit: 값을 흘려보낸다는 의미
+- flow 빌더 함수
+  - 코드 블록 구성하고 emit을 호출해서 스트림에 데이터를 흘려보냄 (플로우 빌더 함수를 이용해서 플로우를 생성)
+- flow는 Cold Stream 이기 때문에 요청하는 사이드에서 collect를 호출해야 값을 emit 하기 시작
+  - 참고
+    - Cold Stream: 요청이 있는 경우에 보통 1:1로 값 전달
+    - Hot Stream: 0개 이상의 상대를 향해 지속적으로 값 전달
+- withTimeoutOrNull 활용한 취소 처리 가능
+  - withTimeoutOrNull(500L) { flowObj {} }
+- 플로우 빌더
+  - flowOf, flow{} - 아래 2가지는 동일
+    - flowOf(1,2,3).collect( value -> println(value))
+    - flow { emit(1), emit(2), emit(3)}.collect { println(it)}
+  - asFlow
+    - Collection 이나 시퀀스를 전달해 플로우 생성 가능
+    - listOf(1,2,3).asFlow().collect(value -> println(value))
+    - (6..10).asFlow().collect { println(it)}
