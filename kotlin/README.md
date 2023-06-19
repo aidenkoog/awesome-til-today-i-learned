@@ -430,21 +430,6 @@
   - launch (Dispatchers.IO + CoroutineName("TestThread"))
   - 조회할 때: coroutineContext[CoroutineDispatcher] / coroutineContext[CoroutineName] 사용
 
-#### Coroutine Exception Handler 개념 (더 스터디하고 개념 정리 필요)
-
-- exception을 핸들링할 때 기본적으로 수행해야 하는 로직들을 처리하기에 수월함
-- 예외가 전파되는 것을 막지는 않으나 예외 발생했을 때 수행해야 할 로직들을 설정 가능 (로깅 등)
-- 보통 CoroutineExceptionHandler + SupervisorJob 조합으로 예외 전파를 막고 로깅을 하는 방법을 사용
-- Exception Propagation
-  - 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨 (전파와 노출의 차이)
-    - Exception을 외부로 전파 (Propagation): launch, actor
-    - Exception 노출: async, produce
-- launch의 경우 exception이 발생하면 바로 예외 발생
-- async의 경우 exception이 있더라도 실제로 exception이 발생되는 부분은 await()를 만날 때임
-- 전파와 노출 둘 다 콘솔에 exception 발생, 이를 방지하기 위해 CoroutineExceptionHandler를 이용하여 코루틴 내부의 기본 catch block으로 사용 가능
-  - Java 스레드에 사용하는 Thread.defaultUncaughtExceptionHandler 와 유사
-  - 참고. 안드로이드에서는 기본으로 uncaughtExceptionPreHandler가 코루틴의 exception 처리를 할 수 있도록 설정되어 있음
-
 #### Kotlin Data Class / Sealed Class
 
 - Data Class
@@ -652,3 +637,52 @@
 - coroutineScop 안에서 launch 된 것은 동시에 실행됨
 - launch block은 Job을 반환하며 외부에서 이를 호출 가능
 - 코루틴은 경량 쓰레드이므로 다수의 코루틴 Block을 launch해도 문제 없음
+
+#### CEH, Coroutine Exception Handler 개념 (더 스터디하고 개념 정리 필요)
+
+- exception을 핸들링할 때 기본적으로 수행해야 하는 로직들을 처리하기에 수월함
+- 예외가 전파되는 것을 막지는 않으나 예외 발생했을 때 수행해야 할 로직들을 설정 가능 (로깅 등)
+- 보통 CoroutineExceptionHandler + SupervisorJob 조합으로 예외 전파를 막고 로깅을 하는 방법을 사용
+- Exception Propagation
+  - 코루틴 빌더들은 예외 처리 방식에 따라 2가지 타입으로 나뉨 (전파와 노출의 차이)
+    - Exception을 외부로 전파 (Propagation): launch, actor
+    - Exception 노출: async, produce
+- launch의 경우 exception이 발생하면 바로 예외 발생
+- async의 경우 exception이 있더라도 실제로 exception이 발생되는 부분은 await()를 만날 때임
+- 전파와 노출 둘 다 콘솔에 exception 발생, 이를 방지하기 위해 CoroutineExceptionHandler를 이용하여 코루틴 내부의 기본 catch block으로 사용 가능
+  - Java 스레드에 사용하는 Thread.defaultUncaughtExceptionHandler 와 유사
+  - 참고. 안드로이드에서는 기본으로 uncaughtExceptionPreHandler가 코루틴의 exception 처리를 할 수 있도록 설정되어 있음
+
+#### CEH (Coroutine Exceptio Handler), Supervisor Job 설명
+
+- GlobalScope
+  - 어디에도 속하지 않는 스코프, 전역 스코프
+  - 계층적으로 관리되지 않고 글로벌 스코프 자체에서 수행됨
+  - 사용이 간편하나 관리가 어려움
+  - 예. GlobalScope.launch(Dispatchers.IO)
+- CoroutineScope
+  - 권장 사항
+  - 하나의 코루틴 컨텍스트를 인자로 받음
+    - 예. CoroutineScope(Dispatchers.Default + CoroutineName("Scope"))
+- CEH (코루틴 익셉션 핸들러)
+  - 체계적인 예외 핸들링을 위한 방법 (로깅, 팝업 표시 등)
+    - 매번 해당 부분에 try-catch를 코딩하는 것은 비효율적
+  - CEH를 만든 다음 상위 코루틴 빌더의 컨텍스트에 핸들러를 등록
+  - CEH 정의
+    - val ceh = CoroutineExceptionHandler { _, exception -> println("error happend: $exception") }
+  - CEH 적용 및 실행 코드
+    - val scope = CoroutineScope(Dispatchers.IO)
+    - val job = scope.launch(ceh) { launch {} }
+- CEH와 runBlocking
+  - runBlocking에서는 CEH 사용 불가능
+  - runBlocking은 자식이 예외로 종료되면 항상 종료되고 CEH를 호출하지 않음
+- SupervisorJob
+  - 예외에 의한 Cancel을 아래쪽으로만 전파
+  - CEH와 컴비네이션
+    - val scope = CoroutineScope(Dispatchers.IO + SupervisorJob() + ceh)
+  - joinAll(job1, job2)과 같이 여러 조인 로직을 하나로 합칠 수 있음
+- supervisorScope
+  - suspend function에 쉽게 붙여서 사용 가능
+  - supervisorScope를 가지는 suspend 함수 내의 코루틴 빌더에서는 반드시 CEH가 등록되어 있어야 하거나 try-catch 블럭을 필수적으로 구현해줘야 함
+    - 등록되어 있지 않으면 에러 발생
+    - supervisorScope 에서 에러 발생 시 에러를 처리하지 않으면 외부에 에러를 전파하게 됨
