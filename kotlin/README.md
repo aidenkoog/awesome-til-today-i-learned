@@ -397,15 +397,22 @@
     - Main (UI), IO (파일 / 네트워크), Default (CPU 부하가 있는 작업을 기본 스레드 외부에서 실행, 정렬 또는 JSON 파싱) 존재
   - ContinuationInterceptor 인터페이스를 구현하고 있고 이 인터페이스가 CoroutineContext의 Element
   - Default, Main, Unconfined, IO 디스패처 존재
-  - launch 파라미터로 Dispatcher 넣는 것 가능 (CoroutineContext를 구성하는 Element에 디스패쳐도 포홤되기 때문)
+  - launch 파라미터로 Dispatcher 넣는 것 가능, launch 외에도 async, withContext 등 다른 빌더에서도 사용 가능 (CoroutineContext를 구성하는 Element에 디스패쳐도 포홤되기 때문)
     - Dispatcher 없는 경우: 부모 컨텍스트 상속하여 수행, runBlocking 컨텍스트에서 수행
-    - Default: DefaultDispatcher에서 수행, 메인이 아닌 워커 스레드를 통해 동작, 코어 수에 비례하는 쓰레드 풀에서 수행
-    - IO: DefaultDispatcher에서 수행, 워커 스레드를 통해 동작, 코어 수보다 훨씬 많은 스레드를 갖는 쓰레드 풀에서 수행
+    - [Default]: DefaultDispatcher에서 수행, 메인이 아닌 워커 스레드를 통해 동작, 코어 수에 비례하는 쓰레드 풀에서 수행
+      - DefaultDispatcher-worker-1
+    - [IO]: DefaultDispatcher에서 수행, 워커 스레드를 통해 동작, 코어 수보다 훨씬 많은 스레드를 갖는 쓰레드 풀에서 수행
+      - DefaultDispatcher-worker-1
       - Default, IO는 워커 스레드를 사용하지만 얼마만큼 스레드를 생성할 지에 대한 정책적인 차이가 있음
       - Default는 IO 보다 더 복잡한 연산 수행 가능 (JSON 파싱 / 정렬) - 여러 개의 스레드를 만들면 효율적이지 않음
-      - IO는 CPU 소모가 덜 한 연산에 적합 (파일 / 네트워크, 스레드를 여러 개 만들더라도 영향이 크지 않음)
-    - Unconfined: 메인 스레드에서 동작, 부모가 메인에서 동작하면 메인에서 수행, 어떤 스레드에서 실행될 지는 예측 불가능
-    - Main: 메인 스레드에서 코루틴 실행, 뷰와 상호작용하는 작업 실행할 때 사용
+      - (중요) IO는 CPU 소모가 덜 한 연산에 적합 (파일 / 네트워크, 스레드를 여러 개 만들더라도 영향이 크지 않음)
+    - [Unconfined]: 메인 스레드에서 동작, 부모가 메인에서 동작하면 메인에서 수행, 어떤 스레드에서 실행될 지는 예측 불가능
+      - 한번 suspension point에 오면 스레드가 바뀌게 될 수 있음, 사용 지양
+    - [Main]: 메인 스레드에서 코루틴 실행, 뷰와 상호작용하는 작업 실행할 때 사용
+      - main @coroutine#2
+    - [newSingleThreadContext]: 항상 새로운 스레드 생성
+      - KooThread @coroutine#6
+      - 생성한 스레드 이름 명시 가능
   - Dispatcher는 async, withContext와 같은 코루틴 빌더에서도 사용 가능
   - launch 때 CoroutineContext를 명시하지 않는 경우엔 EmptyCoroutineContext 가 적용
 
