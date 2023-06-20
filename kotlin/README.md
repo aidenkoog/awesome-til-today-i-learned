@@ -903,3 +903,39 @@
 - 첫번째 인자로 코루틴 스코프를 설정
 - 다른 코루틴에서 우리 이벤트를 감시할 로직을 동작시킴, 이벤트와 같이 상태가 바뀌는 것을 추적할 때 주로 사용
 - 즉, 레거시 방법을 비추어봤을 때 별개의 스레드를 생성해서 그 안에서 동작하게 하는 개념
+
+#### 코루틴 채널 개념
+
+- [channel]
+  - 파이프라인, 채널을 열고 한쪽에서 값을 보내면 다른 쪽에서 수신하는 개념
+  - send, receive 하는 부분은 suspension point라 볼 수 있음
+    - 송/수신할 데이터가 없는 경우에는 잠이 들었다가 유효한 데이터 발생 시 깨어나서 처리
+    - (대체) trySend, tryReceive
+    - (과거) offer, poll
+      - 반환값을 null로 가지고 있어서 널 체크를 해서 성공이냐 실패를 판단했었음
+    - send, receive가 suspension point이고 서로에게 의존적이기 때문에 같은 코루틴에서 사용하는 것은 지양 필요
+    - 별도의 코루틴을 만들어서 각각의 코루틴이 서로 잠이 들어도 상대방의 실행에는 문제가 없게 코드 작성 필요
+- [channel.close]
+  - channel.receive() 불필요해짐
+  - 데이터를 다 보냈으면 close 처리하고 receive 함수 호출 없이 채널을 사용하는 부분은 close가 되면 처리하지 않게 됨
+
+#### 채널 프로듀서
+
+- 생산자, 소비자 패턴
+- 채널 이용해서 한 쪽에서 데이터를 만들고 다른 쪽에서 받는 것을 도와주는 [확장함수] 존재
+- [사용법]
+  - [produce] 코루틴 생성하여 채널 제공
+  - [consumeEach] 채널에서 반복해서 데이터를 수집
+- [ProducerScope] --> CoroutineScope (I) --> SendChannel (I)
+  - 코루틴 컨텍스트 + 채널 인터페이스 같이 사용 가능한 스코프
+  - produce를 사용하면 ProducerScope를 상속받은 ProducerCoroutine 코루틴을 얻게 됨
+- [참고]
+  - runBlocking --> BlockingCoroutine --> [AbstractCoroutine] --> JobSupport, Job(I), Continuation(I), CoroutineScope(I)
+    - 코루틴 빌더는 코루틴을 생성 (코루틴 스코프이기도 함)
+    - [Continuation]: 다음에 무엇을 할지
+    - [Job]: 제어를 위한 정보와 제어
+    - [CoroutineScope]: 컨텍스트 제공
+    - [JobSupport]: 실제 Job 동작 관련 지원
+- [예제]
+  - val test = produce { channel.send(x) }
+  - test.consumeEach { println(it) }
