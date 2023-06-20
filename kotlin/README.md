@@ -728,22 +728,78 @@
 
 #### Flow
 
-- 코루틴으로 만들어진 코틀린에서 사용할 수 있는 비동기 스트림
+- 코루틴으로 만들어진 코틀린에서 사용할 수 있는 [비동기스트림]
 - 반환 타입은 Flow<Type>
-- emit: 값을 흘려보낸다는 의미
+- [emit]: 값을 흘려보낸다는 의미
 - flow 빌더 함수
   - 코드 블록 구성하고 emit을 호출해서 스트림에 데이터를 흘려보냄 (플로우 빌더 함수를 이용해서 플로우를 생성)
 - flow는 Cold Stream 이기 때문에 요청하는 사이드에서 collect를 호출해야 값을 emit 하기 시작
   - 참고
-    - Cold Stream: 요청이 있는 경우에 보통 1:1로 값 전달
+    - Cold Stream: 요청이 있는 경우에 보통 1:1로 값 전달하기 시작
     - Hot Stream: 0개 이상의 상대를 향해 지속적으로 값 전달
 - withTimeoutOrNull 활용한 취소 처리 가능
   - withTimeoutOrNull(500L) { flowObj {} }
-- 플로우 빌더
-  - flowOf, flow{} - 아래 2가지는 동일
+- [플로우-빌더] (플로우를 실제로 생성)
+  - 코드 블록을 가지고 있음
+  - collect 블록 내 기본 인자는 it
+    - it을 그대로 사용한다면 value -> 와 같이 사용할 필요 없음
+  - [flowOf], [flow{}] - 아래 2가지는 동일
     - flowOf(1,2,3).collect( value -> println(value))
     - flow { emit(1), emit(2), emit(3)}.collect { println(it)}
-  - asFlow
+  - [asFlow]
     - Collection 이나 시퀀스를 전달해 플로우 생성 가능
     - listOf(1,2,3).asFlow().collect(value -> println(value))
     - (6..10).asFlow().collect { println(it)}
+
+#### Flow 연산
+
+- 플로우와 [맵(map)]
+  - 데이터 가공
+  - 예제: flow{}.map{}.collect{}
+- [filter]
+  - 조건에 맞는 데이터만 남김
+  - 예제: (1..20).asFlow().filter { it % 2 == 0}.collect{ }
+  - filter 블럭 안에 들어가는 내용을 술어 또는 predicate라 일컬음
+- [filterNot]
+  - 술어 즉 predicate 로직을 그대로 남겨 두고 싶을 때, 반대의 값을 필터하고 싶을 때 사용
+  - 예제: (1..20).asFlow{}.filterNot{}.collect{}
+- [transform]
+  - 중간 연산자(map, filter)같이 단순한 변환보다 복잡한 변환 처리를 위한 연산자
+  - map은 요소마다 1개의 변환만이 가능하나 transform은 emit()을 추가하여 요소마다 여러 개의 변환을 가능케 만들어 줌
+- [take]
+  - 몇 개의 수행 결과만 취함
+  - 예제: 100개를 방출하는 플로우에서 take(5).collect{} 와 같이 구현하면 5개의 값만 가져옴
+- [takeWhile]
+  - 조건을 만족하는 동안만 값을 가져옴
+  - 예제: flow{}.takeWhile{it < 15}.collect{}
+- [drop]
+  - 처음 몇 개의 결과를 버림 (take와 반대 기능), [dropWhile] 연산자도 존재
+- [reduce]
+  - 참고
+    - collect, reduce, fold, toList, toSet, count와 같은 연산자는 플로우를 끝내는 종단 연산자 (terminal operator)
+      - 특정 값이나 컬렉션 등의 결과 리턴
+      - 반면, 중간 연산자는 결과 리턴 X, collect를 사용해서 결과를 가져와야지만 이용 가능 
+    - reduce는 함수형 언어의 오래된 메커니즘
+    - 첫번째 값을 결과에 넣은 후 각 값을 가져와 누진적으로 계산
+    - 예제
+      - (1..10).asFlow().reduce {a,b -> a+b}
+      - 누진적 계산 과정
+        - a:1, b:2 => 3 => a = 3
+        - a:3, b:3 => 6 => a = 6
+        - a:6, b:4 => 10 => a = 10
+        - a:10, b:5 => 15 => a = 15
+        - a:15, b:6 => 21 => a = 21
+        - a:21, b:7 => 28 => a = 28
+        - a:28, b:8 => 36 => a = 36
+        - a:36, b:9 => 45 => a = 45
+        - a:45, b:10 => 55 => a = 55
+        - ... 이런식으로 계산이 진행되어 최종적으로 1~10까지 합인 55가 출력됨
+- [fold]
+  - reduce와 유사하나 초기값이 있음
+  - 예제
+    - (1..10).asFlow().fold(10) {a,b -> a + b}
+    - 초기값 10이 더 추가된 65가 반환
+- [count]
+  - 종단 연산자 (terminal operator)
+  - 술어를 만족하는 자료의 개수를 반환
+  - 예제: (1..10).asFlow().filter {(it % 2 == 0)}.count()
