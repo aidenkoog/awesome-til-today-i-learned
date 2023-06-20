@@ -881,3 +881,11 @@
     - runBlocking { simple().catch { e -> emit("caught $e")}}.collect {}
 - [catch-투명성]
   - catch 연산자는 catch 연산자를 쓰기 전의 코드 즉 업스트림에만 영향을 미치고 다운스트림에는 영향을 미치지 않음 <= catch 투명성
+
+#### 플로우 완료 처리 (완료된 이후의 동작을 핸들링해야 할때)
+
+- [try-finally] 블록 사용
+- [onCompletion] 선언적으로 완료 처리
+  - 예제: simple().onCompletion { println("complete")}
+  - 예제2: simple().onCompletion { cause -> if (cause != null) { 문제로 인한 종료} else { 문제가 없음}}
+  - 장점: 종료 처리할 때 예외가 발생되었는지에 대한 여부를 알 수 있음
