@@ -851,7 +851,9 @@
 #### onEach
 
 - 주어진 action 즉, 주어진 suspend 함수 (블록)를 실행하는 플로우를 반환
-  - (1..3).asFlow().onEach { delay(100L) }
+  - 예제: (1..3).asFlow().onEach { delay(100L) }
+- addEventListener 대신 플로우의 onEach를 사용 가능 (이벤트마다 onEach가 대응)
+- collect()가 호출되기 전에는 동작하지 않음
 
 #### Flow 플래트닝
 
@@ -889,3 +891,8 @@
   - 예제: simple().onCompletion { println("complete")}
   - 예제2: simple().onCompletion { cause -> if (cause != null) { 문제로 인한 종료} else { 문제가 없음}}
   - 장점: 종료 처리할 때 예외가 발생되었는지에 대한 여부를 알 수 있음
+
+#### collect()
+
+- collect()는 지속적으로 들어오는 이벤트 처리에는 적합하지 않음
+- collect()는 플로우가 끝날 때까지 계속 기다리며 기다리는 동안 그 아래에 있는 코드는 동작될 수 없음
