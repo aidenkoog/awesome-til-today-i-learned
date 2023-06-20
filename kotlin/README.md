@@ -939,3 +939,12 @@
 - [예제]
   - val test = produce { channel.send(x) }
   - test.consumeEach { println(it) }
+
+#### 채널 파이프라인
+
+- 파이프라인: 일반적인 패턴
+  - 하나의 스트림을 프로듀서가 만들고, 다른 코루틴에서 그 스트림을 읽어 새로운 스트림을 만드는 패턴
+  - 예제
+    - CoroutineScope 확장함수 정의 후 produce 사용하여 ProducerScope 생성 후 데이터 send
+    - CoroutineScope 확장함수 하나 더 정의 후 send한 값들을 ReceiveChannel로 받게 정의하고 produce 사용하여 ProducerScope 생성 후 데이터 2차 send
+    - 수집 측에서 ReceiveChannel object의 receive() 활용하여 데이터 수집/로깅 처리
