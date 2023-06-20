@@ -803,3 +803,17 @@
   - 종단 연산자 (terminal operator)
   - 술어를 만족하는 자료의 개수를 반환
   - 예제: (1..10).asFlow().filter {(it % 2 == 0)}.count()
+
+#### 플로우 컨텍스트
+
+- 플로우는 기본적으로 코루틴의 컨텍스트에서 호출됨
+- 다른 컨텍스트로의 이동 불가능, 플로우 내에서는 컨텍스트 변경 불가능
+  - 예제
+    - 메인에서 Dispatchers.IO 로 플로우 수집 후 실제 플로우 내에서 withContext(Dispatchers.Default) 설정하는 경우 에러 발생
+
+#### flowOn 연산자
+
+- flowOn을 통해 컨텍스트 변경 가능
+- flowOn 기준으로 위쪽은 업스트림, 아래쪽은 다운스트림 (상대적 기준)
+- flowOn(Dispatchers.Default) 라고 설정을 했다면 업스트림은 Default 디스패쳐로 동작하게 됨
+- 만약 스트림에 따라 각각 다른 디스패쳐를 사용하고 싶다면 flowOn을 여러 개 붙일 수 있음
