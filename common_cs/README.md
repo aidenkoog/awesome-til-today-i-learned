@@ -806,3 +806,25 @@
 - MMU가 어떻게 해당 페이지의 테이블을 알수 있을까?
   - CR3로 알 수 있음
   - MMU는 CR3로 가서 가상 주소를 가지고 해당 페이지 테이블로 접근
+
+#### APN 
+
+- 요약
+  - Access Point Name, 즉 엑세스 포인트 이름. 게이트웨이 이름임
+  - 예를 들어 three.co.uk 혹은 lte.sktelecom.com(SK텔레콤) 처럼 도메인 네임으로 쓰일 수도 있고 internet.mnc012.mcc345.gprs 이렇게 형식을 갖춘 하나의 게이트웨이 이름 (게이트웨이가 엑세스 포인트)
+- 추가 설명
+  - 다른 말로, GSM, GPRS, 3G 혹은 4G mobil network와 다른 컴퓨터 네트워크 사이의 게이트웨이 이름
+  - 데이터 연결을 만드는 모바일 디바이스는 통신사에게 제시할 APN을 구성해야 함
+   - 이 통신사(carrier)는 이 식별자(identifier)가 어떤 타입의 네트워크 연결로 만들지를 결정
+     - 예를 들어 어떤 IP주소를 무선 장치에 할당해야 하는 지, 어떤 보안 방법을 사용해야 하는 지, 그리고 어떻게 또는 어떤 사설 고객 네트워크에 연결해야하는지에 대한 것들 결정
+- APN의 구조
+  - 2개의 파트로 구성
+    - 네트워크 식별자 (Network Identifier) : 외부 네트워크를 정의
+    - 사업자 식별자 (Operator Identifier) : 구체적인 사업자의 GGSN에 위치한 PDN(Packet domain network)를 정의
+- APN Setting
+  - Name : 통신사(carrier)의 이름
+  - APN : 위에서 말한 엑세스 포인트 이름, 즉 게이트웨이 이름. (보통 도메인 네임)
+  - MCC : Mobile country code. 모바일 국가 코드 (MNC 보단 큰 범)
+  - MNC : Mobile Network code. 모바일 네트워크 코드
+  - MVNO type(가상 이동통신망 사업자 유형) : MVNO 유형. MVNO는 소위 알뜰폰이라고 불리우는 이동 통신사 (carrier)로부터 통신서비스를 임차해 자사서비스로 운영하는 사업자를 의미함
+  - APN type : 이 APN이 지원하는 APN의 유형들
