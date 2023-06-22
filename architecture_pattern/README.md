@@ -135,6 +135,15 @@
       - 현재 상태와 전달된 이벤트를 참고하여 새로운 상태 생성
         - ex. state.copy(count = state.count + 1)
 
+#### MVI 패턴 사이클 정리
+
+- 뷰에서 유저로부터 이벤트를 받음
+- 인텐트 즉, 액션 (UserEvent)를 생성하여 ViewModel을 호출
+- ViewModel에서 인텐트에 따라 필요한 데이터 플로우를 호출
+- 데이터 플로우를 마치고 필요한 데이터를 사용하여 UserState를 갱신
+- 뷰에서 Observing하고 있던 State의 변화를 감지
+- State의 변화 값에 따라 UI를 업데이트
+
 #### 단방향 아키텍쳐 (Data Uni-Directino-Architecture) 특징
 
 - View는 State를 통해 변경되며 오직 한 방향으로만 수정 가능
