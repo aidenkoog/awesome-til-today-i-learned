@@ -855,6 +855,15 @@
 - addEventListener 대신 플로우의 onEach를 사용 가능 (이벤트마다 onEach가 대응)
 - collect()가 호출되기 전에는 동작하지 않음
 
+#### 생명주기 기반 컴포넌트 - DefaultLifecycleObserver
+
+- 구성요소
+  - Owner: Activity / Fragment
+  - Observer: Activity / Fragment의 생명주기 처리를 담당
+- 보통 DefaultLifecycleObserver 또는 LifecycleEventObserver 사용
+- DefaultLifeCycleObserver
+  - LifecycleEventObserver와 DefaultLifecycleObserver 모두 구현했다면 DefaultLifecycleObserver의 메소드들이 먼저 호출되고 그 다음에 LifecycleEventObserver.onStateChanged의 호출이 이루어짐
+
 #### Flow 플래트닝
 
 - [flatMapConcat]
