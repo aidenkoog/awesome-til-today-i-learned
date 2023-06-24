@@ -1916,3 +1916,21 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - 뷰 => 뷰모델 (StateFlow) => 뷰모델 (MutableStateFlow) => Repository (suspend fun...)
 - StateFlow는 라이브데이터와 가장 유사
 - UI 상태를 뷰에 노출시킬 때는 StateFlow 사용 (UI 상태를 유지하도록 설계된 가장 안전하고 효율적인 옵저버)
+
+#### buildSrc를 통한 dependency 관리
+
+- Gradle이 수행되면 buildSrc 디렉토리가 존재하는지 체크
+- 이 경우에 Gradle은 자동적으로 코드를 컴파일하고 테스트한 뒤 빌드 스크립트의 classpath에 삽입
+- 이 방법은 유지 보수, 리팩토링 및 코드 테스트가 더 쉬워지게 만듬
+- 적용법
+  - 루트 폴더에 buildSrc 폴더 생성
+  - buildSrc 폴더 안에 build.gradle.kts 파일을 생성한 뒤, kotlin-dsl를 enable
+  - 그리고 gradle sync를 하여 이 plugin을 활성화
+    - plugins { `kotlin-dsl` }, repositories { jcenter() }
+  - src > main > java 폴더를 생성
+  - java 폴더안에 Kotlin 파일을 생성하고, 원하는 이름을 지정
+  - 생성한 Kotlin 파일에 dependency를 지정
+- buildSrc를 사용하면 좋은 점이 Kotlin을 사용해 관리해주기 때문에 Auto Complete 지원 가능
+- Reference
+  - https://github.com/tkdgusl94/blog-source/tree/master/buildSrc
+
