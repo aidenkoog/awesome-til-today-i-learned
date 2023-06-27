@@ -1934,3 +1934,14 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Reference
   - https://github.com/tkdgusl94/blog-source/tree/master/buildSrc
 
+#### viewLifeCycleOwner 설명
+
+- 실 사용 예
+  - viewLifecycleOwner.lifecycleScope.launch { }
+- Fragment 생명주기
+  - onAttach ~ onDestory 에서 끝남
+  - viewLifecycleOwner 사용 시 프래그먼트 생명주기 중 onCreateView ~ OnDestroyView 까지의 생명주기만 사용
+  - onCreateView 이전, onDestroyView 이 후에 viewLifecycleOwner 호출 시 IllegalStateException 발생
+- 액티비티와 다르게 프래그먼트에서는 onDestroy 호출 이전에 onCreateView가 여러번 호출 가능함
+  - 만약 LiveData 관찰을 위한 옵저버를 두어야 할 때 lifecycleOwner를 this로 작성한다면 복수의 옵저버 할당이 이루어질 문제가 있음
+  - viewLifecycleOwner 사용한 메모리 누수 문제 해결이 가능
