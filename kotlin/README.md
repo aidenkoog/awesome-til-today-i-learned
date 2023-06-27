@@ -956,7 +956,10 @@
   - 예제
     - CoroutineScope 확장함수 정의 후 produce 사용하여 ProducerScope 생성 후 데이터 send
     - CoroutineScope 확장함수 하나 더 정의 후 send한 값들을 ReceiveChannel로 받게 정의하고 produce 사용하여 ProducerScope 생성 후 데이터 2차 send
+      - ReceiveChannel 이라는 것은 receive()를 호출할 수 있다는 것을 의미
+      - 그냥 Channel은 receive(), send() 둘 다 호출 가능
     - 수집 측에서 ReceiveChannel object의 receive() 활용하여 데이터 수집/로깅 처리
+  - coroutineContext.cancelChildren() : 코루틴 취소
 
 #### 코틀린 A to B (to)
 
@@ -1049,3 +1052,45 @@
 - 컴파일 시점에만 타입에 대한 제약 조건을 설정하고, 런타임에는 해당 정보를 소거하는 프로세스
 - 제네릭이 도입되기 전 즉, JDK 1.5 이전의 소스 코드와의 호환성 유지를 위해 사용
   - 컴파일 후에도 타입 지정이 되어 있는 경우에는 하위 호환이 되지 않을 것임
+
+#### 팬 아웃 / 팬 인
+
+- 팬 아웃 (Fan out)
+  - 여러 코루틴이 동시에 채널 구독 가능
+  - launch { channel.consumeEach { } }
+- 팬 인 (Fan in)
+  - 반대로 생산자가 많은 것
+
+#### 공정한 채널
+
+- 두 개의 코루틴에서 채널을 서로 사용할 때 공정하게 기회를 배분
+
+#### Select
+
+- 먼저 끝나는 요청을 처리하는 것이 중요할 수 있는 데 이 경우에 select 사용 가능
+- 먼저 끝내는 애만 듣겠다 라고 할 때 사용
+- 채널 말고도 Job / Deferred 등에도 사용 가능
+  - Deferred: Async가 반환하는 것이 Deferred
+
+#### 채널 버퍼링
+
+- 채널은 기본적으로 suspension point를 가지고 있고 send를 하면 받을 때 까지 잠이 들고 receive를 하면 데이터가 올 때까지 잠이 들게 됨
+- 버퍼링 이용 시 자유롭게 보내고 받는 것 가능 (중단되지 않으면서 채널 사용 가능)
+- Channel 생성자는 인자로 버퍼의 사이즈를 지정받음 (지정하지 않으면 버퍼 생성은 하지 않음)
+- 버퍼 사이즈 랑데뷰(Channel.RENDEZVOUS)
+  - 채널 사이즈 0으로 설정의 의미 (버퍼없는 없는 것)
+- UNLIMITED: 채널의 버퍼 사이즈가 정해지지 않은 것, 무제한
+  - 실제로 무제한은 아니고 메모리가 허용하는 범위까지 가능하다는 의미
+- CONFLATED: 오래된 값이 지워짐
+- BUFFERED: 기본적으로 64개 버퍼 가짐
+  -  오버플로우 발생할 때는 잠이 들게 됨
+
+#### 버퍼 오버플로우
+
+- 버퍼의 오버플로우 정책에 따라 다른 결과가 나올 수 있음
+- 사용 예.
+  - Channel<Int>(2, BufferOverflow.DROP_OLDEST)
+- SUSPEND: 잠이 들었다 깨어남
+- DROP_OLDEST: 예전 데이터를 삭제
+- DROP_LATEST: 새 데이터를 삭제
+
