@@ -1945,3 +1945,19 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 액티비티와 다르게 프래그먼트에서는 onDestroy 호출 이전에 onCreateView가 여러번 호출 가능함
   - 만약 LiveData 관찰을 위한 옵저버를 두어야 할 때 lifecycleOwner를 this로 작성한다면 복수의 옵저버 할당이 이루어질 문제가 있음
   - viewLifecycleOwner 사용한 메모리 누수 문제 해결이 가능
+
+#### AccessibilityService 활용한 다른 앱의 뷰 레이아웃 정보 얻는 방법 설명
+
+- 활성화된 스크린 안의 뷰 레이아웃 정보를 가져오는 방법
+  - 해당 서비스를 상속하는 커스텀 서비스 생성 후 onAccessibilityEvent 오버라이드
+  - eventType이 AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED 일 때 rootInActiveWindow (getRootInActiveWindow) 함수 이용하여 현재 보이는 화면의 가장 최상단 루트 노트를 가져올 수 있음
+  - 루트 노드로부터 자식 노드를 검색이 가능하며 텍스트뷰에 설정된 스트링 리소스도 볼 수 있음
+  - AndroidManifest에 BIND_ACCESSIBILITY_SERVICE 퍼미션 추가 필요
+  - accessibility_service_config.xml도 추가로 정의 필요
+    - description
+    - accessibilityEventTypes
+    - canRequestFilterKeyEvents
+    - accessibilityFlags
+    - accessibilityFeedbackType
+    - notificationTimeout
+    - canRetrieveWindowContent
