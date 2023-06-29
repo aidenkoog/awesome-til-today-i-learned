@@ -1961,3 +1961,12 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - accessibilityFeedbackType
     - notificationTimeout
     - canRetrieveWindowContent
+
+#### OverlayView 표시를 위해 필요한 절차
+
+- AndroidManifest에 SYSTEM_ALERT_WINDOW 권한 추가 / FOREGROUND_SERVICE 권한도 추가
+- WindowManager 활용하여 LayoutParams 설정
+- LayoutInflater 활용하여 커스텀 뷰 inflate 하기 위한 준비
+- 표시하고자 하는 뷰 (xml) 정의
+- 생성한 커스텀 뷰를 inflate하고 해당 객체를 윈도우 매니저에 addView 처리
+- addView 하게 되면 해당 커스텀 뷰가 화면에 보이게 됨
