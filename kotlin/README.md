@@ -1108,3 +1108,68 @@
   - 람다 표현식: 어떤 함수를 파라미터와 반환값 만으로 나타낸 표현식
   - 확장함수: 이미 정의된 클래스나 인터페이스에 상속 없이 함수를 추가 정의할 수 있도록 Kotlin에서 제공되는 기능
 
+#### 코루틴 내부 구조 관련 내용 / 키워드 정리
+
+- 모나드 (Monad) 1950년 후반, 로제 고드망이 만든 개념
+- 모나드 : 파라미터 이름, (T) -> Box<U>
+  - 값을 받아서 박스를 반환하는 함수
+  - Null의 추상 (Optional / Option / Maybe), 에러 추상 (Either), 비동기 실행 (IO Monad) 에 사용
+  - (1930년) 인자 하나를 받는 함수를 칭하는 말로 일컬어지기도 했었음
+  - flatMap (bind, chain) 함수의 인자 => 모나드
+    - 모나드는 플랫맵의 파라미터
+- 모나드의 규칙
+  - 좌항등원
+  - 우항등원
+  - 교환법칙
+- Functor
+  - 값을 받아 값을 리턴하는 파라미터
+  - 값을 바로 리턴
+  - map 함수의 인자는 Functor
+- 연속적인 모나드 체인 (연속적인 호출 가능)
+- Either (성공: Right, 실패: Left)
+- Functor와 모나드 자체는 Async할 수도 Sync할 수도 있음
+- Haskell (하스켈)
+- CPS (Continuation Passing Style, 1975)
+  - 계속 Continuation을 전달하는 방식
+  - 콜백가 유사한 느낌
+  - Continuation은 Last Call
+  - Last Call Optimization 가능
+  - LLVM Tail Call
+  - 자바에서는 최적화 되지 않음 (CPS 사용 어려움)
+  - CPS 단점: 끝없는 들여쓰기, 이해 어려움
+  - CALL/CC (Call with Concurrent Continuation)
+  - CPS 장점: 모든 제어 흐름 생성 가능
+    - 없는 것이 있으면 Continuation을 통해 만든다는 개념, Schema 프로그래밍
+- Direct Style (Return based)
+- Continuation
+  - 다음에 수행해야 할 내용을 의미
+  - 다음에 수행해야 할 함수를 의미 (실체화된 Continuation)
+- Coroutine (1958), 멜빈 콘웨이
+  - Direct Style 같은 Straight forward한 프로그래밍
+  - suspend / resume 반복
+  - Kotlin Coroutine 특이점: Promise-free
+  - Coroutine의 지배적인 모델: C#이 설립한 Async / Await 모델
+  - Go언어, Colorless 모델, 비동기 함수와 동기 함수 구분이라는 색상 구분이 없음
+  - 코틀린은 자바와의 호환성 때문에 async (suspend)는 유지
+  - Suspension points: 중단 가능 함수 호출 때 마다 블록을 나눔
+  - 상태머신: 중단 가능한 함수들은 상태머신으로 변경
+  - LLVM에서 코루틴 다루는 방식
+  - suspend 함수는 내부적으로 cont: Continuation 이라는 인자가 하나 더 추가됨
+    - 다시 진입했을 때 동작을 위해 Continuation으로 관리
+    - 코루틴의 Continuation: 컨텐스트와 남은 일에 대한 인터페이스, context, resumeWith
+  - 컴파일러가 Continuation과 상태머신을 생성
+  - Continuation Lowering
+    - 하위 수준의 언어로의 변경을 의미, IR: 중간언어 의미, 사실상 Desugaring 의미
+    - Desugaring: 사람들이 쓰기 편했던 속성 제거
+    - Sugaring: 고수준 언어 특성 추가 
+  - 코루틴 밖과 연결도 Continuation으로 처리
+    - 외부에서 자신의 결과를 Continuation으로 처리
+  - Continuation 최적화: 마커를 넣고 나중에 로어링때 최적화 수행, 로어링에서 여러 호출이 제거됨
+    - FixStackMethodTransformer
+- 어떻게 멀티스레드로 수행?
+  - intercept라는 메소드를 오버라이딩해 동작 변경 가능
+  - fold는 reduce와 비슷하나 초기값 존재
+  - ThreadContinuaion
+    - interceptContinuation이 ThreadContinuation 삽입
+    - resume 상황에서 executor를 사용해서 다른 코드들을 다른 스레드에서 수행하게 됨
+- 코루틴 내부 = 상태머신 + Continuation (다른 언어와도 유사)
