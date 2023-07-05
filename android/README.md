@@ -1985,3 +1985,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - KT --> KTC
     - LGU+ --> LUC
     - 자급제폰 --> KOO
+
+#### AccessibilityService 활용한 사용자 인풋 이벤트 감지 방법
+
+- 필요 권한: 오버레이뷰 그리는것과 동일하게 "접근성" 권한 설정 필요
+- 감지 과정: 사용자 입력이 되면 onAccessibilityEvent 메소드로 TYPE_VIEW_TEXT_CHANGED 이벤트가 들어옴
+- 필요 서비스 : AccessibilityService 상속하는 커스텀 서비스 필요
+- EditText 에서 텍스트 입력 / 수정 / 삭제 할 때 해당 텍스트값 Catch 가능
