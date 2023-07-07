@@ -538,6 +538,7 @@
   - delay는 코루틴이나 suspend 함수 안에서만 사용 가능
   - 코루틴 내부가 복잡할 때 suspend 함수로 로직을 나눠서 유지보수가 용이하게 만드는 작업 필요
   - suspend 함수 리턴값이 없는 경우 코틀린은 알아서 리턴 타입이 Unit 임을 인지
+  - 함수 진입 입구와 출구가 여러개
 - runBlocking<Int>의 형식으로 반환값 지정도 가능, 반환값이 없다면 <Unit>
 - runCatching
   - Kotlin 1.3 부터 제공하는 API
