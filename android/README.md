@@ -1992,3 +1992,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 감지 과정: 사용자 입력이 되면 onAccessibilityEvent 메소드로 TYPE_VIEW_TEXT_CHANGED 이벤트가 들어옴
 - 필요 서비스 : AccessibilityService 상속하는 커스텀 서비스 필요
 - EditText 에서 텍스트 입력 / 수정 / 삭제 할 때 해당 텍스트값 Catch 가능
+
+#### ComponentActivity와 AppCompatActivity 설명
+
+- AppCompatActivity는 FragmentActivity를 상속하고 FragmentActivity는 ComponentActivity를 상속, 그리고 ComponentActivity는 Activity 상속
+  - AppCompatActivity --> FragmentActivity --> ComponentActivity --> Activity
+- ComponentActivity는 Compose 앱에서 사용
+  - 컴포즈 UI 관련 필요한 것들을 가지고 있음
