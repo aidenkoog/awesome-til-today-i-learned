@@ -1995,7 +1995,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
 
 #### ComponentActivity와 AppCompatActivity 설명
 
-- AppCompatActivity는 FragmentActivity를 상속하고 FragmentActivity는 ComponentActivity를 상속, 그리고 ComponentActivity는 Activity 상속
-  - AppCompatActivity --> FragmentActivity --> ComponentActivity --> Activity
+- AppCompatActivity는 FragmentActivity를 상속하고 FragmentActivity는 ComponentActivity를 상속, 그리고 ComponentActivity는 androidx.core.app.ComponentActivity 상속, androidx.core.app.ComponentActivity는 Activity 상속
+  - AppCompatActivity --> FragmentActivity --> ComponentActivity --> androidx.core.app.ComponentActivity --> Activity
 - ComponentActivity는 Compose 앱에서 사용
   - 컴포즈 UI 관련 필요한 것들을 가지고 있음
