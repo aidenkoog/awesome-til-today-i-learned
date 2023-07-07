@@ -1170,3 +1170,16 @@
     - interceptContinuation이 ThreadContinuation 삽입
     - resume 상황에서 executor를 사용해서 다른 코드들을 다른 스레드에서 수행하게 됨
 - 코루틴 내부 = 상태머신 + Continuation (다른 언어와도 유사)
+
+#### 코틀린 코루틴 플로우 실제 사용 정리
+
+- 뷰모델 내 count 변수 생성
+- 외부 노출용 countFlow 생성 (countFlow: Flow<Int> = flow { emit(count)...})
+  - 코루틴 블록으로 호출됨
+- 뷰에서 뷰모델 가져오기 위해 androidx.lifecycle...viewmodel 의존성 추가
+- 뷰 내에서 뷰모델 가져오기
+- count 상태값을 읽기
+  - val countState = viewModel.countFlow.collectAsState(0)
+- 참고: suspend 함수는 코루틴 블럭에서 실행해야 함
+- 참고: collectLatest 사용 시 무한히 처리하게 되는 이슈가 발생할 수 있음, 가장 마지막 값만 취함
+  - 데이터가 나가는 상황보다 소비하는게 더 오래 걸린다면 이슈 발생 가능성 있음
