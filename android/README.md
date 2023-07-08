@@ -1974,6 +1974,24 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - Android 11부터 ACTION_MANAGE_OVERLAY_PERMISSION 인텐트는 항상 앱에 대한 SYSTEM_ALERT_WINDOW 권한을 부여하거나 취소할 수 있는 최상위 설정 화면으로 사용자를 안내 (패키지 설정 관련하여 인텐트의 데이터 무시됨)
   - 이전 버전에서는 인텐트가 권한 관리를 위해 사용자를 앱별 화면으로 이동시키는 패키지 지정이 가능했으나 정책 강화로 인하여 현재는 불가능
 
+#### OverlayView 표시를 위한 추가 설명
+
+- 마시멜로우 6.0 API 23 부터는 권한 설정 필요
+  - <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  - Android Marshmallow에서는 기본 권한 획득 외에도 SYSTEM_ALERT_WINDOW 사용을 위한 별도 권한 추가가 필요
+  - SYSTEM_ALERT_WINDOW는 WindowManager를 이용하여 최상위 뷰에 화면을 노출하는 뷰의 옵션
+  - 참고.
+    - Play store 다운 앱의 경우 draw 권한이 true 상태로 설치되며, 사용자가 변경이 가능
+    - Play store에서 받을 경우 Yes 직접 설치할 경우 No이므로 다음의 Overlay 권한 획득 요청이 필요
+    - Play store에서 true로 설정해주더라도, 사용자가 언제든 끌 수 있음
+    - SYSTEM_ALERT_WINDOW 권한을 요청하고 Play 스토어(버전 6.0.5 이상 필요)를 통해 설치된 모든 앱은 해당 앱에 대해 자동으로 권한이 부여됨
+      - 업데이트가 아닌 오로지 클린 설치인 경우에만 해당하는 것으로 보임
+- 서비스에서 오버레이뷰를 표시하는 경우에는 Android O 이상에서는 포그라운드 서비스로 실행해야 함
+- 참고. 뷰에 아래 속성 추가 시 터치 이벤트 발생
+  - android:filterTouchesWhenObscured="true"
+- 오버레이뷰 권한 획득 여부 판별
+  - Settings.canDrawOverlays(this)
+
 #### 안드로이드 플랫폼 - 스마트폰 기기 내 설정된 최초 향 정보 추출
 
 - 기기 자체에 설정된 ro 프로퍼티 등이 존재
