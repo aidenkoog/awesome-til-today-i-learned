@@ -2020,3 +2020,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - AppCompatActivity --> FragmentActivity --> ComponentActivity --> androidx.core.app.ComponentActivity --> Activity
 - ComponentActivity는 Compose 앱에서 사용
   - 컴포즈 UI 관련 필요한 것들을 가지고 있음
+
+#### XML 에서 String 포맷 사용하는 방법 다시 정리
+
+- 포맷 형식은 %d, %s, %f, %2d 등 사용 가능
+- 예제
+  - <string name="test">result: %d.</string>
+  - val text = String.format(resources.getString(R.string.test), 100)
