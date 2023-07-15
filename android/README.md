@@ -2027,3 +2027,17 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 예제
   - <string name="test">result: %d.</string>
   - val text = String.format(resources.getString(R.string.test), 100)
+
+#### 노티피케이션 바 컨트롤 (Notification Bar Control)
+
+- Notification Bar 정보 가져오기 가능
+- 앱 당 24개 정도로 최대 표시 개수 제한이 있음
+  - 제조사 마다 AOSP에서 설정 가능
+- 노티피케이션 바 개수가 가득 찼을 때 가장 오래된 것부터 삭제하는 로직 추가 필요
+- 안드로이드 노티피케이션 특성 상 3개까지는 각각 표시되다가 그 이후부터는 그루핑이 됨
+- 그루핑이 될때 해당 앱의 노티피케이션 아이템이 하나 더 증가하게 되고 문제는 그룹타입인 아이템도 포스팅 시간 정보가 있음
+  - 즉 아이템1, 2, 3, 4, GroupBar, ...
+- 활성화된 노티피케이션 정보들에서 해당 앱의 패키지명으로 필터링하여 리스트를 만들 때 item.tag가 널이 아닌 것은 그룹이라는 의미
+- 그러므로 이 아이템은 리스트 항목에서 제외시켜야 추가/삭제 동작 시 제대로 동작함
+- 삭제 처리
+  - notificationManager.cancel(id)
