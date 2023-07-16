@@ -450,3 +450,13 @@
 - 자바 예
   - int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors()
   - ExecutorService service = Executors.newFixedThreadPool(NUMBER_OF_CORES)
+
+#### 자바 동기화
+
+- synchronized를 이용하는 방법은 2가지 존재
+  - 1. synchronized method 방법
+    - 메소드에 락을 걸고자 할 때
+    - Runnable을 구현힌 구현체 내 run 안에서 synchronized function 호출
+    - 동기화 적용이 필요한 로직을 함수화하고 synchronized 키워드를 붙임
+  - 2. synchronized block 방법
+    - 특정 객체에 락을 걸고지 할때
