@@ -1191,3 +1191,11 @@
 - 코루틴이 실행될 Scope를 정하고 (CoroutineScope, ViewModelScope, LifecycleScope, liveData...)
 - launch 또는 async로 코루틴을 실행
 - 즉, Context로 Scope를 만들고, Builder를 이용하여 코루틴을 실행
+
+#### CoroutineScope와 RunBlocking 차이점
+
+- RunBlocking은 suspend 함수가 아님
+- CoroutineScope는 suspend 함수
+- 왜 RunBlocking이 존재?
+  - 개발하다보면 스레드를 블락해야하는 상황이 생김
+  - suspend 함수는 스레드를 블락시키지는 않지만 메인 스레드가 그대로 흘러가서 앱이 죽을 수도 있는 단점도 존재
