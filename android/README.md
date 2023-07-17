@@ -2041,3 +2041,18 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 그러므로 이 아이템은 리스트 항목에서 제외시켜야 추가/삭제 동작 시 제대로 동작함
 - 삭제 처리
   - notificationManager.cancel(id)
+
+#### BaseActivity, BaseFragment 사용
+
+- BaseActivity, BaseFragment 를 통해 보일러 플레이트 코드(반복되는 코드)를 정리하기 위한 목적
+- 코드의 중복을 줄이고 가독성을 높이기 위해서 프로젝트의 뼈대로 사용되는 클래스
+- 보통 binding이나 그 외 여러 activity/fragment 걸처 공통적으로 수행하는 코드에 대하여 초기화나 이벤트 등을 정리해둠으로서 나중에 다른 activity/fragment에서 이를 상속하여 사용
+- 바인딩 클래스를 템플릿으로 지정하고 파라미터로 레이아웃 리소스를 설정하는 형태로 베이스 클래스를 주로 작업
+- 공통적인 코드라고 무조건 베이스에 넣는 방법은 지양, 차라리 Util 관련 클래스를 만들어 띠로 빼서 쓰는 것이 이상적
+- 라이프사이클 준수하는 것에 초점
+- 몇개가 만들어질지 모르는 변수들 즉 뷰모델, 기타 변수들은 베이스 부분에 넣지 않는 것을 추천
+- 코틀린에서 상속은 open class 나 abstract class 만 가능
+- DataBinding과 ViewModel의 강제는 지양
+- Presenter의 경우 1:1관계, 뷰모델의 경우 n:n관계를 생성할 수 있는 게 좋음
+- 베이스 코드가 정립되고나면 코루틴 스코프 등 관련 델리게이션 사용하는 방향도 좋은 방향
+  - 예로 UICoroutineScope의 정의
