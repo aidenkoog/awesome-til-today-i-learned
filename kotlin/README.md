@@ -1184,3 +1184,10 @@
 - 참고: suspend 함수는 코루틴 블럭에서 실행해야 함
 - 참고: collectLatest 사용 시 무한히 처리하게 되는 이슈가 발생할 수 있음, 가장 마지막 값만 취함
   - 데이터가 나가는 상황보다 소비하는게 더 오래 걸린다면 이슈 발생 가능성 있음
+
+#### 코루틴 사용 시 세가지 순서
+
+- 어떤 쓰레드에서 실행할 것 인지 Dispatchers 를 정하고 (Dispatchers.Main, Dispatchers.IO, Dispatchers.Default)
+- 코루틴이 실행될 Scope를 정하고 (CoroutineScope, ViewModelScope, LifecycleScope, liveData...)
+- launch 또는 async로 코루틴을 실행
+- 즉, Context로 Scope를 만들고, Builder를 이용하여 코루틴을 실행
