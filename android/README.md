@@ -1888,8 +1888,9 @@ Google Play 스토어가 설치된 Chrome OS 기기
 
 #### SharedFlow로 LiveData 대체하는 과정 중 필요한 SharedFlow, StateFlow 개념 정리
 
-- SharedFlow
+- SharedFlow *
   - Hot Stream으로 동작하게 하는 Flow의 종류
+  - Collector가 여러 개인 경우, Collector 들이 emit된 값들을 동시에 소비할 수 있도록 공유(Share)되는 Flow의 API
   - value 값 존재하지 않고 replayCache가 존재
   - replayCache는 몇 개의 값을 저장해 두고 받을지에 대해 설정 가능
   - Flow => SharedFlow => StateFlow
