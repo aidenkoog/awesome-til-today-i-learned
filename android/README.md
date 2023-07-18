@@ -1447,6 +1447,18 @@
     - LoadResult.Error: 오류 발생
     - LoadResult.Invalid: PagingSource가 더 이상 결과의 무결성을 보장할 수가 없어 무효화되는 경우
 
+#### Paging, getRefreshKey() 개념
+
+- PagingState 객체를 매개변수로 취급하고 데이터가 첫 로드된 후 새로고침되거나 무효화되었을 때 키를 반환하여 load()로 전달
+- 페이징 라이브러리가 화면을 새로고침해야 할 때 호출됨
+- 사용자가 새로고침 후 목록에서 현재 위치를 잃지 않도록 새 PagingSource 가 로드를 시작해야 하는 키를 제공해야 하기 때문.
+- 참고.
+  - 무효화 상황: PagingSource의 기본 데이터가 변경되었으며 UI에서 업데이트 해야 하는 상황
+    - 무효화가 되면 페이징 라이브러리가 데이터를 새로고침할 때 신규 PagingSource를 만들고 PagingData를 내보내 UI에 알림
+  - 무효화가 발생하는 이유
+    - PagingAdapter에서 refresh()를 호출
+    - PagingSource에서 invalidate()를 호출
+
 #### Jetpack 자체에 대한 개념 재정리
 
 - Jetpack은 개발자가 관심 있는 코드에 집중할 수 있도록 권장사항 준수, 상용구 코드 제거, 모든 Android 버전과 기기에서 일관되게 작동하는 코드 작성을 돕는 라이브러리
