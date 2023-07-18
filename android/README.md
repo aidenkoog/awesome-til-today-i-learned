@@ -1385,7 +1385,7 @@
   - 실제로 WorkRequest를 스케줄링하고 실행하며 관리하는 클래스
   - 인스턴스를 받아와 WorkRequest를 큐에 추가하여 실행되도록 함
 
-#### Jetpack Paging 라이브러리
+#### Jetpack Paging 라이브러리 *
 
 - Android Jetpack에서는 페이징을 위한 Paging3 라이브러리를 제공
 - Paging3 라이브러리는 로컬 저장소에서나 네트워크를 통해 데이터를 나누어 효율적으로 로딩할 수 있게 도와줌
@@ -1396,22 +1396,56 @@
 - 사용자가 로드된 데이터의 끝까지 스크롤할 때 구성 가능한 RecyclerView 어댑터가 자동으로 데이터를 요청
 - Kotlin 코루틴 및 Flow뿐만 아니라 LiveData 및 RxJava를 최고 수준으로 지원
 - 새로고침 및 재시도 기능을 포함하여 오류 처리를 기본으로 지원
-- 3개의 레이어로 구성
-  - Repository
-  - ViewModel
-  - UI
+- 라이브러리 내부적으로 3개의 레이어로 구성
+  - Repository (PagingSource + RemoteMediator)
+  - ViewModel (Pager => Flow<PagingData>)
+  - UI (PagingDataAdapter)
 - 주요 클래스
   - PagingSource
+    - 특정 페이지 쿼리의 데이터 청크를 로드하는 기본 클래스, 데이터 레이어의 일부, 일반적으로는 데이터 소스 클래스에서 확인 가능하며 이 후에는 뷰 모델에서 사용하기 위해 레파지토리에서 사용됨
+    - 네트워크 소스 / 로컬 데이터베이스 등의 단일 소스에서 데이터 로드 가능
+    - PagingSource 빌드를 위해서는 다음 항목 정의 필요
+        - Paging 키 타입: 추가 데이터를 요청하는 데에 사용하는 페이지 쿼리 유형 정의
+        - 로드된 데이터 타입
+        - 데이터를 가져오는 위치 지정
   - RemoteMediator
+    - 로컬 데이터베이스 캐시가 있는 네트워크 데이터 소스와 같은 계층화된 데이터 소스의 페이징 처리
   - Pager
+    - PagingData를 생성하는 클래스 (PagingData: 리턴받는 객체)
+    - 페이징 소스에 따라 다르게 실행되고 뷰 모델에서 생성되어야 함
   - PagingConfig
+    - 페이징 동작 결정하는 매개변수를 정의하는 클래스
+    - 페이지 크기, placeholder 사용 여부 포함
   - PagingData
+    - 페이징된 데이터의 스냅샷을 가진 컨테이너
+    - 데이터 새로고침할 때마다 자체 페이징 소스로 지원되는 상응 PagingData가 별도로 생성
+    - PagingSource 객체를 쿼리해 결과를 저장한다는 의미
   - PagingDataAdapter
+    - RecyclerView.Adapter의 서브 클래스
+    - RecyclerView에 PagingData 출력
+    - factory 메소드 사용해 코틀린 플로우 / 라이브데이터 / RxJava Flowable / Observable 혹은 정적 목록에도 연결 가능
 
-#### Paging
+#### Paging *
 
 - 페이징이란 데이터를 가져올 때 한 번에 모든 데이터를 가져오는 것이 아니라 일정한 덩어리로 나눠서 가져오는 것을 의미.
 - 페이징을 사용하면 성능, 메모리, 비용 측면에서 굉장히 효율적
+- 정보를 점진적으로 가져오는 프로세스
+- 각 페이지는 데이터 청크에 상응
+- 페이지를 요청하려면 페이징되는 데이터 소스에 필요한 정보를 정의하는 쿼리가 필요
+
+#### PagingSource load() 개념
+
+- 사용자가 스크롤할 때 출력할 데이터를 비동기식으로 가져오기 위해 사용
+- 상응하는 데이터 소스에서 페이징된 데이터를 검색하는 방법을 나타내기 위해 재정의 필수
+- 매개변수
+  - LoadParams: 로드작업과 관련된 정보 저장
+- 반환값
+  - LoadResult
+    - LoadResult.Page: 로드 성공 (data: 가져온 데이터)
+      - prevKey: 현재 페이지 앞에 아이템을 가져와야 하는 경우
+      - nextKey: 현재 페이지 뒤에 아이템을 가져와야 하는 경우
+    - LoadResult.Error: 오류 발생
+    - LoadResult.Invalid: PagingSource가 더 이상 결과의 무결성을 보장할 수가 없어 무효화되는 경우
 
 #### Jetpack 자체에 대한 개념 재정리
 
