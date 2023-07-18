@@ -608,6 +608,32 @@
 - 액티비티와 프래그먼트가 ViewModelStoreOwner를 구현하고 있기 때문에 뷰 모델 생성시 액티비티나 프래그먼트 정보가 필요 --> 어떤 Owner를 통해 생성하냐에 따라 뷰모델의 스코프가 결정
 - 참고. ViewModelProvider 내에는 Factory Interface가 정의
 
+#### ViewModel 생성 방법
+
+- ViewModelProviders (Deprecated)
+  - ex. ViewModelProviders.of(this).get(AnyViewModel::class.java)
+- 파라미터가 없는 뷰모델 생성 1
+  - lifecycle-extensions 모듈 등록
+  - ex. ViewModelProvider(this).get(NoParamViewModel::class.java)
+- 파라미터가 없는 뷰모델 생성 2
+  - lifecycle-extensions 모듈 필요없음
+  - ex. ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+            .get(NoParamViewModel::class.java)
+- 파라미터가 없는 뷰모델 생성 3
+  - 직접 ViewModelProvider.Factory 인터페이스를 구현하는 방법
+  - 하나의 팩토리로 다양한 뷰모델 클래스 관리가 가능하고 예외 상황에 대한 컨트롤 가능
+- 파라미터가 있는 뷰모델 생성 1
+  - 위 3번의 연장선으로서 Factory 클래스에 파라미터를 넘겨주어 create()내에서 인스턴스를 생성할 때 활용 가능
+- 파라미터가 없는 안드로이드 뷰모델 생성 1
+  - AndroidViewModel
+  - ViewModel 클래스에서 컨텍스트 객체 소유 또는 접근에 대해서 권장하고 있지 않음
+  - 불가피하게 필요한 경우 안드로이드 뷰 모델을 사용
+  - ViewModelProvider.AndroidViewModelFactory 라는 별도의 팩토리 제공
+    - 참고. NewInstanceFactory를 상속한 코드
+- 파라미터가 있는 안드로이드 뷰모델 생성 1
+  - ViewModelProvider.NewInstanceFactory 를 구현하는 클래스 정의 후 아래처럼 뷰모델 생성
+  - ex. return modelClass.getConstructor(Application::class.java, String::class.java).newInstance(application, param)
+
 #### 데이터 바인딩과 뷰 바인딩 차이
 
 - 뷰 바인딩
