@@ -600,6 +600,13 @@
 - 라이프 사이클을 고려하여 UI 관련된 데이터를 저장, 관리하기 위해 사용
 - 화면 전환과 같이 설정이 변경되는 상황에서도 데이터를 유지
 - 액티비티가 끝날 때까지 사라지지 않고 뷰의 생명주기와는 별개로 흘러감
+- ViewModel 클래스를 상속하여 정의한 클래스는 개발자가 직접 생성자를 통해 생성할 수 없고, ViewModelProvider.Factory 인터페이스를 필요로 함
+- ViewModel은 ViewModelStore 객체에서 관리됨
+  - 내부적으로 HashMap<String, ViewModel>을 두어 ViewModel 관리
+- ViewModelStore 객체는 ViewModelStoreOwner 인터페이스 통해 만들고 관리됨
+  - ComponentActivity와 Fragment 클래스가 ViewModelStoreOwner Interface를 구현
+- 액티비티와 프래그먼트가 ViewModelStoreOwner를 구현하고 있기 때문에 뷰 모델 생성시 액티비티나 프래그먼트 정보가 필요 --> 어떤 Owner를 통해 생성하냐에 따라 뷰모델의 스코프가 결정
+- 참고. ViewModelProvider 내에는 Factory Interface가 정의
 
 #### 데이터 바인딩과 뷰 바인딩 차이
 
@@ -2059,3 +2066,5 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Presenter의 경우 1:1관계, 뷰모델의 경우 n:n관계를 생성할 수 있는 게 좋음
 - 베이스 코드가 정립되고나면 코루틴 스코프 등 관련 델리게이션 사용하는 방향도 좋은 방향
   - 예로 UICoroutineScope의 정의
+
+#### 
