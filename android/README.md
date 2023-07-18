@@ -1889,10 +1889,21 @@ Google Play 스토어가 설치된 Chrome OS 기기
 #### SharedFlow로 LiveData 대체하는 과정 중 필요한 SharedFlow, StateFlow 개념 정리
 
 - SharedFlow *
-  - Hot Stream으로 동작하게 하는 Flow의 종류
+  - Hot Stream으로 동작하게 하는 Flow의 종류 (HotFlow)
+    - 데이터를 소비하는 곳과 무관하여 데이터를 흘려보내는 API.
+    - 컬렉터들이 준비가 되어 있을 때 데이터가 생성되면 아무것도 받지 못하게 됨
+    - Buffer라는 것이 있어서 위의 문제, 데이터를 받지 못하는 이슈 방지가 가능
+    - extraBufferCapacity 설정해주는 경우는 받을 수 있음
+    - 예를 들어 emit 개수가 5개, buffer 개수가 3개인 경우 버퍼 개수가 부족한데 이 경우는 기본적으로 emit을 잠시 suspend 하게 됨. 버퍼 3개가 다 차면 emit을 멈추었다가 받을 수 있는 상황일 때 emit 하게 됨
+    - 데이터 실시간성이 중요한 경우는 버퍼를 사용하는 것이 데이터 시간차를 유발하므로 무조건 지양해야 하는 방향은 아님
   - Collector가 여러 개인 경우, Collector 들이 emit된 값들을 동시에 소비할 수 있도록 공유(Share)되는 Flow의 API
   - value 값 존재하지 않고 replayCache가 존재
   - replayCache는 몇 개의 값을 저장해 두고 받을지에 대해 설정 가능
+  - replay
+    - 가장 최근의 데이터를 새로운 컬렉터가 컬렉트를 시작할 때 보내줌
+    - 디폴트: 0
+    - 리플레이 공간이 꽉차게 되면 가장 오래된 값이 제거됨
+    - 모든 값을 받을 수 있었던 버퍼를 사용한 케이스와는 다른 양상
   - Flow => SharedFlow => StateFlow
   - emit 시 바로 collect 되므로 클릭 이벤트, 전환 등의 이벤트 처리에 적합
 - StateFlow
@@ -1917,6 +1928,21 @@ Google Play 스토어가 설치된 Chrome OS 기기
         - collector가 등록되면 바로 sharing을 시작하며 collector가 전부 없어지면 바로 중지됨
         - 구글에서는 WhileSubscribed(5000)을 권장 (Flow의 중단 타이밍과 관련)
         - 화면 방향 전환 및 기타 이유로 액티비티가 onDestroy 되었다가 다시 생성되는 경우 등을 구분하기 위해 딜레이를 5초로 주면 어떤 상황인지 구분이 가능해 Flow를 중지할 지 말지 결정할 수가 있어서 권장하고 있음
+
+#### asSharedFlow
+
+- 캡슐화 하기 위해서 사용하는 확장함수 (API)
+- ex. 초기에 MutableSharedFlow로 내부 변수 선언하고 asSharedFlow 사용해서 readOnly타입의 SharedFlow로부터 컬렉터들이 값을 컬렉트하도록 해줌
+
+#### tryEmit()
+
+- 코루틴의 suspend 함수 없이도 값을 방출할 수 있게 해줌
+- 이유: 컬렉트하는 영역에서 코루틴을 사용하기 어려운 경우도 있으므로 탄생
+- SharedFlow 처럼 여러곳에서 컬렉트해서 사용하는 API라면 필요성이 있을 수도 있음
+- emit 성공 시 boolean true를 리턴
+- 버퍼 사이즈가 꽉 차게 되서 emit에 실패하는 경우는 false 리턴
+  - 원래는 버퍼가 꽉 차게 되면 emit을 suspend 하는데 tryEmit은 suspend가 작동하지 않으므로
+  - 데이터 유실이 발생할 수 있음
 
 #### Flow => StateFlow 변환
 
