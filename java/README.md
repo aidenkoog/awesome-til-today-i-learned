@@ -500,6 +500,8 @@
   - Consumer<T> 리턴 없음
     - Consumer<Integer> printT = (i) -> println(i);
     - printT.accept(10)
+    - IntConsumer printInt = (i) -> println(i);
+    - printInt.accept(10);
   - Supplier 인자 없고 리턴만 존재
     - Supplier<Integer> get10 = () -> 10;
     - println(get10.get())
@@ -508,3 +510,12 @@
   - UnaryOperator<T> 인자값과 리턴값 형이 같은 경우
     - Function<T, T> 상속하고 있음
   - BinaryOperator<T> 3개의 타입이 모두 같은 경우 
+    - ex. BinaryOperator<Integer> sum = (a, b) -> a + b;
+
+#### 람다 표현식
+
+- effective final 인 경우 로컬클래스, 익명클래스, 람다 모두에서 참조 가능
+  - 사실 상 final 이라는 의미
+  - 만약 final 처럼 람다안에서 쓰고 있는데 어디선가에서 변수 값을 변경하는 코드가 존재한다면 컴파일 에러 발생
+  - 로컬 / 익명 클래스는 쉐도잉됨, 각각은 부모와는 다른 스코프임, 따라서 부모에서 선언한 변수와 똑같은 변수를 선언/정의 함으로서 부모 변수를 가릴 수 있음
+  - 람다는 쉐도잉 되지 않음, 스코프가 부모 함수와 동일, 같은 스코프 내 똑같은 이름의 변수 정의 불가능 
