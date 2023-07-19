@@ -409,7 +409,7 @@
   - 람다 표현식
   - 메소드 레퍼런스
   - 스트림 API
-  - Optional
+  - Optional<T>
 
 #### Optional<T>
 
@@ -423,9 +423,12 @@
 - 실제 서비스 운영환경 (Production)에서는 LTS 버전 권장
 - 지원 기간은 5년 이상, 벤더와 이용하는 서비스에 따라 달라질 수 있음
 - 배포주기 3년, 매 6번째 배포판이 LTS가 됨
-- 자바 8, 11이 LTS
+- JDK 17 이후 2년 주기로 전환 (2023년 9월로 예상)
+- 현 시점에는 자바 8, 11이 LTS 둘 중 하나를 써야 하는게 바람직
 - 다음 LTS: 자바 17
 - 매년 3월과 9월에 새 버전 배포
+- LTS 버전과의 차이점
+  - 얼마나 오래 지원을 하는가?
 - 비-LTS
   - 업데이트 제공 기간이 짧음
   - 배포 주기 6개월
@@ -460,3 +463,48 @@
     - 동기화 적용이 필요한 로직을 함수화하고 synchronized 키워드를 붙임
   - 2. synchronized block 방법
     - 특정 객체에 락을 걸고지 할때
+
+#### 함수형 인터페이스
+
+- 인터페이스 안에 추상 메소드가 하나인 인터페이스
+  - abstract가 생략된 것이라 생각하면 됨
+- 자바 8에서는 static 메소드 정의 가능 / default 메소드도 정의 가능
+  - 다른 형태의 메소드가 있더라도 추상 메소드가 하나이면 그것은 함수형 인터페이스
+- @FunctionalInterface 를 정의해두면 추상 메소드 하나 더 추가 시 컴파일 에러 발생 (이 어노테이션을 정의하고 있는 추상메소드가 하나인 인터페이스를 함수형 인터페이스)
+- 사용하는 부분
+  - 보통 전통적으로 익명 함수 구현으로 사용
+  - 람다로 변경 가능, 람다는 특수한 형태의 오브젝트라 보면 됨 (일급 객체)
+- 같은 값을 인자로 전달했을 때 똑같은 결과를 얻어야 함수형 프로그래밍이라 볼 수 있음 (순수 함수)
+  - 위반 케이스: 함수 바깥의 변수를 가져다 쓰는 경우, 상태값을 가지고 있는 경우
+    - 단순히 가져다 쓰는 경우는 상관없음. final 변수를 가져다 쓰는 경우는 괜찮음
+  - 위반 케이스: 멤버 변수를 사용하는 상황 하 멤버 변수 변경을 가하는 경우
+  - 추가 설명
+    - 사이드 이펙트 만들 수 없음 (함수 밖에 있는 값을 변경하지 못함)
+    - 상태가 없음
+    - 함수가 전달하는 파라미터만 사용해야 함
+- 고차 함수
+  - 함수가 함수를 매개변수로 받을 수 있고 함수를 리턴하는 것도 가능한 함수
+
+#### 자바가 기본으로 제공하는 함수형 인터페이스
+
+- java.util.function 패키지
+  - apply 메소드 오버라이드
+- Function<Integer, Integer>
+- 함수 결합도 가능
+  - Function<Integer, Integer> funcTest = (i) -> i + i;
+  - Function<Integer, Integer> funcTest2 = (i) -> i * 2;
+  - Function<Integer, Integer> funcTest3 = funcTest.compose(funcTest2);
+    - println(funcTest3.apply(2));
+    - andThen 도 존재
+  - BiFunction 인자 2개
+  - Consumer<T> 리턴 없음
+    - Consumer<Integer> printT = (i) -> println(i);
+    - printT.accept(10)
+  - Supplier 인자 없고 리턴만 존재
+    - Supplier<Integer> get10 = () -> 10;
+    - println(get10.get())
+  - Predicate 인자를 받아서 true / false를 리턴
+    - or, and 등의 오퍼레이터 사용 가능
+  - UnaryOperator<T> 인자값과 리턴값 형이 같은 경우
+    - Function<T, T> 상속하고 있음
+  - BinaryOperator<T> 3개의 타입이 모두 같은 경우 
