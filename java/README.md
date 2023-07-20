@@ -147,14 +147,32 @@
   - 함수의 리턴값으로 사용 가능해야 함
 - 자바스크립트, 파이썬이 일급객체 언어이고 C/C++은 아님 (자바의 경우 람다로 일급객체 개념 지원)
 
-#### 스트림 설명
+#### 스트림 설명 *
 
+- 연속된 데이터를 처리하는 오퍼레이션들의 모음
+  - (중요) 데이터를 담고 있는 저장소 (컬렉션)이 아님
+  - 스트림으로 전달받은 데이터를 변경하는 것 아님
+  - 함수형
+- 무제한일 수 있음
+  - Short Circuit 메소드를 사용해서 제한 가능
+- 중개 오퍼레이션들은 lazy 한 특성 지님
+- 오퍼레이션 스타일
+  - 중개
+    - 스트림을 리턴 (Stateless / Stateful 로 상세 구분도 가능)
+    - list.stream().map(s -> {}) 여기까지만 작성하면 실행하지 않음
+      - 즉 터미널 오퍼레이터가 오기 전까지는 실행되지 않음 (lazy한 특성)
+    - 대부분 Stateless 이나 distinct 나 sorted 처럼 이전 소스 데이터를 참조해야 하는 오퍼레이션은 Stateful
+    - filter, map, limit, skip, sorted etc.
+  - 종료
+    - 스트림 리턴하지 않음
+    - collect, allMatch, count, forEach, min, max etc.
 - 자바 8에서 새로 추가된 기능
 - 탄생 배경
   - 기존 루프문 처리 문제 (컬렉션 크기가 커지면 루프문의 사용은 성능 저하를 유발)
 - 컬렉션 데이터를 선언형으로 쉽게 처리 가능
 - 병렬 처리를 별도의 멀티스레드 구현없이도 쉽게 구현 가능
   - stream() / parallelStream()
+    - parallelStream() : 데이터가 엄청 방대한 경우에 성능 향상의 효과를 보임 / Thread.currentThread.getName()으로 확인해보면 매번 스레드가 변경되면서 병렬적으로 내부적으로 처리되는 것을 확인 가능
 - Ex.
   - 기존 방식
     - OK 여부 필터링 (for문)
@@ -168,6 +186,10 @@
   - 함수의 조립: 유연성 증가
   - 병렬화: 성능 향상
   - 파이프라이닝: 서로 연결하여 큰 파이프 라인을 구성할 수 있도록 스트림 자신을 반환
+- 추가 설명
+  - 스트림 파이프라인 (Stream Pipeline)
+    - 0 또는 다수의 중개 오퍼레이션 (Intermediate) 과 한개의 종료 오퍼레이션 (Terminal) 으로 구성
+    - 스트림의 데이터 소스는 오직 터미널 오퍼레이션을 실행할 때만 처리함.
 
 #### 스트림과 컬렉션 차이점
 
@@ -583,4 +605,3 @@
 - Comparator
   - list.sort(String::compareToIgnoreCase);
   - list.sort(String::compareToIgnoreCase.reversed().thenComparing(...));
-
