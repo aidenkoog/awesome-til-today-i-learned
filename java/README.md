@@ -530,4 +530,28 @@
   - 사실 상 final 이라는 의미
   - 만약 final 처럼 람다안에서 쓰고 있는데 어디선가에서 변수 값을 변경하는 코드가 존재한다면 컴파일 에러 발생
   - 로컬 / 익명 클래스는 쉐도잉됨, 각각은 부모와는 다른 스코프임, 따라서 부모에서 선언한 변수와 똑같은 변수를 선언/정의 함으로서 부모 변수를 가릴 수 있음
-  - 람다는 쉐도잉 되지 않음, 스코프가 부모 함수와 동일, 같은 스코프 내 똑같은 이름의 변수 정의 불가능 
+  - (중요) 람다는 쉐도잉 되지 않음, 스코프가 부모 함수와 동일, 같은 스코프 내 똑같은 이름의 변수 정의 불가능 
+
+#### 메소드 레퍼런스
+
+- 클래스 이름 :: 메소드 이름 형식으로 입력
+- 메소드를 호출하는 것이지만 괄호는 생략
+- 많은 코드가 생략되어 있으므로 사용하려는 메소드의 인자와 리턴 타입을 알고 있어야 함
+- 사용의 이유
+  - 메소드 레퍼런스 형태로 작성되는 람다식이 많으며 모든 코드를 다 작성하는 것이 번거로움
+- 사용 패턴에 따라 아래와 같이 분류 가능
+  - Static Method 레퍼런스
+  - Instance Method 레퍼런스
+  - Constructor Method 레퍼런스
+- 사용 예
+  - Class이름::testFunc;
+  - Class이름::testFunc::test2
+  - 생성자 사용
+    - Supplier<Testing> testing = Testing::new;
+    - Testing object = testing.get();
+    - Function<String, Testing> testing2 = Testing::new;
+    - Testing object = testing2.apply("testing");
+    - println(object.getName());
+- 람다를 넣을 수 있다는 것은 메소드 레퍼런스를 쓸 수 있다라고 이해
+
+
