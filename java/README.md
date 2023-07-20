@@ -474,6 +474,12 @@
   - 지원 기간: 배포 이후 6개월
 - Moving Java Forward Faster
 
+#### Optional APIs
+
+- isPresent()
+- isEmpty() <-- Java 11부터 제공
+- get(): 값이 있으면 문제가 없는데 값이 비어있는 경우에는 NoSuchElementException (Runtime) 에러 발생
+
 #### 스레드풀 (Thread poop)
 
 - 스레드 풀 탄생 배경
