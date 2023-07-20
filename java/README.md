@@ -529,6 +529,7 @@
     - println(get10.get())
   - Predicate 인자를 받아서 true / false를 리턴
     - or, and 등의 오퍼레이터 사용 가능
+    - ex. Predicate.not(TestingClass::isOpened)
   - UnaryOperator<T> 인자값과 리턴값 형이 같은 경우
     - Function<T, T> 상속하고 있음
   - BinaryOperator<T> 3개의 타입이 모두 같은 경우 
