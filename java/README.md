@@ -410,7 +410,7 @@
 - StringBuffer는 공통 메소드가 동기화되므로 멀티 스레드 환경에서 사용
 - 멀티 스레드 환경을 고려하지 않아도 된다면 더 성능이 좋은 StringBuilder 사용이 권장
 
-#### Java Stream
+#### Java Stream *
 
 - stream
   - 원본 데이터를 읽기만 하지, 원본 데이터 변경은 하지 않음
@@ -423,7 +423,7 @@
 - collect
   - 스트림 데이터를 원하는 자료형으로 변환
 
-#### Java 8
+#### Java 8 *
 
 - 2014.03 출시
 - 83% 사용 중
@@ -433,14 +433,31 @@
   - 스트림 API
   - Optional<T>
 
-#### Optional<T>
+#### Optional<T> *
 
+- 자바 8에서 추가된 새로운 인터페이스
+  - 비어있을 수도 / 담고 있을 수도 있는 컨테이너 인스턴스의 타입
 - NPE 방지를 위한 장치
 - 널이 올 수 있는 값을 감싸는 Wrapper 클래스로 참조하더라도 NPE가 발생하지 않도록 처리
 - Wrapper 클래스이기 때문에 빈 값이 올 수도 있으며, 빈 객체는 empty() 메소드로 생성 가능
 - orElse / orElseGet 메소드로 널인 경우라도 다른 값을 리턴 가능
+- Optional.of / Optional.ofNullable 등 존재함.
+- 리턴 타입으로 쓰기 만을 권장
+  - public Optional<Progress> getProgress() { return Optional.ofNullable(progress) }
+  - 파라미터로 주는 경우 널 체크를 해야 하는데 (.ifPresent) 애초에 호출하는 쪽에서 null 자체를 넘겨줄 수 있기 때문
+    - Optional<Progress> progress = null 이 가능하다는 의미
+    - setter의 파라미터로 사용하는 것은 지양
+  - 맵 사용 시 키 값에 Optional 사용은 지양
+    - 맵의 가장 중요점은 키 값은 널이 아니라는 것임
+- Optional.of(10) 과 같이 원시 타입값을 넣는 것은 지양
+  - 내부적으로 박싱 / 언박싱이 일어나 성능에 좋지 않음
+  - OptionalInt.of 방식으로 사용 지향
+- getter 에서는 절대 널 리턴 형식으로 코딩 금지
+  - Optional.empty() 로 리턴 권장
+- Collection, Map, Stream, Array, Optional 은 Optional로 Wrapping 금지
+  - 그 자체로 비어있는지 아닌지를 알 수 있는 컨테이너들을 한번 더 감싸는 것은 의미 없음
 
-#### LTS, 비-LTS 버전 차이
+#### LTS, 비-LTS 버전 차이 *
 
 - 실제 서비스 운영환경 (Production)에서는 LTS 버전 권장
 - 지원 기간은 5년 이상, 벤더와 이용하는 서비스에 따라 달라질 수 있음
@@ -479,7 +496,7 @@
 #### 자바 동기화
 
 - synchronized를 이용하는 방법은 2가지 존재
-  - 1. synchronized method 방법
+  - 1. synchronized method 방법 *
     - 메소드에 락을 걸고자 할 때
     - Runnable을 구현힌 구현체 내 run 안에서 synchronized function 호출
     - 동기화 적용이 필요한 로직을 함수화하고 synchronized 키워드를 붙임
@@ -507,7 +524,7 @@
 - 고차 함수
   - 함수가 함수를 매개변수로 받을 수 있고 함수를 리턴하는 것도 가능한 함수
 
-#### 자바가 기본으로 제공하는 함수형 인터페이스
+#### 자바가 기본으로 제공하는 함수형 인터페이스 *
 
 - java.util.function 패키지
   - apply 메소드 오버라이드
@@ -535,7 +552,7 @@
   - BinaryOperator<T> 3개의 타입이 모두 같은 경우 
     - ex. BinaryOperator<Integer> sum = (a, b) -> a + b;
 
-#### effective final (사실상 final) / 변수 캡쳐 (Variable Capture)
+#### effective final (사실상 final) / 변수 캡쳐 (Variable Capture) *
 
 - 자바 8부터 해당
 - 해당 지역 변수가 사실상 파이널일 때 이 키워드를 생략 가능
@@ -543,11 +560,11 @@
   - 자바 8 이전에 익명 클래스와 내부 클래스에서도 쓰이던 기능, 이때는 final 키워드가 필수적이었음
   - 자바 8부터는 사실상 파이널이면 변수 캡쳐 가능 (즉, 변수 참조 가능)
 
-#### Shadowing 개념
+#### Shadowing 개념 *
 
 - 메소드 내부에서 멤버 변수와 동일한 변수 이름을 정의할 때 이 메소드 내부에서 멤버 변수가 가려지는 현상
 
-#### 람다 표현식
+#### 람다 표현식 *
 
 - effective final 인 경우 로컬클래스, 익명클래스, 람다 모두에서 참조 가능
   - 사실 상 final 이라는 의미
@@ -555,7 +572,7 @@
   - 로컬 / 익명 클래스는 쉐도잉됨, 각각은 부모와는 다른 스코프임, 따라서 부모에서 선언한 변수와 똑같은 변수를 선언/정의 함으로서 부모 변수를 가릴 수 있음
   - (중요) 람다는 쉐도잉 되지 않음, 스코프가 부모 함수와 동일, 같은 스코프 내 똑같은 이름의 변수 정의 불가능 
 
-#### 메소드 레퍼런스
+#### 메소드 레퍼런스 *
 
 - 클래스 이름 :: 메소드 이름 형식으로 입력
 - 메소드를 호출하는 것이지만 괄호는 생략
@@ -593,7 +610,7 @@
 - 자주 사용하는 유용한 유틸리티 함수를 인터페이스 내에 정의하여 사용하는 것도 가능
   - 인터페이스.유틸리티 함수명으로 호출
 
-#### 자바 8에서 추가된 기본 메소드로 인한 API 변화
+#### 자바 8에서 추가된 기본 메소드로 인한 API 변화 *
 
 - Iterable
   - forEach: list.forEach(s -> {}), list.forEach(System.out::println)
