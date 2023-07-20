@@ -558,6 +558,9 @@
 
 - default 키워드 활용하여 기본 구현체를 만들 수 있음
   - 구현하는 쪽에서 해당하는 인터페이스 메소드를 구현하지 않아도 컴파일 에러 발생하지 않음
+  - 과거에 컴파일 에러 때문에 인터페이스를 상속하는 추상클래스를 구현하여 빈 함수를 구현해서 최종적으로 API 를 제공하는 형태였으나
+  - default 키워드 사용하면 추상클래스 레이어는 불필요
+  - 그리고 가장 큰 장점은 implements 로 구현하기 때문에 다른 클래스의 상속도 가능해진다는 큰 장점이 있음 (상속이 강제되지 않음, 비침투성, 비침투적인 방법)
 - 템플릿 메소드 처럼 구현 시 어떠한 값이 처리될지 불분명하므로
 - @implSpec 어노테이션을 통해 주석을 강화
 - Object 에서 정의된 즉, equals, hashcode, toString 등은 재 정의 불가능
@@ -566,4 +569,18 @@
   - 충돌되는 경우에는 구현하는 측에서 그냥 직접 구현을 해서 새로 작성해야 함 <-- 이렇게 하면 컴파일 에러 처리 가능
 - 자주 사용하는 유용한 유틸리티 함수를 인터페이스 내에 정의하여 사용하는 것도 가능
   - 인터페이스.유틸리티 함수명으로 호출
+
+#### 자바 8에서 추가된 기본 메소드로 인한 API 변화
+
+- Iterable
+  - forEach: list.forEach(s -> {}), list.forEach(System.out::println)
+  - spliterator: list.spliterator()
+- Collection
+  - list.stream(): spliterator를 사용하고 있음
+  - long count = list.stream().map(String::toUpperCase).filter(s -> s.startWith("K)).count();
+    - list.stream().map(String::toUpperCase).filter(s -> s.startWith("K)).collect(Collectors.toSet());
+  - list.removeIf(s -> s.startWith("K));
+- Comparator
+  - list.sort(String::compareToIgnoreCase);
+  - list.sort(String::compareToIgnoreCase.reversed().thenComparing(...));
 
