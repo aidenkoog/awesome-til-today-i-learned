@@ -865,8 +865,9 @@
 - DefaultLifeCycleObserver
   - LifecycleEventObserver와 DefaultLifecycleObserver 모두 구현했다면 DefaultLifecycleObserver의 메소드들이 먼저 호출되고 그 다음에 LifecycleEventObserver.onStateChanged의 호출이 이루어짐
 
-#### Flow 플래트닝 *
+#### Flow 플래트닝 **
 
+- 묶음을 풀어낸다는 뉘앙스로 이해 (리스트 덩어리를 각각 아이템의 나열로 표현)
 - (참고) 플래트닝: 리스트가 있다면 그안의 모든 아이템들을 하나하나씩 꺼내어 풀어내는 (나열하는) 것
 - [flatMapConcat]
   - 블록 호출한 결과 (flow)를 합침

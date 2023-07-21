@@ -474,11 +474,21 @@
   - 지원 기간: 배포 이후 6개월
 - Moving Java Forward Faster
 
-#### Optional APIs
+#### Optional APIs *
 
 - isPresent()
 - isEmpty() <-- Java 11부터 제공
 - get(): 값이 있으면 문제가 없는데 값이 비어있는 경우에는 NoSuchElementException (Runtime) 에러 발생
+- orElse: 값이 없으면 처리할 내용 (처리할 내용이 할상 실행은 됨)
+- orElseGet: 값이 없으면 처리할 내용 (값이 없을 때 처리할 내용이 최초로 실행됨)
+- orElseThrow: 값이 없으면 에러 던짐
+- flatMap
+  - Optional 안에 있는 클래스의 멤버 변수 타입이 옵셔널인 경우 flatMap은 한줄로 꺼내기가 가능, 즉 멤버 변수가 옵셔널이면 알아서 옵셔널 안의 아이템을 꺼내줌
+    - Optional<Progress> progress = optional.flatMap(Testing::getProgress);
+  - map을 사용하면 아래와 같이 2단계로 진행을 해야 함, 즉, 멤버변수가 옵셔널이어도 알아서 아이템을 꺼내주지 않음
+    - Optional<Optional<Progress>> progress1 = optional.map(Testing::getProgress);
+    - Optional<Progress> progress2 = progress1.orElse(Optional.empty());
+  - stream의 flatMap 과는 다름, 스트림의 플랫맵은 아웃풋이 여러개
 
 #### 스레드풀 (Thread poop)
 
@@ -578,7 +588,7 @@
   - 로컬 / 익명 클래스는 쉐도잉됨, 각각은 부모와는 다른 스코프임, 따라서 부모에서 선언한 변수와 똑같은 변수를 선언/정의 함으로서 부모 변수를 가릴 수 있음
   - (중요) 람다는 쉐도잉 되지 않음, 스코프가 부모 함수와 동일, 같은 스코프 내 똑같은 이름의 변수 정의 불가능 
 
-#### 메소드 레퍼런스 *
+#### 메소드 레퍼런스 **
 
 - 클래스 이름 :: 메소드 이름 형식으로 입력
 - 메소드를 호출하는 것이지만 괄호는 생략
