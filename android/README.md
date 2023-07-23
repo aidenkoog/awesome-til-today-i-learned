@@ -2177,3 +2177,11 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Presenter의 경우 1:1관계, 뷰모델의 경우 n:n관계를 생성할 수 있는 게 좋음
 - 베이스 코드가 정립되고나면 코루틴 스코프 등 관련 델리게이션 사용하는 방향도 좋은 방향
   - 예로 UICoroutineScope의 정의
+
+#### Livedata 활용한 FCM (Firebase Cloud Messaging) 처리 방법
+
+- 이벤트 전달을 위한 라이브데이터 오브젝트 클래스와 함수 정의
+  - object Events { val serviceEvent: MutableLiveData<String> by lazy { MutableLiveData<String>() }}
+- 라이브데이터 데이터 설정 (postValue)
+- 데이터를 받고지 하는 화면 액티비티나 프래그먼트에서 라이브데이터 옵저빙하여 데이터 처리
+
