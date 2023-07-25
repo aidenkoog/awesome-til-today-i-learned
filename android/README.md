@@ -2199,7 +2199,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - repeatOnLifecycle 블록 내부에 있는 flow에 대한 collect는 View가 포그라운드에 있을 때만 진행
 - 백그라운드에서 수행되어야 하는 무거운 작업은 repeatOnLifecycle에서 수행하면 안됨
 - 확장함수 활용해서 코드 라인 줄이는 작업 마지막에 필수
-=======
+
 #### AndroidManifest XML 속성 설명 *
 
 - allowBackup
@@ -2216,4 +2216,27 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 문제점
   - 앱 삭제 후 재설치해도 전에 있던 데이터들이 남아있는 문제 존재
   - 보안 이슈 존재 --> 사용 지양 (false로 설정 권장)
->>>>>>> Stashed changes
+
+#### Gradle 빌드 속도 개선
+
+- Legacy Multidex 
+  - 라이브러리 사용 때문에 우리가 사용하게 되는 메소드 개수는 65536개는 넘게 되었음
+  - 버전에 따라 멀티 덱스 다루는 방법이 상이
+    - Android 5.0 (API 21) 미만: 앱 코드 실행을 위해 달빅 런타임 사용 / 기본적으로 달빅에서는 APK 당 하나의 classes.dex 바이트코드 파일로 앱을 제한
+    - Android 5.0 (API 21) 이상: ART 런타일 사용 / APK로부터 여러개의 덱스 파일을 로드하는 것을 지원
+  - 21 이상으로 설정하면 빠르게 빌드 가능
+    - 과거 버전에 대한 호환성을 맞춰야 한다면 flavor로 설정 부분 나눠서 개발 권장
+- APK 파일의 크기가 클때 abi별 / density별로 APK파일을 나누어서 용량 줄이기 가능
+  - 많은 서비스에서 x86용, x86_64용, armeabi-v7a용, arm64-v8a용으로 APK를 분할해서 제공 (이런 split작업은 빌드시간을 증가시키는 원인)
+  - 개발 단계에서는 abi별로 split하는 작업을 하지 않게 만들어주어야 함
+- 리소스 축소 / PNG 최적화 (Crunching) 기능 OFF
+  - 보통 개발 시 1개의 폰을 사용
+  - 예를 들어 한국어 이면서 xxxhdpi이거나 특정 해상도의 테스트 폰만을 사용할 것으로 추측되는 상황
+    - 특정 언어와 해상도로 고정을 해주면 빌드 시간 감축에 도움
+  - 기본적으로 안드로이드에서는 PNG를 최적화하는 기능이 켜져 있는데 이를 끄면 빌드 시간 감축에 도움
+  - 예. dev { dimension "stage" aaptOptions.cruncherEnabled = false resConfigs "ko", "xxxhdpi" }
+- 고정된 버전코드 사용
+  - 빌드 시간을 버전 코드로 사용하는 등의 작업 지양
+- Fabric 활용한 사용자 분석 또는 오류 로그 분석 기능을 OFF
+- 라이브러리 버전을 끝까지 명시
+  - x.x.+ (26.+) 로 명시할 경우 24시간마다 최신버전을 알아오기 때문에 빌드시간이 늘어나는 원인이 됨

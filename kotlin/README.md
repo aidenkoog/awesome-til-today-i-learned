@@ -266,7 +266,7 @@
   - let은 리시버의 확장함수로 쓰이지만 with은 그렇지 않음.
   - 리시버객체는 with(리시버객체){람다함수}로 인자로만 전달 가능
   - 객체 초기화, 람다 리턴 값이 필요 없을 때 사용
-- [run]
+- [run] *
   - this로 Context 객체 참조
     - val user = User("tester", 10, 10)
     - val age = user.run { this.age }
@@ -279,7 +279,7 @@
     - ex. run {}
   - run()함수는 익명함수처럼 사용하거나 객체에서 호출하는 방법 모두 제공
   - 객체를 초기화하고 리턴 값이 있을 때 사용
-- [let]
+- [let] *
   - it으로 Context 객체(리시버) 참조 (전달 인자명 지정 안하면 it)
     - .let { user -> user.name }
     - val age = user.let { user -> user.gender }
