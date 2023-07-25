@@ -2178,6 +2178,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 베이스 코드가 정립되고나면 코루틴 스코프 등 관련 델리게이션 사용하는 방향도 좋은 방향
   - 예로 UICoroutineScope의 정의
 
+<<<<<<< Updated upstream
 #### Livedata 활용한 FCM (Firebase Cloud Messaging) 처리 방법
 
 - 이벤트 전달을 위한 라이브데이터 오브젝트 클래스와 함수 정의
@@ -2198,3 +2199,21 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - repeatOnLifecycle 블록 내부에 있는 flow에 대한 collect는 View가 포그라운드에 있을 때만 진행
 - 백그라운드에서 수행되어야 하는 무거운 작업은 repeatOnLifecycle에서 수행하면 안됨
 - 확장함수 활용해서 코드 라인 줄이는 작업 마지막에 필수
+=======
+#### AndroidManifest XML 속성 설명 *
+
+- allowBackup
+  - ADB 를 통해서 앱 백업과 복구를 사용 가능하는 설정
+- fullBackupContent
+  - 안드로이드 6.0 (API 레벨 23부터)부터 구글 클라우드를 이용해 앱의 데이터를 자동 백업하도록 하는 설정
+- 안드로이드 스튜디오 매니페스트를 보면 기본 설정은 true 로 설정되어 있음
+- 추가 설명
+  - 백업되는 파일
+    - 공유 환경 설정 파일
+    - getFilesDir() / getDir()을 사용하여 액세스하는 앱의 내부 저장소에 저장된 파일
+    - getDatabasePath()에서 반환한 디렉터리의 파일 (SQLiteOpenHelper 클래스 사용하여 생성한 파일도 포함)
+    - getExternalFilesDir() 에서 반환한 디렉터리의 외부 저장소에 있는 파일
+- 문제점
+  - 앱 삭제 후 재설치해도 전에 있던 데이터들이 남아있는 문제 존재
+  - 보안 이슈 존재 --> 사용 지양 (false로 설정 권장)
+>>>>>>> Stashed changes
