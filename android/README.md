@@ -2240,3 +2240,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Fabric 활용한 사용자 분석 또는 오류 로그 분석 기능을 OFF
 - 라이브러리 버전을 끝까지 명시
   - x.x.+ (26.+) 로 명시할 경우 24시간마다 최신버전을 알아오기 때문에 빌드시간이 늘어나는 원인이 됨
+
+#### Deprecated 된 API 찾기
+
+- 안드로이드 스튜디오 메뉴에서 Analyze -> Run Inspection by Name
+- 검색창에 Deprecated API usage 검색
+- Run 'Deprecated API usage'창 뜨면 OK 누름
+- 로딩 후 결과 볼 수 있음
