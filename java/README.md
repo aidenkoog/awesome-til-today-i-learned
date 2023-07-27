@@ -218,11 +218,12 @@
 - 스트림 파이프라인을 구성할 중간 연산 (filter, map, limit 등)
 - 스트림 연산을 실행하고 결과로 출력할 최종 연산
 
-#### Annotation 설명
+#### Annotation 설명 **
 
 - 주석이란 뜻, 인터페이스를 기반으로 한 문법
 - 주석처럼 코드에 달아 클래스에 특별한 의미를 부여하거나 기능 주입 가능
 - 해석되는 시점 결정도 가능
+- JDK 1.5 버전 이상부터 사용 가능, 클래스 파일에 임베드되어 컴파일러에 의해 생성된 이후 JVM에 포함되어 동작
 - 종류
   - Build-In Annotation
     - JDK에 내장 (Ex. @Override)
@@ -230,6 +231,16 @@
     - 어노테이션에 대한 정보를 나타내기 위한 어노테이션
   - Custom Annotation
     - 개발자가 직접 만들어 내는 어노테이션
+- 메타 어노테이션 추가 설명
+  - Retention
+    - RetentionPolicy.Class
+    - RetentionPolicy.Runtime
+    - RetentionPolicy.Source
+  - Documented
+  - Target
+  - Inherited
+- 커스텀 어노테이션 추가 설명
+  - 생성 방법: @interface
 
 #### 제네릭 (Generic) 설명
 
