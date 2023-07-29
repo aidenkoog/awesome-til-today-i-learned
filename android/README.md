@@ -2247,3 +2247,26 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 검색창에 Deprecated API usage 검색
 - Run 'Deprecated API usage'창 뜨면 OK 누름
 - 로딩 후 결과 볼 수 있음
+
+#### 안드로이드 커스텀 린트 (Custom Lint) 만들기
+
+- Android Lint는 앱을 구성하는 코드(소스, 리소스, manifest를 포함)들을 정적 분석하는 도구
+- Test Code의 작성 없이 코드의 구조적 품질 문제를 식별하고 수정 가능
+- Lint 검사 도구에서 감지된 각 문제는 설명 메시지 및 심각도 수준과 함께 보고되므로 개선이 시급한 순서대로 우선순위를 정할 수 있음
+- lint.xml 파일은 제외하려는 린트 검사를 지정하고 문제 심각도 수준 등을 변경하여 맞춤 설정하는 데에 사용할 수 있는 구성 파일
+- 사용 이유
+  - 다수의 인원이 작업하는 프로젝트에 있어서 공통으로 지켜야 하는 룰 중에서 강제화할 필요가 있는 것들에 대해서는 Custom Lint를 사용하면 좋은 경우
+- 커스텀 린트 적용 구조
+  - Custom Lint를 구현하고 적용하기 위해서는 2개의 모듈을 추가해야 함
+  - 앱은 library 모듈에 dependency를 가지면 되고, library 모듈은 checks 모듈에 dependency를 가지면 됨
+  - 실제 린트 검사를 위해 필요한 내용들은 checks에 있고 library는 이 checks 모듈을 lintPublish dependency를 가짐. (이름은 자유 선택 가능)
+  - 문서나 자료들을 찾다 보면 lintPublish 말고 lintChecks가 있는데 특정 버전 이후부터는 lintPublish만 사용하면 됨
+    - 최근에는 lintPublish를 사용하면 됨
+  - ToDo
+    - Lint Version
+    - Checks Module
+    - META INF 등록
+    - Issue Registry 구현
+    - Lint Publisher Module
+    - Lint Checks
+    - lint-baseline.xml
