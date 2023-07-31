@@ -2270,3 +2270,13 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - Lint Publisher Module
     - Lint Checks
     - lint-baseline.xml
+
+#### 안드로이드에서 제공하는 테스트
+
+- Instrumented test
+  - AndroidTest 디렉토리에 존재
+  - 하드웨어나 에뮬레이터에서 실행되는 테스트
+- Unit test
+  - test 디렉토리에 존재
+  - JVM에서 실행되는 테스트
+  - Android OS 프레임워크 관련 의존성이 없는 경우 실행하면 실행시간을 최소화 시키는 것이 가능
