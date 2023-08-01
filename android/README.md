@@ -2178,7 +2178,6 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 베이스 코드가 정립되고나면 코루틴 스코프 등 관련 델리게이션 사용하는 방향도 좋은 방향
   - 예로 UICoroutineScope의 정의
 
-<<<<<<< Updated upstream
 #### Livedata 활용한 FCM (Firebase Cloud Messaging) 처리 방법
 
 - 이벤트 전달을 위한 라이브데이터 오브젝트 클래스와 함수 정의
@@ -2294,3 +2293,11 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Mock은 가짜 객체 인스턴스를 만드는 기능
 - 인터페이스가 아닌 클래스를 넣어서 가짜 클래스의 인스턴스를 얻을 수 있음
 - 객체 간 의존성이 강해 구현하기 힘든 경우 실제 객체를 만들어 사용하기에 시간과 비용이 많이 들기 때문에 Mock을 통해 객체를 생성하는 방법
+
+#### CompositeDisposable clear() 와 dispose() 차이점
+
+- clear()
+  - clear를 호출한 CompositeDisposable 객체는 재사용 가능
+- dispose()
+  - dispose를 호출하면 호출한 CompositeDisposable 객체는 재사용이 불가능
+  - clear()와는 달리 dipose()함수는 내부구조에서 disposed 라는 flag 변수를 통해 함수가 불릴 때 disposed = true가 되어서 재활용 할 수 없음
