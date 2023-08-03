@@ -2301,3 +2301,20 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - dispose()
   - dispose를 호출하면 호출한 CompositeDisposable 객체는 재사용이 불가능
   - clear()와는 달리 dipose()함수는 내부구조에서 disposed 라는 flag 변수를 통해 함수가 불릴 때 disposed = true가 되어서 재활용 할 수 없음
+
+#### RecyclerView.Adapter 메소드 
+
+- notifyDataSetChanged
+  - 아이템 변경 (데이터가 업데이트 되었지만 위치는 변하지 않았을 때) 또는 구조적 변경 (아이템 간 삽입, 삭제, 이동 발생 시) 사용
+- notifyItemChanged
+  - notifyItemChanged(int position, Object payload)
+  - position 위치의 아이템이 변경되었다고 파라미터를 통해 알려줄 수 있음
+- notifyItemInserted
+  - notifyItemInserted(int position)
+  - position 위치에 아이템이 추가되었다는 뜻
+- notifyItemMoved
+  - notifyItemMoved(int fromPostion, int toPosition)
+  - 인덱스 fromPosition 아이템이 toPosition으로 이동
+- notifyItemRangeChanged
+  - notifyItemRangeChanged(int positionStart, int itemCount, Object payload)
+  - positionStart부터 itemCount개까지 범위에서 변경이 일어남
