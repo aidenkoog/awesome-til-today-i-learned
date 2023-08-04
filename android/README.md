@@ -2318,3 +2318,32 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - notifyItemRangeChanged
   - notifyItemRangeChanged(int positionStart, int itemCount, Object payload)
   - positionStart부터 itemCount개까지 범위에서 변경이 일어남
+
+#### OkHttp Interceptor 개념 / 종류
+
+- 개념
+  - API 통신에서 요청에 대해 monitor, rewrite 그리고 retry 할 수 있는 강력한 메커니즘
+  - Interceptor를 통해서 우리는 API 통신을 만들 때, 통신 과정을 모니터링 하거나 특별한 작업을 수행 가능
+  - Interceptor 기능은 공항 보안 요원이 보안 검사하는 과정과 비슷
+  - Interceptor는 중앙에서 API 호출들을 모니터링 하는 것처럼 다양하게 사용됨
+  - 일반적으로 우리는 각각의 network 호출에 대해 logger를 달아야 할 필요가 있는데 Interceptor를 이용한다면 하나의 logger를 추가하여 모든 network 호출에 대해 동작하도록 할 수 있음.
+  - 다른 경우로는 offline-first app의 build를 위해 network 요청의 response를 캐싱하기도 함
+- 종류
+  - 2가지 타입 존재
+  - Application Interceptors: Application Code(우리가 작성한 코드) 와 OkHttp Core Library 사이에 추가된 Interceptors.
+    - addInterceptor()를 이용
+  - Network Interceptor: OkHttp Core Library와 server 사이에 추가된 Interceptors
+    - addNetworkInterceptor()를 이용
+- 실제 사용법
+  - OkHttp에 Interceptors 추가
+  - Error Interceptor
+    - chain.request()로부터 request를 받음
+    - chain.proceed()에 request를 담아 보내, 서버로 부터 온 response를 저장
+    - proceed(request) 여기서, response code를 확인하고 원하는 동작을 수행
+- 기타 응용 사용법
+  - 만약 API 통신을 구현해야 하는데 모든 API 통신에 Authorization Header를 포함해야 한다면, 각각의 API에 넣어줄 수도 있고 Interceptor를 이용하는 방향도 가능
+  - 순서
+    - chain.request()로 부터 request를 받아 .newBuilder() requestBuilder를 생성
+    - 다음 local storage에서 header token을 읽어옴
+    - requestBuilder에 addHeader(K, V)를 이용하여 헤더 정보를 입력
+    - chain.proceed()에 requestBuilder를 담아 요청 송신
