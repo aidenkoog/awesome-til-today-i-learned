@@ -2347,3 +2347,14 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - 다음 local storage에서 header token을 읽어옴
     - requestBuilder에 addHeader(K, V)를 이용하여 헤더 정보를 입력
     - chain.proceed()에 requestBuilder를 담아 요청 송신
+
+#### 안드로이드 전역적인 상태 관리 방법
+
+- Application 클래스 활용
+  - MyApplication myApp = (MyApplication)getApplicationContext();
+- SharedPreference 사용
+- SQLite 데이터베이스 활용
+- 단순 파일 생성 및 작성
+- Realm (JPA 같은 느낌)
+- Activity View Model (액티비티와 다수의 뷰 모델로 구성되어 있는 경우 유용)
+- 이벤트 버스 라이브러리 (게시자 / 구독자 개념)
