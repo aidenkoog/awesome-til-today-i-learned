@@ -2358,3 +2358,13 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Realm (JPA 같은 느낌)
 - Activity View Model (액티비티와 다수의 뷰 모델로 구성되어 있는 경우 유용)
 - 이벤트 버스 라이브러리 (게시자 / 구독자 개념)
+
+#### 툴팁 구현
+
+- 의존성 추가
+  - implementation "com.github.skydoves:balloon:1.4.6"
+- Balloon Object 생성
+- setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR) : 툴팁을 띄울 버튼을 기준으로 화살표 방향을 잡는 것
+- 가로길이 컨텐츠 크기에 맞게 동적으로 반응하게 만드는 방법 : setWidth(BalloonSizeSpec.WRAP)
+- balloon.showAlignBottom(binding.ibBodyTooltip)
+  - 툴팁을 띄울 방향 지정하면서 띄우기 (아래에 표시)
