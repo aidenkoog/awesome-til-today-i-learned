@@ -2368,3 +2368,16 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 가로길이 컨텐츠 크기에 맞게 동적으로 반응하게 만드는 방법 : setWidth(BalloonSizeSpec.WRAP)
 - balloon.showAlignBottom(binding.ibBodyTooltip)
   - 툴팁을 띄울 방향 지정하면서 띄우기 (아래에 표시)
+
+#### 자바에서 코틀린 마이그레이션 시 발생하는 문제
+
+- JVM Signature 충돌 문제
+  - 코틀린 변수 사용 시 자동으로 getter / setter 가 생성되어 기존에 이미 정의해놓았던 메소드와 충돌 발생
+    - 예. name 이라는 변수가 있고 setName() 이라는 메소드를 또 정의했다면 문제가 발생
+    - 해결법: 변수에 @JvmField 애노테이션 설정하여 자동으로 getter / setter를 생성하지 않도록 명시
+- BindingAdapter 사용 오류
+  - 오류 예제
+    - java.lang.IllegalStateException: Required DataBindingComponent is null in class ItemBooksBindingImpl. A BindingAdapter
+    - BindingAdapter 사용 메소드는 static으로 작성되어져야 하므로 코틀린 파일에서 클래스 이름 즉 class XXX 부분을 아예 빼버리거나 뺄수가 없는 상태이면 BindingAdapter를 사용하는 메소드에 @JvmStatic 애노테이션을 명시해주면 됨
+
+
