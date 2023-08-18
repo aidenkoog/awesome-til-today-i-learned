@@ -2390,7 +2390,7 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - 멀티모듈
   - 여러 모듈로 구성된 앱을 의미
   - 앱의 코드베이스가 큰 경우에 다중 모듈 구성을 적용하는 것이 적합
-  - 시작하는 사람들에게 다중 모듈 프로젝트는 이해하기 어렵고, 가독성이 떨어질 수 있음
+  - 시작하는 사람들에게 다중 모듈 프로젝트는 이해하기 어렵고, 가독성이 떨어질 수 있음
   - 코드의 결합도가 낮기 때문에 앱을 확장하거나 수정할 때, 훨씬 더 유연하게 대응 가능
   - 장점
     - 의존성 줄이기(관심사의 분리)
@@ -2400,3 +2400,24 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - 전체 모듈을 빌드할 필요가 없으므로 빌드시간을 줄이는데 유리
     - 코드 재사용성 증가
     - 계층, 기능 별로 모듈을 나누어서 코드를 작성하게 되면 해당 기능이 필요할 때 그 기능을 가지고 있는 모듈에 대한 의존성을 추가하여 사용하면 되기 때문에 재사용성이 늘어남
+
+#### 안드로이드 파일 쓰기 / 저장 / External Storage
+
+- Internal Storage
+  - Permission 없이 사용 가능
+  - 저장된 파일은 자신의 앱에서만 액세스 가능
+  - 앱을 지우면 파일도 함께 소멸
+  - 캐시파일의 개념과 비슷
+- External Storage
+  - Permission 필요 (READ / WRITE_EXTERNAL_STORAGE)
+  - SD 카드 등의 외부저장소에 파일을 저장
+  - 스마트폰의 저장소도 외부 저장소에 포함됨 (Download 폴더 등)
+  - getExternalStorageState() 함수를 호출하여 외부 저장소가 사용 가능한지에 대해 확인
+  - 예외 사항
+    - 안드로이드 10 Q 부터는 보안 정책 강화로 외부 저장소에 접근 불가
+    - Manifest에 requestLegacyExternalStorage를 true로 설정해주면 사용은 가능하나 비추천
+    - 이전 코드로 시도 시 open failed: EACCES (Permission denied) 에러 발생
+    - Environment.getExternalStorageDirectory() 는 만료됨
+    - MediaStore 또는 SAF (Storage Access Framework) 사용 추천
+      - 이미지 / 동영상 / 오디오 : MediaStore
+      - Txt, Pdf 등 기타 파일 : SAF
