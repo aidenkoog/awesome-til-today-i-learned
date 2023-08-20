@@ -2421,3 +2421,15 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - MediaStore 또는 SAF (Storage Access Framework) 사용 추천
       - 이미지 / 동영상 / 오디오 : MediaStore
       - Txt, Pdf 등 기타 파일 : SAF
+
+#### ActionBar, ToolBar, CollapsingToolbarLayout
+
+- CollapsingToolbarLayout
+  - Tool Bar의 높이가 높음
+  - Tool Bar의 높이를 높게 했다가, ActionBar 혹은 Toolbar의 높이로 좁게 했다가, 동적으로 변환이 가능
+  - 보통은 아래 콘텐츠에 보통 스크롤 할 수 있는 뷰가 있으며, 스크롤을 아래로 내리면 크기가 늘어나고, 스크롤을 위로 하면 크기가 줄어들게 사용하곤 함
+  - 사용법은 material design 문서 참고 가능
+- ToolBar / ActionBar
+  - Toolbar를 쓰는것이 권장
+  - Toolbar는 v7 appcompat Support Library에 포함되어 있기 때문에 기기별로 동작기능이 같음
+  - 반면, ActionBar는 각 버전별로 동작 및 모양이 조금씩 다름
