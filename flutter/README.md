@@ -38,11 +38,12 @@
 #### 플러터 아키텍쳐 구조 설명
 
 - Framework (최상위 레이어, Dart): Dart 기반 플랫폼
-  - Material, Cupertino
-  - Widgets
-  - Rendering
-  - Animation, Painting, Gestures
-  - Foundation
+  - app Widgets, Gestures, Animations, Illustrations, Materials를 처리하는 Dart 기반 플랫폼.
+    - Material, Cupertino
+    - Widgets
+    - Rendering
+    - Animation, Painting, Gestures
+    - Foundation
 - Engine (C/C++): 새로 화면을 그릴 때마다 화면을 래스터화 (디스플레이 처리)
   - Service Protocol, Composition, Platform Channels
   - Dart isolate Setup, Rendering, System Events
@@ -663,3 +664,12 @@
     - static SimpleController get to => Get.find(); => SimpleController.to.increase() 의 형태로 사용 가능
   - Get.find() 사용하는 클래스에 StatelessWidget 대신 GetView를 상속하는 방식 사용
     - extends GetView<SimpleController> 의 방식
+
+#### Flutter Responsive UI
+
+- 화면 사이즈를 읽는 방법은 여러가지가 존재
+- MediaQuery
+- MediaQueryData.fromWindow
+- WidgetsBinding.instance.window.physicalSize
+- Flexible / Expanded Widgets
+- LayoutBuilder Widget
