@@ -1227,3 +1227,26 @@
 - [@JvmOverloads]
   - 코틀린 함수의 오버로딩 메서드들을 생성해주는 애노테이션
   - 코틀린에만 기본인자 개념이 있어서 자바에는 이것을 이해하지 못하므로 JvmOverloads 애노테이션을 사용하면 알아서 여러 스타일의 생성자를 생성해 줌
+
+#### 코틀린에서 널 처리 방법
+
+- Nullable 타입 선언
+  - 변수 또는 반환 타입에 ?를 붙여 Nullable 타입을 선언
+  - Nullable 타입은 해당 변수 또는 표현식이 null일 수 있다는 것을 나타냄
+  - var name: String? = null
+- 안전 호출 연산자
+  - Nullable 객체의 프로퍼티나 메서드에 접근할 때, 안전 호출 연산자를 사용하여 null 체크를 수행
+  - 이 연산자는 객체가 null이 아닌 경우에만 접근을 시도하고, null인 경우에는 null을 반환
+  - val length = name?.length
+- 엘비스 연산자
+  - Nullable 객체가 null인 경우, 엘비스 연산자를 사용하여 기본값을 지정할 수 있음
+  - 엘비스 연산자는 Nullable 객체가 null인 경우, 우측에 있는 기본값을 반환
+  - val length = name?.length ?: 0
+- 안전한 캐스트
+  - Nullable 객체를 캐스트할 때, 안전한 캐스트를 사용하여 캐스트가 실패할 경우 null을 반환
+  - val number: Any? = "123"
+  - val intValue: Int? = number as? Int
+- Non-null 단언
+  - Nullable 객체를 Non-null 타입으로 강제로 캐스트
+  - 이 연산자는 객체가 null인 경우 NullPointerException을 발생시킬 수 있으므로 주의해야 함
+val length = name!!.length
