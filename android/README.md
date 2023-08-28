@@ -1846,6 +1846,31 @@ Google Play 스토어가 설치된 Chrome OS 기기
 - Custom Application 클래스에 "@HiltAndroidApp" 이라는 Annotation을 추가해 주어야 함
 - 앱이 살아있는 동안 Dependency를 제공하는 역할을 하는, 애플리케이션 레벨의 Component
 
+#### Hilt Annotation에 대한 추가 설명
+
+- @HiltAndroidApp
+  - 앱의 Application 클래스에 이 어노테이션을 지정하여 Hilt를 초기화
+  - Hilt가 앱의 컴포넌트 계층 구조를 구성하고 DI를 가능하게 함
+- @AndroidEntryPoint
+  - Android Framework 클래스들인 Activity, Fragment, Service, BroadcastReceiver 등에 이 어노테이션을 지정하여 Hilt가 해당 클래스의 종속성을 주입할 수 있도록 함
+- @Inject
+  - 이 어노테이션은 주입할 필드, 생성자 또는 메서드에 지정됨. 
+  - Hilt는 해당 필드나 생성자에 대한 인스턴스를 자동으로 생성하고 주입
+- @Module
+  - 이 어노테이션은 Hilt 모듈을 정의하는 클래스에 지정. 
+  - 모듈은 주입할 종속성을 제공하는 방법을 정의
+- @Provides
+  - 이 어노테이션은 모듈 내의 메서드에 지정됨
+  - 해당 메서드는 종속성을 제공하고 Hilt에 의해 주입될 수 있도록 함
+- @InstallIn
+  - 모듈을 특정 컴포넌트에 설치하는 데 사용
+  - @InstallIn 어노테이션은 모듈 클래스 위에 지정되며, @SingletonComponent, @ActivityRetainedComponent, @ActivityComponent 등과 같은 Hilt 컴포넌트를 대상으로 함
+
+#### Hilt에서 SingletonComponent 설명
+
+- Hilt 컴포넌트 중 하나로, 앱의 전역 범위에서 단일 인스턴스를 유지하는 데 사용되는 컴포넌트
+- 앱의 라이프사이클 동안 단 한번만 생성되고 유지됨
+
 #### Debounce, Throttle 이해
 
 - 사전 백그라운드 지식 / 상황 정리
