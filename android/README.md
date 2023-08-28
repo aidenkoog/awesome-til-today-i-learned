@@ -203,6 +203,37 @@
     - onPause() => onStop() => onDestroyView() => onDestroy() => onDetach() => Fragment Destroyed.
     - onDestroyView() => onCreateView() => onActivityCreated() => onStart() => onResume() => Fragment Active.
 
+#### 프래그먼트 라이프사이클 다시 정리
+
+- Created
+  - onCreate
+  - onCreateView
+  - onViewCreated
+  - onViewStateRestored
+- Started
+  - onStart
+- Resumed
+  - onResume
+
+#### 프래그먼트 라이프사이클 콜백 설명
+
+- onAttach()
+  - 프래그먼트가 액티비티에 연결될 때 호출되는 메서드
+- onCreate()
+  - 프래그먼트가 생성될 때 호출되는 메서드.
+  - 초기화 작업이나 인터페이스 설정 등 수행
+- onCreateView()
+  - 프래그먼트의 레이아웃을 그리는 메서드
+- onViewCreated()
+  - onCreateView() 후에 호출되는 메서드
+  - 프래그먼트의 UI가 만들어진 후에 호출됨
+- onStart()
+  - 프래그먼트가 화면에 보여지기 직전에 호출되는 메서드
+  - 프래그먼트가 사용자에게 보여지기 시작
+- onResume()
+  - 프래그먼트가 사용자와 상호작용을 시작하고 활동 상태에 들어갈 때 호출되는 메서드.
+  - 프래그먼트가 포그라운드에 있으며 사용자 입력을 받을 수 있음
+
 #### View 라이프사이클 설명
 
 - Button, TextView, ImageView 등의 위젯을 작성하는데 사용되는 기본 클래스이자 이 모든 것이 View
