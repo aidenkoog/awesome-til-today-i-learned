@@ -228,3 +228,9 @@
   - 세터 제거 (Remove Setting Method)
     - 해당 필드가 변경될 수 있다는 것을 의미 (세터를 제공한다는 것은)
     - 객체 생성 시 처음 설정된 값이 변경될 필요가 없다면 생성자 생성 후 세터는 제거
+  - 파생 변수를 질의 함수로 변경 (Replace Derived Variable with Query)
+    - 변경 가능한 데이터를 최대한 축소시키는 데에 집중
+    - 계산해서 알아낼 수 있는 변수는 제거 권장 (계산 자체가 데이터 의미를 잘 표현할 수도 있음)
+    - 헤딩 변수의 변경 가능성을 제거 가능
+    - assert로 계산식 유효성 확인 후 적용하는 방식으로 보통 진행
+    - return this.adjustments.stream().mapToDouble(Double::valueOf().sum())
