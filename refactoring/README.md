@@ -234,3 +234,10 @@
     - 헤딩 변수의 변경 가능성을 제거 가능
     - assert로 계산식 유효성 확인 후 적용하는 방식으로 보통 진행
     - return this.adjustments.stream().mapToDouble(Double::valueOf().sum())
+  - 여러 함수를 변환 함수로 묶기 (Combine Functions into Transform)
+    - 관련있는 여러 파생 변수를 만들어내는 함수가 여러곳에서 만들어지고 사용된다면 그러한 파생 변수를 변환 함수 즉, Transform Function 을 통해 한 곳으로 모아두는 것 가능
+    - 소스 데이터가 변경될 수 있는 경우 여러 함수를 클래스로 묶기 사용이 적절 (Combine Functions into Class)
+    - 소스 데이터가 변경되지 않는 경우에는 두가지 방법 모두 사용 가능 하나 변환 함수를 사용해서 불변 데이터의 필드로 생성해 두고 재사용하는 것도 가능
+    - 중복 수식 제거
+  - 참조를 값으로 변경 (Change Reference to Value)
+    - 
