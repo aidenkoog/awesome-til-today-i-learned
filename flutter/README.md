@@ -673,3 +673,23 @@
 - WidgetsBinding.instance.window.physicalSize
 - Flexible / Expanded Widgets
 - LayoutBuilder Widget
+
+#### Flutter 3.10 / Dart 3
+
+- 2023 Google I/O
+  - 개발자 경험 (얼마나 쉽게 개발 가능한지)
+    - Material3 Kit
+  - 광고 삽입 방법
+    - 다트 언어만 사용해서 광고 삽입 가능
+  - 퍼포먼스 업데이트
+    - 개발자가 해야할 것 없으며 플러터만 업그레이드 하면 퍼포먼스 업데이트가 가능
+  - 다트 3.0
+    - Patterns, sealed class, class modifiers
+  - Shader support for Web
+  - WASM for web (Web Assembly)
+    - 개발
+    - Deploy
+    - 다트 언어를 자바스크립트로 변경 (나중에는 Web Assembly 로 변경)
+      - 자바 스크립트 뿐만 아니라 거의 모든 언어들이 웹 어셈블리 바이너리를 가져와서 사용 가능
+      - 다이나믹함 증대
+    - Deploy
