@@ -247,12 +247,16 @@
   - [Electric Eel] ln -s jbr jre
   - 안드로이드 라이센스 동의 에러 발생하면 flutter doctor --android-licenses 명령 실행
   - flutter doctor
+    - 신형 모델 맥북에서 에러 발생 시 터미널 & 컴퓨터 껐다가 켜고 터미널에 softwareupdate --install-resetta
+  - flutter doctor --android-licenses
 - Visual Studio Code 설치
   - Flutter, Flutter Intl, Dart, dart-import
 - Xcode 설치
   - open a Simulator 명령으로 시뮬레이터 실행 가능
 - Android Studio 설치
   - (참고) Android Platform 종속성을 제공하기 위해 Android Studio의 전체 설치에 의존
+  - flutter 설치 (플러그인)
+  - atom one dark 설치 (옵션 플러그인)
 - flutter run 명령으로 플러터 앱 실행
 - Android 기기에서 USB 설정을 '파일 전송' 모드로 설정
 - 참고. 스마트폰 미러링 위한 설치
@@ -265,6 +269,9 @@
   - Cocoapods
 - iOS 는 QuickTime Player 로 화면 미러링
 - Flutter 앱을 실제 iOS 기기에 Deploy 하려면 Apple 계정 필요. 또한 Xcode 에서 실제 기기 Deploy 설정 필요. 앱이 Flutter Plugin을 사용하는 경우 써드 파티 Cocoapods 의존성 관리도 필요
+- 환경변수
+  - 윈도우: C:\FLUTTER/BIN
+  - Mac: touch ~/.zshrc, export PATH="$PATH:/Users/koo/Documents/flutter/bin"
 
 #### 변수 선언 관련 설명
 
@@ -732,3 +739,13 @@
   - https://fuchsia.dev 
 - 참고 설명
   - 구글 트레블 프로젝트
+
+#### Flutter 개발 시 필요한 부분
+
+- Method or Function
+- If else
+- For loop
+- List
+- Class
+- Constructor
+- Data type
