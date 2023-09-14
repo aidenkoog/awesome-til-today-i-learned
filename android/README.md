@@ -2557,3 +2557,21 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - 프로덕션 채널로 앱 업로드 (하루 이상 시간 소요)
   - 처음에는 5~10% 타겟팅 대상으로 배포 진행
   - 경과를 본 후 이상 없을 시 100%로 변경
+
+#### Android Test Code 작성 관련 처리 사항 정리
+
+- 안드로이드 테스트코드를 작성
+- 실행했을 때 Test events 가 들어온 것이 없다는 에러 발생
+  - Hilt를 사용하고 인드로이드 모듈을 사용하는 부분이 있어서 androidTest로 코드를 이동
+- 코드 이동 후 실행 시 packagingOptions excludes 관련 에러 발생
+  - Warning에서 가이드하는 내용들을 excludes 목록에 추가
+- Hilt 테스트 관련 에러 발생
+- 테스트코드 클래스에 HiltAndroidTest와 Rules 그리고 필요한 객체를 Inject
+- 그리고 rules.inject() 수행하여 Hilt 동작 확인
+- 기본 Test나 Before, After 어노테이션 동작 이상
+  - build.gradle dependencies 재확인 및 등록 처리
+- 정상적으로 테스트 케이스 수행은 되는 것 같으나 http 통신이 안되는 이슈 발생
+  - 앱 내 필요한 프리퍼런스, 베이스 url등이 제대로 셋팅되지 않아 발생한 이슈
+  - 앱 시나리오 적인 코드 적용 후 다시 시도
+- 테스트 케이스 정상 수행
+- 최소한의 코드 작성으로 기존에 구현한 뷰모델, di 등을 최대한 활용한 테스트 코드 작성법에 대해서는 조금 더 검토 필요
