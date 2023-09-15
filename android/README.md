@@ -2575,3 +2575,32 @@ Google Play 스토어가 설치된 Chrome OS 기기
   - 앱 시나리오 적인 코드 적용 후 다시 시도
 - 테스트 케이스 정상 수행
 - 최소한의 코드 작성으로 기존에 구현한 뷰모델, di 등을 최대한 활용한 테스트 코드 작성법에 대해서는 조금 더 검토 필요
+
+#### 단말 기기 해상도에 따라 레이아웃 처리 분기
+
+- 레이아웃은 기본적으로 ConstraintLayout
+- dpi별로 레이아웃 또는 dimens xml 생성
+- Guideline view (begin dp / percent)
+- ScalableLayout 
+- 해상도별 크기 대응
+```
+class ApplicationClass : Application() {
+    companion object {
+        var dpHeight = 0.0F
+        var dpWidth = 0.0F
+    }
+ 
+    override fun onCreate() {
+        super.onCreate()
+ 
+        val windowManager = applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val outMetrics = DisplayMetrics()
+        display.getMetrics(outMetrics)
+ 
+        val density = resources.displayMetrics.density
+        dpHeight = outMetrics.heightPixels / density
+        dpWidth = outMetrics.widthPixels / density
+    }
+}
+```
