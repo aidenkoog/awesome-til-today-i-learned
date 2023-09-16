@@ -2604,3 +2604,33 @@ class ApplicationClass : Application() {
     }
 }
 ```
+
+#### JUnit 테스팅
+
+- 어느 정도 개발이 진행되면 프로그램에 대한 단위 테스트는 반드시 수행해야 하는데, JUnit은 보이지 않고 숨겨진 단위 테스트를 끌어내어 정형화시켜 단위 테스트를 쉽게 해주는 테스트용 Framework
+- JDK 1.4에서 추가된 assert...를 사용하여 Test 진행 가능
+- JUnit은 테스트 결과를 단순한 텍스트로 남기는 것이 아니라 Test클래스로 남김
+- 개발자에게 테스트 방법 및 클래스의 History를 넘겨주는 것 가능
+- 특징
+  - 단위 테스트 Framework 중 하나 
+  - 문자 혹은 GUI 기반으로 실행됨 
+  - 단정문으로 테스트 케이스의 수행 결과를 판별함(assertEquals(예상 값, 실제 값)) 
+    - assertArrayEquals(a,b) : 배열 a와b가 일치함을 확인  
+    - assertEquals(a,b) : 객체 a와b의 값이 같은지 확인  
+    - assertSame(a,b) : 객체 a와b가 같은 객체임을 확인  
+    - assertTrue(a) : a가 참인지 확인  
+    - assertNotNull(a) : a객체가 null이 아님을 확인
+  - 어노테이션으로 간결하게 지원함 
+  - 결과는 성공(녹색), 실패(붉은색) 중 하나로 표시
+- 어노테이션
+  - (1) 테스트 메소드 지정
+    - @Test가 메소드 위에 선언되면 이 메소드는 테스트 대상 메소드임을 의미
+  - (2) 테스트 메소드 수행시간 제한
+    - @Test(timeout=5000)를 메소드 위에 선언
+    - 시간단위는 밀리 초
+    - 이 테스트 메소드가 결과를 반환하는데 5,000밀리 초를 넘긴다면 이 테스트는 실패하는 것
+  - (3) 테스트 메소드 Exception 지정
+    - @Test(expected=RuntimeException.class)가 메소드 위에 선언되면 이 테스트 메소드는 RuntimeException이 발생해야 테스트가 성공, 그렇지 않으면 실패하는 것
+  - (4) 초기화 및 해제
+    - @BeforeClass, @AfterClass가 메소드 위에 선언되면 해당 테스트 클래스에서 딱 한 번씩만 수행되도록 지정하는 어노테이션
+    - @Before, @After가 메소드 위에 선언되면 해당 테스트 클래스 안에 메소드들이 테스트 되기 전과 후에 각각 실행되게 지정하는 어노테이션
