@@ -2634,3 +2634,23 @@ class ApplicationClass : Application() {
   - (4) 초기화 및 해제
     - @BeforeClass, @AfterClass가 메소드 위에 선언되면 해당 테스트 클래스에서 딱 한 번씩만 수행되도록 지정하는 어노테이션
     - @Before, @After가 메소드 위에 선언되면 해당 테스트 클래스 안에 메소드들이 테스트 되기 전과 후에 각각 실행되게 지정하는 어노테이션
+
+#### Android espresso
+- Android Unit Test Framework
+- UI 상호작용을 실행할 때 작업을 동기화된 상태로 유지해 주며, 백그라운드 작업이 존재하는 경우 그 작업이 완료 된 뒤에 테스트를 진행함
+- 즉, 안정적인 환경에서 UI Test 를 할 수 있게 도와주는 프레임워크
+- 의존성 작성 시 발생가능한 예외상황
+  - AndroidX 를 사용할 때, com.android.support 와 동시에 사용하게 되면 충돌이 발생하여 정상 동작을 하지 않는 경우가 발생
+- UI Test는 androidTest 에서 진행
+- @get:Rule 어노테이션을 달고있는 변수
+  - ActivityTestRule 을 사용하여 해당 작성할 Test 가 수행 될 Activity 에 대한 설정을 해줌
+  - 해당 설정을 해주지 않으면, 수행 할 Acitivity 를 찾지 못하여 빌드 시 에러가 발생
+- UI Function
+  - onView(ViewMatcher) 에는 동작을 수행할 리소스의 id 값을 넣어주면 됨
+  - onView(withId(R.id.text1)) 과 같이 선언해 줌
+  - withId(R.id.text1) 를 사용하여 이벤트를 수행할 ID 값을 작성하면 됨
+  - perform(ViewAction) 에는 말 그대로 수행할 동작에 대해 작성
+  - perform 으로 선언할 때, 한가지의 동작만 수행하는 것이 아니라 , 로 구분하여 순차적으로 여러 개의 동작을 수행하게 작성 가능
+- References
+  - https://github.com/HeeGyeong/UnitTestSample
+  - https://developer.android.com/training/testing/espresso/basics 
