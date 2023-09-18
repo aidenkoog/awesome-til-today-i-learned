@@ -2654,3 +2654,44 @@ class ApplicationClass : Application() {
 - References
   - https://github.com/HeeGyeong/UnitTestSample
   - https://developer.android.com/training/testing/espresso/basics 
+
+#### 안드로이드 화면 밀도
+
+- 화면 공간 안의 픽셀 개수, dpi(dots per inch)에 따라 분류
+- ldpi
+  - 저밀도(120dpi) 화면에 해당
+- mdpi
+  - 중밀도(160dpi) 화면에 해당
+- hdpi
+  - 고밀도(240dpi) 화면에 해당
+- xhdpi
+  - 초고밀도(320dpi) 화면에 해당
+- xxhdpi 	
+  - 초초고밀도(480dpi) 화면에 해당
+- xxxhdpi
+  - 초초초고밀도(640dpi) 화면에 해당
+- 기기의 dpi가 기준 되는 dpi와 정확하게 맞아야 하는 것은 아님
+- 기기의 dpi와 가장 비슷한 레이아웃으로 자동으로 찾아감
+- 이때 고밀도에서 저밀도 순으로 우선순위가 정해짐
+- 최소 너비
+  - 사용 가능한 화면 영역의 가장 짧은 치수를 기준으로 분류
+- sw<N>dp
+  - 사용 예 : sw320dp, sw600dp, sw720dp
+  - sw600dp로 분류된 레이아웃은 화면의 사용 가능한 영역 중,
+  - 가로 또는 세로 중 짧은 치수를 기준으로 600dp가 넘는 경우에만 접근이 가능하도록 함
+- 사용 가능한 화면 너비 또는 높이
+  - 사용 가능한 최소 너비 또는 높이를 기준으로 분류
+- w<N>dp
+  - 최소 사용 가능 너비를 dp로 지정
+ 	- 사용 예 : w720dp, w1024dp 
+- h<N>dp
+  - 최소 사용 가능 높이를 dp로 지정
+ 	- 사용 예 : h720dp, h1024dp 
+- 이전에 사용하던 화면 크기에 따른 분류(small, normal, large, xlarge)를 대체하여 사용하도록 권장되고 있음
+  - 지정된 dp를 기준으로 가로 또는 높이가 기준 dp보다 높을 경우에만 접근이 가능하도록 함
+- 흔히 이 방법은 가로 모드와 세로 모드가 다른 레이아웃에 대응하기 위해 사용하기도 함
+- 화면 방향
+  - 화면 방향에 따라 분류
+  - port: 세로 모드에 해당
+  - land: 가로 모드에 해당
+- 진화된 방법으로 레이아웃은 하나로 통일시키고 dimens.xml을 세분화 하여 사용하는 방법도 가능
