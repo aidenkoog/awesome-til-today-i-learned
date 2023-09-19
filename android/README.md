@@ -2695,3 +2695,21 @@ class ApplicationClass : Application() {
   - port: 세로 모드에 해당
   - land: 가로 모드에 해당
 - 진화된 방법으로 레이아웃은 하나로 통일시키고 dimens.xml을 세분화 하여 사용하는 방법도 가능
+
+#### 리소스 활용 / 스마트폰 크기 호환성
+
+- Display Mertics
+  - 안드로이드 스마트폰 크기 호환성을 위해 개발자 코드에서 직접 스마트폰의 크기 정보를 획득해야 하는 경우가 있음
+  - 이 때 사용 가능한 클래스
+```
+DisplayMetrics dm=new DisplayMetrics();
+getWindowManager().getDefaultDisplay().getMetrics(dm);
+```
+- 획득 가능한 화면 정보
+  - widthPixels: 가로 화소 수
+  - heightPixels: 세로 화소 수
+  - densityDpi: 화면 밀도
+  - density: mdpi를 기준으로 한 배율. 스케일링 시 곱해지는 값
+  - scaledDensity: 문자열 스케일링 시 곱해지는 값
+  - xdpi: 정확한 가로 밀도
+  - ydpi: 정확한 세로 밀도
