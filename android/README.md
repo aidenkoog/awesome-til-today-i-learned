@@ -2713,3 +2713,12 @@ getWindowManager().getDefaultDisplay().getMetrics(dm);
   - scaledDensity: 문자열 스케일링 시 곱해지는 값
   - xdpi: 정확한 가로 밀도
   - ydpi: 정확한 세로 밀도
+
+#### 반응형 그리드뷰 구현
+
+- 매터리얼 디자인
+  - Columns, Gutters, Margins
+  - 레이아웃 그리드는 ①컬럼(열), ②거터, ③여백으로 이루어져 있음
+  - 중단점, Break Point
+  - 그리드 동작
+    - Fluid grids / Fixed grids
