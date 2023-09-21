@@ -2722,3 +2722,32 @@ getWindowManager().getDefaultDisplay().getMetrics(dm);
   - 중단점, Break Point
   - 그리드 동작
     - Fluid grids / Fixed grids
+
+#### 네비게이션 컴포넌트 - 목적지 설정
+
+'''
+val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    val inflater = navHostFragment.navController.navInflater
+    val graph = inflater.inflate(R.navigation.booking_navigation)
+
+    if (isTrue){
+        graph.startDestination = R.id.DetailsFragment
+    }else {
+        graph.startDestination = R.id.OtherDetailsFragment
+    }
+
+    val navController = navHostFragment.navController
+    navController.setGraph(graph, intent.extras)
+'''
+'''
+// Configure the navigation
+val navHost = nav_host_fragment as NavHostFragment
+graph = navHost.navController
+        .navInflater.inflate(R.navigation.nav_graph)
+graph.startDestination = R.id.welcomeFragment
+
+// This seems to be a magical command. Not sure why it's needed :(
+navHost.navController.graph = graph
+
+NavigationUI.setupActionBarWithNavController(this, navHost.navController)
+'''
