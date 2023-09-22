@@ -2751,3 +2751,12 @@ navHost.navController.graph = graph
 
 NavigationUI.setupActionBarWithNavController(this, navHost.navController)
 '''
+
+#### ConstraintLayout flow 설명
+
+- androidx.constraintlayout.helper.widget.Flow
+- Id만 지정해주면 알아서 정렬
+- constraint_referenced_ids 에 아이디 지정
+  - backBtn,searchBtn
+- flow_horizontalGap
+  - 제약을 걸어준 아이템들의 사이 간격(수평) 지정 가능
