@@ -2771,3 +2771,17 @@ NavigationUI.setupActionBarWithNavController(this, navHost.navController)
   - backBtn,searchBtn
 - flow_horizontalGap
   - 제약을 걸어준 아이템들의 사이 간격(수평) 지정 가능
+
+#### DPI 설명
+
+- PX 최소 단위
+- DPI는 Dot Per Inch로 1인치에 들어가는 픽셀을 나타내는 단위
+- ldpi : 120dpi
+- mdpi : 160dpi (기본)
+- hdpi : 240dpi
+- xhdpi : 320dpi
+- xxhdpi : 480dpi
+- xxxhdpi : 640dpi
+- 안드로이드의 기준 DPI는 160 DPI
+- 160 DPI인 경우 밀도 독립단위 DP와 PX이 같은 크기를 가짐
+- 즉, 160 DPI에서는 1dp는 1px이 됨
