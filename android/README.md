@@ -2714,6 +2714,17 @@ getWindowManager().getDefaultDisplay().getMetrics(dm);
   - xdpi: 정확한 가로 밀도
   - ydpi: 정확한 세로 밀도
 
+#### 화면 사이즈 dp 구하기
+```
+Display display = getWindowManager().getDefaultDisplay();
+DisplayMetrics outMetrics = new DisplayMetrics ();
+display.getMetrics(outMetrics);
+    
+float density = getResources().getDisplayMetrics().density;
+float dpHeight = outMetrics.heightPixels / density;
+float dpWidth = outMetrics.widthPixels / density;
+```
+
 #### 반응형 그리드뷰 구현
 
 - 매터리얼 디자인
