@@ -2785,3 +2785,61 @@ NavigationUI.setupActionBarWithNavController(this, navHost.navController)
 - 안드로이드의 기준 DPI는 160 DPI
 - 160 DPI인 경우 밀도 독립단위 DP와 PX이 같은 크기를 가짐
 - 즉, 160 DPI에서는 1dp는 1px이 됨
+
+#### BottomSheetDialog behavior 구현 건
+
+```
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_view"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:animateLayoutChanges="false"
+    android:background="@color/white"
+    android:orientation="vertical">
+    
+    ...
+    </LinearLayout>
+```
+```
+class BottomCalendar() : BottomSheetDialogFragment() {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.bottom_dialog, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+		
+        // 팝업 생성 시 전체화면으로 띄우기
+        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val behavior = BottomSheetBehavior.from<View>(bottomSheet!!)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+		// 드래그해도 팝업이 종료되지 않도록
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+        
+    }
+}
+```
+- Bottom Sheet Dialog의 특징 중 하나로 아래로 드래그를 할 경우 팝업이 내려가게 됨
+- 드래그 되지 않고, 팝업에 있는 close 버튼이나 확인 버튼을 통해 팝업이 종료되도록 하기 위해서 addBottomSheetCallback을 추가하여 State가 EXPANDED 하도록 설정
+- 참고 Behavior 상태
+  - STATE_EXPANDED : 완전히 펼쳐진 상태
+  - STATE_COLLAPSED : 접혀있는 상태
+  - STATE_HIDDEN : 아래로 숨겨진 상태
+  - STATE_HALF_EXPANDED : 절반으로 펼쳐진 상태
+  - STATE_DRAGGING : 드래깅 되고 있는 상태
+  - STATE_SETTING : 드래그/스와이프 직후 고정된 상태
