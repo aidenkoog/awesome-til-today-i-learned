@@ -2843,3 +2843,27 @@ class BottomCalendar() : BottomSheetDialogFragment() {
   - STATE_HALF_EXPANDED : 절반으로 펼쳐진 상태
   - STATE_DRAGGING : 드래깅 되고 있는 상태
   - STATE_SETTING : 드래그/스와이프 직후 고정된 상태
+
+#### RecyclerView ViewType을 지정한 서로 다른 뷰 표시 설명
+
+- 흔한 예제: 좌/우 채팅창 화면
+- 보통 데이터 모델 만들 때 그 모델이 뷰 타입을 가지고 있어야 함
+- 각각의 뷰 홀더를 정의
+- 뷰 타입 구분을 위한 상수 선언
+- 아답터 내 onCreateViewHolder & onBindViewHolder 리턴 분기 처리 (뷰 타입으로 분기)
+```
+override fun getItemViewType(position: Int): Int {
+        return items[position].viewType
+    }
+```
+```
+// setData
+for (i in 0..15) {
+            val item = ChatBubble(
+                chatText = "chat text$i",
+                viewType = if (i % 2 == 0) BubbleViewType.LEFT else BubbleViewType.RIGHT
+            )
+            data.add(item)
+        }
+        chatAdapter.setData(list = data)
+```
