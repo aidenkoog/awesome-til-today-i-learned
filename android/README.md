@@ -2867,3 +2867,19 @@ for (i in 0..15) {
         }
         chatAdapter.setData(list = data)
 ```
+
+#### 안드로이드 네비게이션 popupto, popuptoinclusive
+
+- popUpTo는 BackStack에서 어디까지 이동할 것인지 결정하는 속성
+- popUpToInclusive는 popUpTo로 지정한 fragment까지 pop 시킬 것인지 정하는 속성
+- ex)
+  - fragment1  -> frgment2 -> frgment3 -> frgment4
+  - fragment3에서 fragment4로 이동하는 액션을 아래처럼 만들었다고 가정하면 fragment4에서 popBackStack() 시 fragment2로 이동함
+```
+<action
+      android:id=="@+id/action__fragment3_to_fragment4"
+      app:destination="@id/fragment4"
+      app:popUpTo="@id/fragment2"
+      app:popUpToInclusive="false"/>
+```
+- 만약 app:popUpToInclusive="true" 였다면 fragment1로 이동함
