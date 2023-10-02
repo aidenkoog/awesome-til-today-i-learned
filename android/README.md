@@ -2894,3 +2894,44 @@ for (i in 0..15) {
   - WorkManager는 프로세스 종료 여부와 관계없이 반드시 작업을 실행
   - 하지만 작업이 즉시 실행되는 것을 보장하지 않음으로 적합한 솔루션을 고민해야 함
   - 서버에 로그 또는 분석 데이터를 전송하거나 주기적으로 로컬 데이터를 서버와 동기화하는 작업, 이미지 저장 및 업로드 등의 작업이라면 WorkManager 사용을 선택해도 좋음
+
+#### 딥링크 개념 재정리
+
+- 통상적인 설명
+  - 홈페이지 메인 페이지가 아닌 홈페이지 내에 특정 화면에 한 번에 도달할 수 있는 링크
+  - https://www.blog.naver.com 일반 링크라면 딥 링크는 https://www.blog.naver.com/xxxxxx 라고 할 수 있음
+- 모바일과 웹에서 모두 사용되는 개념
+- URL Scheme
+  - URL Scheme 방식은 Android와 iOS 모두 사용 가능한 최초의 딥 링크 수단
+  - scheme://host_path
+  - URL과 market:// 등
+  - 참고: URI= 식별자, URL=식별자+위치
+  - 단순 설명
+    - URL Scheme은 리소스를 구별하기 용도로 사용하기 때문에 우리 앱을 부르는 고유한 수단으로 사용할 수 있음
+    - 모바일 기기에서 URL Scheme 링크를 클릭했을 때 우리 앱이 캐치하여 반응하게 만드는 것임
+  - 코드 베이스 설명
+    - Activity 내 intent-filter 내 data 태그에 URL Scheme을 정의할 수 있음
+    - scheme는 mashup, host는 deeplink로 정의하면, mashup://deeplink 가 우리 앱의 딥 링크로 설정된 것이라 보면 됨
+  - 매개변수 설정 / 전달 방법
+    - mashup://deeplink?date=20231002&message=안녕
+'''
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.main)
+
+        val action: String? = intent?.action
+        val data: Uri? = intent?.data
+
+	if (action == Intent.ACTION_VIEW) {
+		val date = data?.getQueryParameter("date")  //20231002
+		val message = data?.getQueryParameter("message") //안녕
+
+		...
+	}
+ }
+'''
+- URL Scheme 한계점
+  - Google Play 스토어 앱은 자신들의 앱에서 market:// 사용 중이었는데, 이후 원스토어와 Galaxy Store도 동일한 URL Scheme를 사용하게 되어 유명한 앱의 스킴 값을 알아내서 동일한 스킴으로 앱을 배포를 하는 사람들이 늘어나게 되면서 유명한 앱들이 어려움을 겪게 됨
+  - 스킴값 중복 문제(원스토어, 플레이스토어 등의 스킴이 모두 market://)
+  - 만약에 사용자가 market:// 에 대한 딥 링크를 통해 열리는 앱을 원스토어로 고정하는 순간 Google Play Store 앱과 Galaxy Store 앱은 이후 딥 링크의 기능을 잃어버리게 됨
+  - URL Scheme 방식은 정말 간단한 게 딥 링크를 추가하는 방법이었지만, 간단한 만큼 다른 앱들도 동일하게 추가할 수 있다는 단점이 존재
