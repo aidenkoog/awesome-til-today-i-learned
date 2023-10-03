@@ -2883,6 +2883,9 @@ for (i in 0..15) {
       app:popUpToInclusive="false"/>
 ```
 - 만약 app:popUpToInclusive="true" 였다면 fragment1로 이동함
+- popUpToInclusive
+  - 지정된 목적지를 포함하지 않고 그 이전의 모든 프래그먼트를 제거함. 이는 대상 목적지 자체도 백 스택에서 제거되는 의미
+  - popUpTo의 대상 목적지를 포함하여 제거할 수 있음. 즉, popUpToInclusive="true"로 설정하면 대상 목적지도 함께 제거됨
 
 #### Android Workmanager 관련 설명
 
