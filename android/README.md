@@ -2938,3 +2938,35 @@ override fun onCreate(savedInstanceState: Bundle?) {
   - 스킴값 중복 문제(원스토어, 플레이스토어 등의 스킴이 모두 market://)
   - 만약에 사용자가 market:// 에 대한 딥 링크를 통해 열리는 앱을 원스토어로 고정하는 순간 Google Play Store 앱과 Galaxy Store 앱은 이후 딥 링크의 기능을 잃어버리게 됨
   - URL Scheme 방식은 정말 간단한 게 딥 링크를 추가하는 방법이었지만, 간단한 만큼 다른 앱들도 동일하게 추가할 수 있다는 단점이 존재
+
+#### Android Proguard
+
+- 안드로이드에서 ProGuard는 코드 난독화, 최적화, 제거를 수행하는 도구
+- ProGuard를 사용하면 앱의 크기를 줄이고, 보안 강화 가능
+- ProGuard는 안드로이드 스튜디오에서 쉽게 사용할 수 있으며, 프로젝트의 build.gradle 파일에 설정할 수 있음
+- 프로가드는 코드를 난독화 및 최적화를 해주는 무료 오픈소스 툴
+- 즉 프로가드는 컴파일된 앱 패키지의 코드를 난독화해서 다른 사람이 해당 패키지를 디컴파일 했을때 해독하기 어렵게 만드는 일종의 보안 장치
+- 적용 방법
+  - 우선 안드로이드 패키지에서 어플리케이션의 build.gradle에 들어가서 buildTypes를 확인
+'''
+buildTypes {
+	release {
+    		minifyEnabled false
+        	proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+}
+// release에서 minifyEnabled를 true로 설정하면 proguard가 적용이 됨
+// debug 모드에서도 proguard를 적용해 테스트를 해보고싶다면 debug 모드도 추가해줘야 함
+'''
+'''
+buildTypes {
+	release {
+    		minifyEnabled true
+        	proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+	debug {
+    		minifyEnabled true
+        	proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+}
+'''
