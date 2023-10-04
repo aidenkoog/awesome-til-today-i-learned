@@ -2970,3 +2970,8 @@ buildTypes {
             }
 }
 '''
+
+#### MVVM ViewModel과 AAC ViewModel 차이점
+
+- MVVM ViewModel은 View와 Model을 바인딩해주는 역할을 함
+- AAC ViewModel은 수명주기를 고려해 UI 관련 데이터를 저장하고 관리함
