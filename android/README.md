@@ -2975,3 +2975,23 @@ buildTypes {
 
 - MVVM ViewModel은 View와 Model을 바인딩해주는 역할을 함
 - AAC ViewModel은 수명주기를 고려해 UI 관련 데이터를 저장하고 관리함
+
+#### RecyclerView DiffUtil 적용 과정
+
+- 배경: 아래 메소드들을 일일이 상황에 맞게 사용하는 것은 공력이 많이 듬
+  - notifyItemChanged(int)
+  - notifyItemInserted(int)
+  - notifyItemRemoved(int)
+  - notifyItemRangeChanged(int, int)
+  - notifyItemRangeInserted(int, int)
+  - notifyItemRangeRemoved(int, int)
+- DiffUtil 자체에 대한 설명
+  - DiffUtil은 두 데이터셋을 받아서 그 차이를 계산해주는 클래스
+  - DiffUtil을 사용하면 두 데이터 셋을 비교한 뒤 그중 변한부분만을 파악하여 Recyclerview에 반영할 수 있음
+  - DiffUtil은 Eugene W. Myers의 difference 알고리즘을 이용해서 O(N + D^2)시간 안에 리스트의 비교를 수행
+  - 이때 N은 추가 및 제거된 항목의 갯수이고, D는 스크립트의 길이임
+- 사용 방법
+  - DiffUtil을 사용하기 위해서는 DiffUtil.Callback()을 상속받아 areItemsTheSame으로 비교대상인 두 객체가 동일한지 확인하고,
+  - areContentsTheSame으로 두 아이템이 동일한 데이터를 가지는지 확인하면 됨
+- 참고 링크
+  - https://cliearl.github.io/posts/android/recyclerview-listadapter/ 
