@@ -2994,4 +2994,11 @@ buildTypes {
   - DiffUtil을 사용하기 위해서는 DiffUtil.Callback()을 상속받아 areItemsTheSame으로 비교대상인 두 객체가 동일한지 확인하고,
   - areContentsTheSame으로 두 아이템이 동일한 데이터를 가지는지 확인하면 됨
 - 참고 링크
-  - https://cliearl.github.io/posts/android/recyclerview-listadapter/ 
+  - https://cliearl.github.io/posts/android/recyclerview-listadapter/
+
+#### BottomSheetDialogFragment vs BottomSheetDialog
+
+- bottomsheetDialogFragment는 fragment를 상속받은 object
+- 따라서 bottomsheetDialog에는 없는 lifecycle이 bottomsheetDialogFragment에는 존재
+- activity가 destroy 되었는데 dialog가 dismiss되지 않아서 생기는 windowleak 같은 에러가 bottomsheetDialogFragment에는 일어나지 않는다는 장점이
+있음
