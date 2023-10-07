@@ -3002,3 +3002,6 @@ buildTypes {
 - 따라서 bottomsheetDialog에는 없는 lifecycle이 bottomsheetDialogFragment에는 존재
 - activity가 destroy 되었는데 dialog가 dismiss되지 않아서 생기는 windowleak 같은 에러가 bottomsheetDialogFragment에는 일어나지 않는다는 장점이
 있음
+- BottomSheetDialog 종류로는 Modal, Persistent가 존재
+  - 모달은 열고 닫기가 끝이나 Persistent는 살짝 또는 많이 펼치는 등의 여러 상태 조절이
+가능
