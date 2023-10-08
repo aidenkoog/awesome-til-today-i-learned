@@ -3005,3 +3005,13 @@ buildTypes {
 - BottomSheetDialog 종류로는 Modal, Persistent가 존재
   - 모달은 열고 닫기가 끝이나 Persistent는 살짝 또는 많이 펼치는 등의 여러 상태 조절이
 가능
+- Behavior 내용
+  - Behavior 속성
+    - app:layout_behavior로 BottomSheetBehavior를 설정했다면 다음과 같은 속성도 사용 가능
+    - behavior_hideable : 아래로 드래그했을 때 뷰를 숨길지 여부를 결정. DialogBottomSheet의 경우의 기본값은 true이고 그 외의 경우 기본값은 false
+    - behavior_skipCollapsed: 뷰를 숨길 때 접히는 상태를 무시할 지 여부를 결정. 기본값은 false이며 behavior_hideable이 false라면 효과가 없음
+    - behavior_draggable : 드래그하여 뷰를 접을 지 펼칠 지 여부를 결정. 기본값은 true.
+    - behavior_fitToContents: 펼쳐진 뷰의 높이가 content를 감쌀 것인지의 여부를 결정. false로 설정하게 되면 뷰가 펼쳐졌을 때 아래로 드래그할 경우 부모 컨테이너 높이의 절반으로 먼저 접히고 다시 드래그 하면 완전히 접혀짐. 기본값은 true.
+    - behavior_halfExpandedRatio : 절반만 펼쳐졌을 경우 뷰의 높이를 결정. 기본값은 0.5. behavior_fitToContents 가 true라면 효과가 없음.
+    - behavior_expandedOffset : 완전히 펼쳐진 상태일 때 뷰의 오프셋을 결정. 마찬가지로 behavior_fitToContents 가 true라면 효과가 없으며 절반으로 접혔을 경우의 오프셋보다 커야함. 기본값은 0dp.
+    - behavior_peekHeight : 뷰가 접힌 상태의 높이. 기본값은 auto.
