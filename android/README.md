@@ -3015,3 +3015,20 @@ buildTypes {
     - behavior_halfExpandedRatio : 절반만 펼쳐졌을 경우 뷰의 높이를 결정. 기본값은 0.5. behavior_fitToContents 가 true라면 효과가 없음.
     - behavior_expandedOffset : 완전히 펼쳐진 상태일 때 뷰의 오프셋을 결정. 마찬가지로 behavior_fitToContents 가 true라면 효과가 없으며 절반으로 접혔을 경우의 오프셋보다 커야함. 기본값은 0dp.
     - behavior_peekHeight : 뷰가 접힌 상태의 높이. 기본값은 auto.
+
+#### 확장함수 사용편
+
+- 추가적인 메소드를 구현하면 이를 확장 함수 라고 하고 추가적인 프로퍼티를 구현하면 확장 프로퍼티
+- 마치 기본 클래스에 정의된 함수인 것처럼 새로운 기능을 추가하는 기능!
+- 수정할 수 없는 Third-party-libarary의 클래스에 새로운 기능을 확장하고 싶을 때
+- Retrofit이나 Glide 같은 외부 라이브러리의 Class는 변형할 수 없지만, 함수나 프로퍼티를 추가하여 확장 가능
+- 기존 이미 있는 기본 클래스에 함수 추가
+- 예를 들면 아래와 같이 Int, String와 같은 기본 타입(클래스)에도 함수를 추가
+- receiver type : 확장 대상이 될 클래스
+- receiver object : 확장 함수의 내부 구현 시 this 키워드를 사용하여 receiver type이 가지고 있는 public 인스턴스에 접근하는 객체
+- 만약, RecyclerView에서 isShowing이 true인 아이템만 출력하고 싶다면 filter 키워드를 사용하여 items.filter { it.isShowing }. forEach { }와 같은 방식으로 작성하는 방식이 있음
+- 하지만 아래 코드처럼 확장 프로퍼티를 사용한다면 items.filterInvisible.forEach { }와 같은 방식으로 작성하여 재사용성을 높일 수 있습니다.
+해당 예제를 통해 확장 함수뿐만 아니라 확장 프로퍼티 또한 가능
+- data class Item(val value: Int, var isShowing: Boolean)
+- val ArrayList<Item>.filterInvisible
+- get() = this.filter { it.isShowing }
