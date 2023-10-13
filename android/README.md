@@ -2917,7 +2917,7 @@ for (i in 0..15) {
     - scheme는 mashup, host는 deeplink로 정의하면, mashup://deeplink 가 우리 앱의 딥 링크로 설정된 것이라 보면 됨
   - 매개변수 설정 / 전달 방법
     - mashup://deeplink?date=20231002&message=안녕
-'''
+```
 override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
@@ -2932,7 +2932,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 		...
 	}
  }
-'''
+```
 - URL Scheme 한계점
   - Google Play 스토어 앱은 자신들의 앱에서 market:// 사용 중이었는데, 이후 원스토어와 Galaxy Store도 동일한 URL Scheme를 사용하게 되어 유명한 앱의 스킴 값을 알아내서 동일한 스킴으로 앱을 배포를 하는 사람들이 늘어나게 되면서 유명한 앱들이 어려움을 겪게 됨
   - 스킴값 중복 문제(원스토어, 플레이스토어 등의 스킴이 모두 market://)
@@ -2948,7 +2948,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 - 즉 프로가드는 컴파일된 앱 패키지의 코드를 난독화해서 다른 사람이 해당 패키지를 디컴파일 했을때 해독하기 어렵게 만드는 일종의 보안 장치
 - 적용 방법
   - 우선 안드로이드 패키지에서 어플리케이션의 build.gradle에 들어가서 buildTypes를 확인
-'''
+```
 buildTypes {
 	release {
     		minifyEnabled false
@@ -2957,8 +2957,8 @@ buildTypes {
 }
 // release에서 minifyEnabled를 true로 설정하면 proguard가 적용이 됨
 // debug 모드에서도 proguard를 적용해 테스트를 해보고싶다면 debug 모드도 추가해줘야 함
-'''
-'''
+```
+```
 buildTypes {
 	release {
     		minifyEnabled true
@@ -2969,7 +2969,7 @@ buildTypes {
         	proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             }
 }
-'''
+```
 
 #### MVVM ViewModel과 AAC ViewModel 차이점
 
@@ -3032,3 +3032,43 @@ buildTypes {
 - data class Item(val value: Int, var isShowing: Boolean)
 - val ArrayList<Item>.filterInvisible
 - get() = this.filter { it.isShowing }
+
+#### Kotlin Extension Function을 사용하여 더블 클릭 방지 방법
+
+- 클릭리스너 구현
+```
+class OnSingleClickListener(private val onSingleClick: (View) -> Unit) : View.OnClickListener {
+    companion object {
+        private const val CLICK_INTERVAL = 500
+    }
+
+    private var lastClickedTime: Long = 0L
+
+    override fun onClick(v: View?) {
+        if (isSafe() && v != null) {
+            lastClickedTime = System.currentTimeMillis()
+            onSingleClick(v)
+        }  
+    }
+
+    private fun isSafe(): Boolean {
+        return System.currentTimeMillis() - lastClickedTime > CLICK_INTERVAL
+    }
+}
+```
+- 확장함수 정의
+```
+fun View.setOnSingleClickListener(onSingleClick: (View) -> Unit) {
+    val singleClickListener = OnSingleClickListener { onSingleClick(it) }
+    setOnClickListener(singleClickListener)
+}
+```
+- 실제 사용
+```
+textView.setOnSingleClickListener { onClickItem() }
+```
+- 확장함수 많이 사용하게 되는 경우
+  - 종류별로 Extention Function을 모아서 관리하는 것을 추천
+  - 코틀린은 파일 == 클래스 가 아니니까 예를 들면, ViewExtentions 에는 View 관련 확장 함수들 / CollectionExtensions에는 collection 관련 확장 함수들을 위치
+  - 확장 함수가 늘어난다면, TextViewExtensions, ButtonExtensions / ListExtensions, MapExtensions 등 처럼 더 상세하게 쪼개는 것도 가능
+
