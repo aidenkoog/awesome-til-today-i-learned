@@ -3152,3 +3152,36 @@ override fun getItemViewType(position: Int): Int {
 val playListAdapter = PlayListAdapter(requireContext())
 playListAdapter.setHasStableIds(true)
 ```
+
+#### Glide
+
+- 구글에서 밀고 있는 이미지 로딩 라이브러리
+- 특징
+  - gif, video등을 로딩하는 것도 가능
+  - 빠른 로딩을 위해 내부적으로 cache를 가짐
+  - httpUrlConnection 라이브러리를 기반으로 하지만, volley, okHttp 등의 라이브러리를 사용할 수 있는 플러그인도 지원.
+  - (때문에 url을 통해 웹서버에 접근하여 file등을 다운로드 받을 수 있고 이를 로딩할 수 있음)
+- 구조
+  - 요청한 이미지를 불러오기 위해 Glide 내부에서 거치는 과정
+    - Request, In Memory, On Disk, Network
+  - 1. 요청한 Data가 캐시에 저장되어 있는지 먼저 확인. 만약 한번 이상 로딩했다면 이는 캐시에 저장되어 빠르게 이미지를 로딩 가능
+  - 2. 캐시에 저장되어 있지 않다면 load할 데이터를 불러와서 로딩. 이는 로컬에 저장된 데이터가 아닌 network통신(데이터가 url인경우)을 통해서 얻어올 수도 있음
+  - 캐시를 사용해서 좋은점도 있지만 반대로 메모리관리도 잘해야 함. 물론 Glide에서는 이를 해결할 수 있도록 메서드를 구현하고 있음
+- 캐시 Cache 관리
+  - 1. skipMemoryCache(Boolean)
+    - 로딩한 데이터를 캐시에 저장하길 원치 않는다면 아규먼트 값으로 true를 전달해주면 됨
+  - 2. diskCacheStrategy(DiskCacheStrategy strategy)
+    - 동일한 리소스(data)를 다양한 크기로 여러 번 사용하고 대역폭 사용을 줄이는 대신 일부 속도 및 디스크 공간을 절충하려면 DiskCacheStrategy.DATA or DiskCacheStrategy.ALL을 넘겨줄 수 있음
+    - 만약 캐시에 어떠한 data도 저장하지 않고싶다면 DiskCacheStrategy.NONE을 사용하면 됨
+- 캐시 무효화
+  - 간혹가다가 Glide에 다른 이미지 업로드가 되지 않는 경우가 존재
+  - 이는 캐시에 남아있는 데이터가 먼저 호출되기 때문임
+  - 디스크의 캐시들은 해싱된 키 값이기 때문에 이들을 모두 추적해서 캐시를 삭제하는 방법은 쉽지 않음
+  - 따라서 원하는 이미지를 로드하려면 콘텐츠가 변경될 때 이를 식별하는 식별자를 매번 다르게 하여 캐시가 저장하지 않은 데이터라고 인식하게 하는 것
+  - signiture(objectkey("metaData"))
+  - 해당 메서드를 사용하여 해시키 값을 변경시킬 수 있음
+    - "metaData"로는 수정된 날짜, mime type, mediaStore item등 다양한 데이터를 넣어주면 됨
+    - .signiture(ObjectKey(System.currentTimeMillis()))
+    - 해시키를 수정된 날짜 값을 섞어 캐시를 무효화
+    - 또한 로딩되는 데이터들은 캐시에 저장되지 않도록 skipMemoryCache메서드와 diskCacheStrategy메서드를 통해 셋팅
+    - 마무리로 로딩될 이미지를 원형으로 만들어 이미지뷰에 셋팅해서 마무리
