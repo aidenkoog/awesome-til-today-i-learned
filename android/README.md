@@ -3124,3 +3124,31 @@ textView.setOnSingleClickListener { onClickItem() }
   - 이처럼 객체 내부의 상태를 확인하는 것이 아닌 특정 행동이 이루어졌나를 확인하는 검증을 행위 검증이라고 표현
   - 행위 검증을 하게 되면 상태를 드러내는 메서드를 만들지 않아도 되지만 SUT 에 대한 구현 방식이 드러나게 됨
   - 또한 행위 검증을 끝내지만 상태를 확인한 것이 아니기 때문에 비교적 테스트에 대한 안정감은 낮아질 수도 있음
+
+#### RecyclerView 아이템 깜박임 제거
+
+- recyclerView.apply { itemAnimator = null }
+- Glide option에 thumbnail 추가
+```
+Glide.with(context)
+  .load(sound.imgUrl)
+  .thumbnail(Glide.with(context).load(sound.imgUrl).override(100, 100))
+  .override(100, 100)
+  .skipMemoryCache(true)
+  .dontAnimate()
+  .into(coverImageView)
+```
+- Adapter 클래스 내에서 getItemViewType(), getItemId()를 오버라이딩받아서 아이템마다 아이디를 부여하는 방법
+```
+override fun getItemViewType(position: Int): Int {
+      return position
+  }
+
+  override fun getItemId(position: Int): Long {
+      return position.toLong()
+  }
+```
+```
+val playListAdapter = PlayListAdapter(requireContext())
+playListAdapter.setHasStableIds(true)
+```
