@@ -3152,6 +3152,13 @@ override fun getItemViewType(position: Int): Int {
 val playListAdapter = PlayListAdapter(requireContext())
 playListAdapter.setHasStableIds(true)
 ```
+- 깜빡임 조치를 위한 미검증된 코드
+  - recyclerView로부터 ItemAnimator를 가져와 setSupportsChangeAnimations를 false로 설정하기
+  - recyclerView로부터 ItemAnimator를 가져와 setChangeDuration값 0으로 설정하기
+```
+(fileExplorerList.getItemAnimator() as DefaultItemAnimator).setSupportsChangeAnimations(false)
+  recyclerViewPicture?.getItemAnimator()?.setChangeDuration(0)
+```
 
 #### Glide
 
