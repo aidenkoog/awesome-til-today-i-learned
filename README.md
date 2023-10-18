@@ -1,3 +1,6 @@
+# Notice
+- Repository name: til --> awesome-koog-til-today-i-learned
+
 ### TIL (Today I learned)
 
 It is a place where various knowledge related to software is organized.
