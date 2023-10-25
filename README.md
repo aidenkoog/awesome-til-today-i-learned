@@ -1,6 +1,9 @@
 # Notice
 - Repository name: til --> awesome-koog-til-today-i-learned
 
+### Development
+2023. 10 ~ till die
+
 ### TIL (Today I learned)
 
 It is a place where various knowledge related to software is organized.
