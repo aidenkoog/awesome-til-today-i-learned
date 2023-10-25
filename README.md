@@ -1,8 +1,8 @@
 # Notice
-- Repository name: til --> awesome-koog-til-today-i-learned
+- Repository name: til --> awesome-til-today-i-learned (2023/10)
 
 ### Development
-2023. 10 ~ till die
+- 2023/10 ~ till die
 
 ### TIL (Today I learned)
 
