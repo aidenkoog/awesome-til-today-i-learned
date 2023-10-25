@@ -1,4 +1,7 @@
-# Notice
+# Awesome-til-today-i-learned
+- This is a repository used when I want to reorganize new information or previously known knowledge.
+
+## Notice
 - Repository name: til --> awesome-til-today-i-learned (2023/10)
 
 ### Development
