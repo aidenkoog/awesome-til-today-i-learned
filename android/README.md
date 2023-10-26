@@ -3192,3 +3192,12 @@ playListAdapter.setHasStableIds(true)
     - 해시키를 수정된 날짜 값을 섞어 캐시를 무효화
     - 또한 로딩되는 데이터들은 캐시에 저장되지 않도록 skipMemoryCache메서드와 diskCacheStrategy메서드를 통해 셋팅
     - 마무리로 로딩될 이미지를 원형으로 만들어 이미지뷰에 셋팅해서 마무리
+
+#### Facebook Sns 로그인 연동 이슈 정리
+
+- 페이스북 로그인 기능을 사용하기 위해서는 해당 페이스북 로그인 버튼에 아래와 같이 퍼미션을 넣어줘야 함
+- loginButton.setPermissions("email", "public_profile", "user_friends") Make sure to use a Facebook valid keys
+- 기존 자바코드에서 코틀린으로 자동 변환하게 되면 IDE 는 permissions와 setPermissions 함수와 변수 혼동이 있어서 제대로 마이그레이션 안될 수 있음
+- permissions 는 테스트 목적의 변수, 스트링 리스트 타입을 인자로 취급
+- setPermissions 는 varags string 타입을 인자로 취급
+- 둘중 아무거나 써도 무관하나 이왕이면 공식 setPermissions 사용 권장
