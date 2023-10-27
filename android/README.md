@@ -3201,3 +3201,24 @@ playListAdapter.setHasStableIds(true)
 - permissions 는 테스트 목적의 변수, 스트링 리스트 타입을 인자로 취급
 - setPermissions 는 varags string 타입을 인자로 취급
 - 둘중 아무거나 써도 무관하나 이왕이면 공식 setPermissions 사용 권장
+
+#### 데이터 바인딩 재정리
+
+- 바인딩 어댑터
+  - 바인딩 어댑터 레이아웃 요소에 코드를 바인딩 하는 역할
+  - 바인딩 어댑터는 UI의 속성 중 값을 할당하기 위해 setter를 호출하거나, 따로 작성한 로직을 실행하거나 또는 사용자의 인터렉션에 반응하도록 함
+- 프로젝트 셋팅
+  - DataBinding사용을 위해 buildFeatures{ dataBinding true }를 build.gradle(Module) 파일의 android{} 에 추가
+- Custom Binding Adapter
+  - Custom 바인딩 아답터 오브젝트 클래스 생성
+  - 예제: @BindingAdapter("isVisible") fun isVisible(view: View, isVisible: Boolean)
+  - 예제: @BindingAdapter("imageUrl") fun loadImage(view: ImageView, url: String)
+- ViewBinding, DataBinding
+  - 참고. 액티비티 내 일반 변수는 화면 회전 등의 Configuration 변화 시 값이 초기화되는 문제가 있음. 뷰 모델을 사용하면 이 문제를 해결할 수 있음
+    - 레이아웃에서는 text를 초기화 해주는 부분을 빼줘야 하는데 이걸 안 빼주면 화면을 회전할때마다 처음에 무조건 작성한 초기값이 표시됨
+    - https://github.com/juhwankim-dev/SelfStudy/tree/master/IncreaseNumber
+  - ViewBinding
+    - findViewById 사용 불필요
+    - binding = ActivityMainBinding.inflate(layoutInflater)
+  - DataBinding
+    - binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
