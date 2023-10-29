@@ -3222,3 +3222,39 @@ playListAdapter.setHasStableIds(true)
     - binding = ActivityMainBinding.inflate(layoutInflater)
   - DataBinding
     - binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+#### LiveData --> StateFlow 적용
+
+- 라이브데이터 한계
+  - 비동기 스트림을 지원하지 않음
+  - LiveData는 UI와 밀접하게 연관되어 있어 오직 메인스레드(Main Thread)에서만 읽고 쓸 수 있음
+  - 따라서 ViewModel에서 LiveData를 사용하여 View를 업데이트할 때는 사용할 수 있지만, Data Layer에서 데이터를 처리할 때는 사용하기 어려움
+  - 데이터를 I/O 할 때에는 메인스레드(Main Thread)가 아닌 작업스레드(Worker Thread)에서 비동기 방식으로 처리되어야 하기 때문임
+  - 안드로이드 플랫폼에 종속적
+  - LiveData가 안드로이드 생명주기를 인식한다는 점은, Clean Architecture 관점에서 보았을 때 단점이 될 수도 있음
+  - Presentation Layer에서는 편리하게 사용할 수 있지만, 플랫폼에 종속적이지 않은 순수한 Kotlin 및 Java 코드로 이루어져야 하는 Domain Layer(Business Layer)에서는 사용하기 어려움
+- Flow
+  - Flow는 값을 순차적으로 방출(emit)하고 정상적 혹은 예외적으로 완료되는 비동기 데이터 스트림이기 때문에 Data Layer에서 쓸 수 있음
+  - 또한, 코틀린의 코루틴 API이기 때문에 안드로이드 플랫폼에 종속적이지도 않음
+  - ViewModel에서는 Flow를 직접 쓰는 것이 아니라 StateFlow를 사용하고, View에서는 Lifecycle.repeatOnLifecycle 블록에서 이를 수집하여 사용하여 LiveData처럼 안드로이드의 생명주기를 직접 인식할 수 없는 문제를 해결 가능
+- StateFlow의 특징
+  - StateFlow는 Flow API 중 하나로 현재 상태와 새로운 상태 업데이트를 collector에 내보내는 관찰 가능한 State Holder Flow
+  - LiveData와 마찬가지로 value 속성을 통해 현재 상태 값을 읽을 수 있음
+  - Hot stream이기 때문에 생성하자마자 바로 활성화되며, 값이 업데이트 된 경우에만 반환
+  - 항상 한 개의 값을 가지고 있기 때문에 초기 상태를 생성자에게 전달해야 함
+  - 여러 개의 collector 를 지원하기 때문에 중복 리소스 요청을 방지
+  - collector 수에 관계없이 항상 구독하고 있는 것의 최신 값을 받음
+- LiveData --> StateFlow 로 변환
+  - 참고. MutableLiveData를 쓰면 명시적으로 발행된 이벤트만 전달되는 것이 아니라 이전에 발행되었던 이벤트까지 전달될 수 있기 때문에 MutableLiveData를 확장하여 만든 SingleLiveEvent 클래스를 만들어 화면 이동 처리를 해주는 것이 좋음
+    - 클릭 시 호출되는 함수인 경우 MutableLiveData 확장한 SingleLiveEvent 를 만들어서 사용 필요
+  - LiveData와 달리 StateFlow에는 초기 값이 필요
+  - 따라서 _uiState 객체를 생성할 때 UiState.Loading을 초기값으로 지정
+  - 또한 flow 빌더에서 emit() 함수를 통해 Repository에서 수집한 데이터를 방출
+  - 이벤트 처리의 경우 SingleLiveEvent 클래스를 따로 만들어 줄 필요 없이 SharedFlow를 사용하여 손쉽게 구현 가능
+  - SharedFlow는 StateFlow와 달리 초기값을 가지지 않고, replay 매개변수를 통해 값을 수집할 수 있는 횟수를 결정할 수 있음
+  - 여기에서는 replay=0 으로 설정하여 클릭이벤트가 발생했을 때 데이터가 한 번만 수집되도록 하였음
+  - 따라서 화면 회전 등 앱의 구성이 변경해도 이벤트는 다시 발생하지 않음
+  - 뷰의 생명주기를 인식하는 LiveData와 달리 Flow는 생명주기를 알지 못함
+  - 따라서 뷰가 STOPPED 상태가 되면 LiveData.observe()는 소비자 등록을 자동으로 취소하는 반면, StateFlow는 수집을 자동으로 중지하지 않음
+  - 따라서 lifeCycleScope 확장함수를 통해 생명주기에 따라 변경된 값을 collect하여 UI를 업데이트 해줄 수 있도록 만듬
+  - SharedFlow의 경우도 마찬가지로 collect로 방출된 결과를 받아옴
