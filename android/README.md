@@ -3258,3 +3258,15 @@ playListAdapter.setHasStableIds(true)
   - 따라서 뷰가 STOPPED 상태가 되면 LiveData.observe()는 소비자 등록을 자동으로 취소하는 반면, StateFlow는 수집을 자동으로 중지하지 않음
   - 따라서 lifeCycleScope 확장함수를 통해 생명주기에 따라 변경된 값을 collect하여 UI를 업데이트 해줄 수 있도록 만듬
   - SharedFlow의 경우도 마찬가지로 collect로 방출된 결과를 받아옴
+
+#### SharedFlow 추가 설명
+
+- Flow -> SharedFlow -> StateFlow로 상속 관계
+- SharedFlow는 Flow를 상속 받고 StateFlow는 SharedFlow를 상속 받음
+- 핫 스트림, 초기값 가지지 않음
+- 보통 StateFlow 사용 시 중복된 리소스 방지 정책으로 인해 이벤트가 오지 않는 문제 발생
+  - SharedFlow 사용 하면 이를 해결 가능
+- SharedFlow 속성 설명
+  - replay : 새로운 구독자들에게 이전 이벤트 방출 여부 (0 = 방출X, 1 = 방출)
+  - extraBufferCapacity : 추가 버퍼 생성 여부 (1 = 생성)
+  - OnBufferOverflow : 버퍼 초과시 처리 여부 (DROP_OLDEST = oldest 데이터 drop)
