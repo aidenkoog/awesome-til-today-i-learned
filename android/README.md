@@ -3282,3 +3282,20 @@ playListAdapter.setHasStableIds(true)
   - by 키워드는 interface가 implement되는 경우에만 사용될 수 있음
   - 클래스 상속에는 by 키워드 사용이 불가능
   - 변수(val, var)와 메서드(fun)에 대한 위임만이 가능
+
+#### ViewModel 공유하기
+
+- 액티비티 위에 프래그먼트가 띄워져있는 상황에서 뷰모델을 공유할 상황
+  - private val searchViewModel: SearchViewModel by activityViewModels()
+  - 프래그먼트들의 부모가 되는 액티비티의 뷰모델을 공유하게 됨으로 한 액티비티에서 파생된 프래그먼트들 끼리는 뷰모델을 공유할수 있고 데이터를 공유하게 됨
+  - 당연히 2개의 프래그먼트에서 1개의 뷰모델을 사용하고자 하는 것이기 때문에 두 프래그먼트에서 선언 해야 함
+- activityViewModels()의 문제점은 activity가 죽기전까지 viewModel이 계속해서 살아있다는 점
+  - 만약 액티비티에 구속되지 않고 프래그먼트들끼리 뷰모델을 공유하고자 한다면
+  - private val viewModel: ManageLocationViewModel by viewModels({requireParentFragment()})
+  - viewModels를 선언할 때 requireParentFragment를 기준으로 함
+  - 액티비티를 기준으로 잡는것과 비슷하지만 이것은 parentfragment가 죽을때 죽음으로써 액티비티에 비해 좀더 완화된 사용법
+- 레퍼런스
+  - https://zion830.tistory.com/72
+  - https://velog.io/@silmxmail/ViewModel-%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0
+
+
