@@ -3270,3 +3270,15 @@ playListAdapter.setHasStableIds(true)
   - replay : 새로운 구독자들에게 이전 이벤트 방출 여부 (0 = 방출X, 1 = 방출)
   - extraBufferCapacity : 추가 버퍼 생성 여부 (1 = 생성)
   - OnBufferOverflow : 버퍼 초과시 처리 여부 (DROP_OLDEST = oldest 데이터 drop)
+
+#### Delegate pattern
+
+- Delegate Pattern의 의의
+  - Delegate Pattern은 보일러 플레이트 코드를 줄여줌
+  - 관리 포인트를 일원화시켜 코드 유지보수를 용이하게 해줌
+  - 한곳에서 구현하면 다른 곳에서 위임 받아 사용할 수 있기 때문임
+- 코틀린 by 키워드
+  - 인터페이스 구현에만 사용 가능
+  - by 키워드는 interface가 implement되는 경우에만 사용될 수 있음
+  - 클래스 상속에는 by 키워드 사용이 불가능
+  - 변수(val, var)와 메서드(fun)에 대한 위임만이 가능
