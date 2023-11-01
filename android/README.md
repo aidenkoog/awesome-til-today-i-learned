@@ -3298,4 +3298,12 @@ playListAdapter.setHasStableIds(true)
   - https://zion830.tistory.com/72
   - https://velog.io/@silmxmail/ViewModel-%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0
 
+#### RecyclerView 의 Adapter 내에서 ViewModel 사용에 대한 내용
 
+- 아답터 뷰 홀더 또는 아답터가 뷰모델 인스턴스를 가지고 있는 경우
+  - 안드로이드의 ViewModel은 특히 생명주기와도 밀접해서 이와 관계없는 어댑터나 홀더가 ViewModel의 인스턴스를 가지고 있을 때 잠재적으로 메모리 해제가 안 되거나 하는 문제 발생의 여지가 존재
+  - ViewModel에서 관리하는 데이터만 어댑터에 전달하는 것이 좋은 방향
+  - 어댑터에서 특정 상황에 ViewModel을 조작하고 싶다면 콜백을 구현해서 조작하는 방향 권장
+- 인터페이스 사용해서 처리
+  - 만약 아답터 안에 뷰모델을 사용하고 있다면 인터페이스로 분리
+  - 만약 어떤 함수가 바로 결과를 뱉는게 아니라 시간이 소요되는 작업인 경우에는 어떤식으로 처리를 해야하는가?
