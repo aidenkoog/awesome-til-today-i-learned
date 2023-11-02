@@ -3307,3 +3307,9 @@ playListAdapter.setHasStableIds(true)
 - 인터페이스 사용해서 처리
   - 만약 아답터 안에 뷰모델을 사용하고 있다면 인터페이스로 분리
   - 만약 어떤 함수가 바로 결과를 뱉는게 아니라 시간이 소요되는 작업인 경우에는 어떤식으로 처리를 해야하는가?
+
+#### Padding 관련 속성 정리
+
+- clipToPadding
+- cropToPadding
+- includeFontPadding
