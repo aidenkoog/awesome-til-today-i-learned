@@ -3310,6 +3310,21 @@ playListAdapter.setHasStableIds(true)
 
 #### Padding 관련 속성 정리
 
-- clipToPadding
-- cropToPadding
-- includeFontPadding
+- clipToPadding (RecyclerView)
+  - android:clipToPadding="false" 속성을 리사이클러뷰에 주면 패딩공간을 스크롤할 때 공간으로 활용할 수 있음
+  - 예
+    - 원래 패딩 영역, 아이템1(반쯤가림)
+    - 아이템2
+    - 아이템3
+    - 아이템4
+    - 원래 패딩 영역, 아이템5(반쯤가림)
+  - 기본적으로 리사이클러뷰에 android:clipToPadding="false" 속성을 주는게 좋다고 함
+- cropToPadding (ImageView)
+  - 이미지가 레이아웃보다 크다면 잘라 낼 것인지에 확인
+  - 보통 레이아웃에서 제공하는 공간(패딩이나 여백을 제외한 공간)에 맞추어 이미지를 잘라내게 됨
+- includeFontPadding (TextView)
+  - 텍스트 폰트 위/아래 padding 없애기. (includeFontPadding)
+  - TextView에 텍스트가 표시될 때 텍스트의 상단에 폰트 자체의 ascent, descent 영역 보다 좀 더 충분한 padding을 추가할지, 아니면 정확하게 ascent, descent 영역만을 사용할지 여부를 지정할 수 있는데 이 때 "includeFontPadding" 속성을 사용
+  - 폰트 구조 --> 폰트 메트릭스
+    - ascend: baseline에서 위쪽 방향으로 글자까지의 권장 거리. top과 ascend 사이
+    - descent: baseline에서 아래쪽 방향으로 글자까지의 권장 거리. bottom과 descent 사이
