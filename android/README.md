@@ -3333,3 +3333,32 @@ playListAdapter.setHasStableIds(true)
 
 - Button, AppCompatButton 등에 해당
 - android:stateListAnimator="@null" 추가
+
+#### MVVM 패턴 적용 시 고려해야 사항들
+
+- ViewModel에는 Android Framework가 최대한 없는 방향으로 코드를 작성
+- Android Framework에 종속성을 가지지 않아야 lightweight unit test를 진행할 수 있게 되어 leak safety와 modularity가 향상
+- 종속성을 가지고 있는지에 대해 쉽게 확인 할 수 있는 방법은 ViewModel 안에 android.* 에 관한 패키지의 import 여부에 대해 확인하면 됨
+- ViewModel은 Activity/Fragment 보다 lifecycle이 길기 때문에 Activity/Fragment가 destroy 되고 recreate 되었을 경우 기존에 존재하던 ViewModel을 가지게 됨
+- ViewModel은 새로운 Activity/Fragment를 참조하고 있는게 아니라 destroyed된 Activity/Fragment를 참조하고 있기 때문에 memory leak이 일어나거나 crash가 발생하게 됨
+- View 뿐만 아니라 Activity의 context를 참조하고 있는 class도 참조해서는 안됨
+- ViewModel에서 View랑 통신하고 싶을때
+  - ViewModel안에 정의된 LiveData를 활용하여 observer pattern을 이용하여 통신
+- Two-way Data Binding 같은 예외적인 케이스를 제외하고 View는 오로지 LiveData를 observe만 해야하기 때문에
+- ViewModel에 선언된 MutableLiveData를 getter나 backing properties를 이용하여 캡슐화를 해야함
+- Activity/Fragment에 if문이라던지 for문 등 복잡한 로직이 존재하면 안됨
+- 이러한 로직은 ViewModel안에 아니면 다른 layer에 존재해야 합니다.
+- view는 일반적으로 unit test가 아니므로 view에 존재하는 로직의 유효성을 검사하기 어려움
+- Activity/Fragment에는 최소한의 로직만 있어야 함
+- 여러 개의 뷰모델을 하나의 뷰에서 사용하는 것 관련해서 우선 Google에서 권장하는 방식은 하나의 ViewModel만을 사용하는것을 권장하고 있음
+- 상황에 따라서 여러개의 ViewModel을 사용할 수 있지만
+- 하나의 View에 여러개의 ViewModel이 존재했을 경우 복잡도가 높아짐
+- 하나의 ViewModel에는 여러 LiveData를 가지는게 더 효율적으로 코드를 관리 할 수 있음
+- 뷰모델 내에서 어떤 값을 프리퍼런스에 바로 넣기 보다는 뷰모델에 repository를 주입해서 repository 메소드 안에서 프리퍼런스 업데이트 작업을 하는 것이 테스트와 아키텍쳐 구조 상 좋음
+- BindingAdapter나 BindingMethod를 사용하여 사용하고 싶은 attribute를 정의할 수 있음
+- BindingAdapter는 주로 extension 형식으로 사용되고
+- BindingMethod는 CustomView에서 정의한 setter 메서드를 layout file에서 attribute로 사용할 수 있음
+- CustomView를 사용하지 않는 경우에는 BindingAdapter를 사용하고
+- CustomView를 사용할 경우에는 최대한 BindingMethod를 사용하는것을 추천
+- BindingAdapter를 남발하게되면 setter 메서드를 찾는데 어려움을 겪게 될 수 있음
+- CustomView에서 setter 메서드의 parameter가 2개 이상일 경우에는 BindingMethod를 사용할 수 없으므로 이때는 BindingAdapter를 사용해야만 함
