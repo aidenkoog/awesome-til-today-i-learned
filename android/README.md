@@ -3328,3 +3328,8 @@ playListAdapter.setHasStableIds(true)
   - 폰트 구조 --> 폰트 메트릭스
     - ascend: baseline에서 위쪽 방향으로 글자까지의 권장 거리. top과 ascend 사이
     - descent: baseline에서 아래쪽 방향으로 글자까지의 권장 거리. bottom과 descent 사이
+
+#### 버튼 쉐도우 효과 제거 방법
+
+- Button, AppCompatButton 등에 해당
+- android:stateListAnimator="@null" 추가
