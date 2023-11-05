@@ -3385,3 +3385,18 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - Synchronized
   - 안전하게 동시성을 보장 가능
   - 하지만 비용이 가장 큼
+
+#### Dokka 문서화
+
+- Dokka로 프로젝트를 문서화하는 법
+  - Dokka는 코틀린과 자바로 작성된 프로젝트의 코드를 분석해서 문서화해주는 플러그인
+  - Java의 Javadoc과 Kotlin의 Kdoc 구조를 분석 가능
+  - 문서는 Javadoc, HTML 형식으로 출력 가능
+  - 안드로이드 스튜디오의 예제 프로젝트에 Dokka를 적용 과정
+    - 우선 New project > Login Activity를 선택
+    - 이 프로젝트는 약간의 구조화가 되어 있고 클래스마다 주석이 달려있기 때문에 Dokka의 예제로 사용하기 좋음
+  - Html 문서를 만들고 싶은 경우 ./gradlew dokkaHtml, Javadoc 문서를 작성하고 싶은 경우 ./gradlew dokkaJavadoc을 실행
+  - 커맨드를 실행하면 app > build > dokka 폴더에 파일이 생성되기 때문에 index.html을 브라우저에서 실행시키면 됨
+  - 그러면 안드로이드 프로젝트 구조에 따라 Html이 보이며 클래스에 달아준 주석의 내용이 같이 표시되게 되
+    - noAndroidSdkLink.set(false) 옵션을 적용해서 Dokka 문서가 Android developers의 문서와 연결되지 않도록 했는데 이 외에도 많은 다양한 옵션들이 존재
+
