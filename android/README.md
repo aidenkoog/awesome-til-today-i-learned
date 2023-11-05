@@ -3362,3 +3362,26 @@ playListAdapter.setHasStableIds(true)
 - CustomView를 사용할 경우에는 최대한 BindingMethod를 사용하는것을 추천
 - BindingAdapter를 남발하게되면 setter 메서드를 찾는데 어려움을 겪게 될 수 있음
 - CustomView에서 setter 메서드의 parameter가 2개 이상일 경우에는 BindingMethod를 사용할 수 없으므로 이때는 BindingAdapter를 사용해야만 함
+
+#### Atomic Type, Volatile, Synchronized
+
+- 멀티스레드 환경에서 경쟁 상태 (race condition) 고려하기 위한 개념
+- Atomic Type
+  - Atomic은 CAS 방식에 기반하여 동기화 문제를 해결
+  - CAS란: CAS란 변수의 값을 변경하기 전에 기존에 가지고 있던 값이 내가 예상하던 값과 같을 경우에만 새로운 값으로 할당하는 방법
+  - Atomic Boolean
+    - boolean 자료형을 가지고 있는 wrapping class
+    - 동시성 보장
+    - compareAndSet(boolean expect, boolean update
+    - getAndSet(boolean update). 이 메소드는 이전 값을 리턴하고 새로운 값으로 Atomic하게 update
+  - Atomic Integer
+    - compareAndSet(int expect, int update)과 getAndSet()을 파라미터나 리턴 타입만 바꿔서 동일하게 제공
+    - incrementAndGet(), x만큼 증가시키는 accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)
+- Volatile
+  - "volatile" 은 Thread1에서 쓰고, Thread2에서 읽는 경우만 동시성을 보장
+  - 두개의 쓰레드에서 쓴다면 문제가 될 수 있음. (한쪽에서는 쓰기만하고, 한쪽은 읽기만 하고)
+  - 키워드가 붙은 자원은 하나의 thread만이 write하고 나머지는 스레드는 read만 한다는 전제하에만 동시성을 보장
+volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가 아닌 Main Memory에서 이뤄집니다.
+- Synchronized
+  - 안전하게 동시성을 보장 가능
+  - 하지만 비용이 가장 큼
