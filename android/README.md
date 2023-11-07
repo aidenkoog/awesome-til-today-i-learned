@@ -3130,6 +3130,7 @@ textView.setOnSingleClickListener { onClickItem() }
 - recyclerView.apply { itemAnimator = null }
 - Glide option에 thumbnail 추가
 ```
+// 아래 코드는 적용해보았으나 (리싸이클러뷰 안에서) 깜빡임 현상은 계속됨
 Glide.with(context)
   .load(sound.imgUrl)
   .thumbnail(Glide.with(context).load(sound.imgUrl).override(100, 100))
@@ -3140,6 +3141,7 @@ Glide.with(context)
 ```
 - Adapter 클래스 내에서 getItemViewType(), getItemId()를 오버라이딩받아서 아이템마다 아이디를 부여하는 방법
 ```
+// 아래 코드도 마찬가지로 효과없음
 override fun getItemViewType(position: Int): Int {
       return position
   }
@@ -3152,12 +3154,40 @@ override fun getItemViewType(position: Int): Int {
 val playListAdapter = PlayListAdapter(requireContext())
 playListAdapter.setHasStableIds(true)
 ```
-- 깜빡임 조치를 위한 미검증된 코드
+- 깜빡임 조치를 위한 미검증된 코드 (효과없음)
   - recyclerView로부터 ItemAnimator를 가져와 setSupportsChangeAnimations를 false로 설정하기
   - recyclerView로부터 ItemAnimator를 가져와 setChangeDuration값 0으로 설정하기
 ```
 (fileExplorerList.getItemAnimator() as DefaultItemAnimator).setSupportsChangeAnimations(false)
   recyclerViewPicture?.getItemAnimator()?.setChangeDuration(0)
+```
+```
+// 아래 코드는 효과가 있음
+// 효과가 있으나 이슈가 발견된 상황
+// 케이스 1: 
+// 리싸이클러뷰 (그리드 레이아웃 매니저 사용) 에서 스크롤 하다 보면 엉뚱한 아이템들에 대해 photoUrl이 적용되어 있는 문제가 발생
+Glide.with(context).asBitmap().load(photoUrl).transition(
+                BitmapTransitionOptions.withCrossFade()
+            ).override(200).into(object : CustomTarget<Bitmap?>() {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap?>?,
+                ) {
+                    setImageBitmap(resource)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    setImageDrawable(placeholder)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    setImageDrawable(errorDrawable)
+                }
+            })
+// 그래서 아래와 같이 다시 원복 시키고 테스트하면 다시 이미지 깜빡임 현상이 발생하고 있음
+Glide.with(context).asBitmap().load(photoUrl).transition(
+                BitmapTransitionOptions.withCrossFade()
+            ).override(200).into(this)            
 ```
 
 #### Glide
@@ -3192,6 +3222,15 @@ playListAdapter.setHasStableIds(true)
     - 해시키를 수정된 날짜 값을 섞어 캐시를 무효화
     - 또한 로딩되는 데이터들은 캐시에 저장되지 않도록 skipMemoryCache메서드와 diskCacheStrategy메서드를 통해 셋팅
     - 마무리로 로딩될 이미지를 원형으로 만들어 이미지뷰에 셋팅해서 마무리
+
+#### Glide 에서 제공하는 함수 설명
+
+- load(url) : url 로드
+- error(url) : 로드 실패시 보여줄 이미지 url
+- placeholder(url) : 로드 진행 중 보여줄 이미지 url
+- centerCrop() : centerCrop(정사각형 만들고 넘어가는 것은 자르는 작업) 외에도 여러가지 가능
+- listener() : 로드 실패시, 준비 완료시 리스너
+- into(view) : view에 로드
 
 #### Facebook Sns 로그인 연동 이슈 정리
 
