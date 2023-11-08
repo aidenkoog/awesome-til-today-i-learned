@@ -3439,3 +3439,11 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - 그러면 안드로이드 프로젝트 구조에 따라 Html이 보이며 클래스에 달아준 주석의 내용이 같이 표시되게 되
     - noAndroidSdkLink.set(false) 옵션을 적용해서 Dokka 문서가 Android developers의 문서와 연결되지 않도록 했는데 이 외에도 많은 다양한 옵션들이 존재
 
+#### Glide 사용 이슈 및 이미지뷰 관련 정리 내용
+
+- Glide clear 함수로 리소스 해제가 제대로 될 것으로 판단
+- 그러나 image view의 포그라운드 이미지가 해제되지 않음
+- 그래서 DataBinding된 이미지뷰 확장함수 내에서 강제로 이미지뷰의 이미지 리소스를 초기화
+  - setImageResource(0)
+  - setBitmapImage(null)
+- 이렇게 처리하고 나서 바로 아래 코드에서 background, bitmap image 설정해주니 정상 동작
