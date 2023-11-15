@@ -3447,3 +3447,26 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - setImageResource(0)
   - setBitmapImage(null)
 - 이렇게 처리하고 나서 바로 아래 코드에서 background, bitmap image 설정해주니 정상 동작
+
+#### Groovy --> KTS 마이그레이션 과정 재정리
+
+- 마이그레이션 장점
+  - kotlin 파일이기 때문에 자동완성이 가능한 점
+  - 여러 모듈에서 동일하게 필요한 라이브러리들이 있는데, 그런 것들을 for문으로 한번에 추가할 수 있다는 점
+  - gradle에서 Kotlin 문법들을 사용할 수 있다는 점
+  - 라이브러리 버전 뿐만 아니라 EndPoint가 변경되었을 때도 수정이 쉽다는 점
+- 적용 방법
+  - 좌측 프로젝트 패널을 Project Files로 변경
+  - 안드로이드 스튜디오에서 File > New > Directory로 프로젝트 root에 buildSrc 폴더를 생성
+  - 해당 폴더를 우클릭 후, New > File로 build.gradle.kts 파일을 생성
+  - build.gradle.kts 파일 안에 import org.gradle.kotlin.dsl.`kotlin-dsl` plugins {`kotlin-dsl`} repositories {mavenCentral()}
+  - 폴더 안에 새로운 directory를 생성하는데, 디렉토리명은 src/main/java 로 설정
+  - 생성한 java 폴더 안에 자신의 앱 패키지와 동일하게 폴더를 생성해주고 Configuration object와 Dependencies kotlin파일을 생성
+  - Configuration 파일에는 app 단위 gradle의 android 내에 필요한 config 들을 정의
+  - Dependencies 파일에는 사용할 플러그인, 라이브러리와 각각의 버전을 작성
+    - object Versions/ object Libraries
+  - 각 모듈들의 build.gradle 파일의 이름을 build.gradle.kts로 변경
+  - KTS 문법을 사용하여 gradle 파일을 수정
+- 적용 후기
+  - KTS를 적용한 후 buildSrc 한 곳에서 모든 모듈에 적용 중인 라이브러리나 플러그인을 관리함으로써 기존의 작업을 많이 단축시키는 것이 가능
+  - gradle에서도 자동완성 기능과 import를 사용할 수 있어서 편리
