@@ -3470,3 +3470,12 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - 적용 후기
   - KTS를 적용한 후 buildSrc 한 곳에서 모든 모듈에 적용 중인 라이브러리나 플러그인을 관리함으로써 기존의 작업을 많이 단축시키는 것이 가능
   - gradle에서도 자동완성 기능과 import를 사용할 수 있어서 편리
+
+#### Layout 이름 작명 고찰
+
+- include 되는 레이아웃의 경우 Prefix로 include 또는 inc 를 붙이는게 좋을 듯 함.
+  - 예. inc_list_item_xxxx.xml / include_list_item_xxxx.xml
+- ConstraintLayout 내 3~4개의 뷰들이 각각 동일한 비율로 자리를 잡으려면
+  - start & end를 서로 체인으로 엮어줘야 함
+  - start_end, end_start
+- 불가피하게 Depth가 깊어지는 레이아웃의 경우 최대한 뎁스없이 구현하거나 또는 include를 사용해서 가독성이라도 높여야 함
