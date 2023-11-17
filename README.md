@@ -43,6 +43,7 @@ It is a place where various knowledge related to software is organized.
 - 👉 uml
 - 👉 vcs
 - 👉 retrospective
+- 👉 rearrange
 
 #### Link
 
