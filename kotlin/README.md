@@ -1251,3 +1251,9 @@
   - Nullable 객체를 Non-null 타입으로 강제로 캐스트
   - 이 연산자는 객체가 null인 경우 NullPointerException을 발생시킬 수 있으므로 주의해야 함
 val length = name!!.length
+
+#### const val vs val 재정리
+
+- const val 는 컴파일 시간에 결정되는 상수. 
+- 런타임에 할당되는 val 와 달리 컴파일 시간 동안 할당이 되어야 함
+- const 는 함수나 어떤 클래스의 생성자에게도 결코 할당 될 수 없고 오직 문자열이나 기본 자료형으로 할당
