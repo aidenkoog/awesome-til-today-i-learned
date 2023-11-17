@@ -3479,3 +3479,13 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - start & end를 서로 체인으로 엮어줘야 함
   - start_end, end_start
 - 불가피하게 Depth가 깊어지는 레이아웃의 경우 최대한 뎁스없이 구현하거나 또는 include를 사용해서 가독성이라도 높여야 함
+
+#### Android Glide 화질 저하 이슈 및 코너 Radius 적용 건 정리
+
+- 코드에 override 로 강제로 100으로 사이즈 설정이 되어 있는 상태였음
+- 해당 코드 삭제 후 아래 코드 추가
+```
+  Glide.with(context).asBitmap().load(url).transition(
+                BitmapTransitionOptions.withCrossFade()
+            ).transform(CenterCrop()).transform(RoundedCorners(26)) // <-- transform method 활용하여 이미지 처리
+```
