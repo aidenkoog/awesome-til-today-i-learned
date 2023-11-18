@@ -3526,3 +3526,14 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
                 BitmapTransitionOptions.withCrossFade()
             ).transform(CenterCrop()).transform(RoundedCorners(26)) // <-- transform method 활용하여 이미지 처리
 ```
+
+#### 텍스트 크기 sp vs dp 재정리
+
+- DP(Density-Independent Pixels)는 UI 레이아웃을 정의할 때 레이아웃 치수나 위치를 지정하기 위해 사용하는 단위
+  - 픽셀 독립 단위이며 화면의 크기가 달라도 동일한 비율로 보여주기 위해 안드로이드에서 정의한 단위이며 큰 화면, 작은 화면에 상관없이 같은 크기로 나뉨
+- SP(Scale-Independent Pixels)는 UI 레이아웃을 정의할 때 텍스트의 크기를 지정하기 위해 사용하는 단위
+  - 안드로이드 설정 화면에서 사용자는 안드로이스 시스템 전체에서 보여지는 텍스트의 크기를 선택하여 설정할 수 있는데 SP는 해당 설정에 영향을 받음. 
+  - 예를 들어, 시스템 설정에서 텍스트 크기를 "최대 크케"로 설정하게 되면 UI 레이아웃을 정의할 때 SP로 크기를 지정해놓은 TextView의 텍스트 크기가 영향을 받아 커지게 됨.
+  - 반면에 TextView의 텍스트 크기를 DP로 설정하게 되면 시스템 설정의 텍스트 크기 값의 변화에 상관없이 일정한 크기를 유지
+  - 디자인 명세에 따라서는 텍스트 크기의 값의 단위를 SP를 사용하는 것이 아니라 DP를 사용하는 것이 좋을 경우도 있을 것임.
+  - 언제나 일관성 있게 화면에서 똑같은 텍스트 크기를 표현하고자 하는 경우에는 SP가 아닌 DP 단위를 사용하기를 권장
