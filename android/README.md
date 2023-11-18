@@ -1957,9 +1957,10 @@ Google Play 스토어가 설치된 Chrome OS 기기
     - task 부분에서 ktlint 실행 가능
 - [detekt]
   - 정적 프로그램 분석 (static program analysis): 프로그램을 실행하지 않고 소프트웨어를 분석하는 것
+  - 코틀린을 위한 정적 분석 툴
   - ktlint와의 차이점
     - ktlint는 코딩 컨벤션을 중점적으로 보고, detekt는 코드의 전체적인 질을 높이기 위한 분석 수행
-    - 예. 메소드 길이, 메소드 Depth 등의 분석 수행 (코드 스멜)
+    - 예. 메소드 길이, 메소드 Depth 등의 분석 수행 (코드 스멜 - 리팩토링 관점)
   - 적용법
     - configurations { detekt } 추가
     - dependencies 내 io.gitlab.arturbosch.detekt: detekt-cli:1.22.0-RC3 추가
