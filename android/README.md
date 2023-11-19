@@ -3580,3 +3580,8 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - 즉 callbackFlow로 구성한 block이 각각 호출
 - callbackFlow는 기본적으로 기본 buffer 크기를 사용하도록 고정
 - 생성자 param으로 넘겨줄 수 없기 때문에 buffer의 크기를 변경하려면 buffer() operator를 사용 가능
+
+#### onSaveInstanceState & onRestoreInstanceState() 재정리
+
+- onSaveInstanceState()는 onDestroy() 메소드가 호출되기 전에 호출됨
+- onRestoreInstanceState()는 onCreate() 메소드가 호출된 직후에 호출
