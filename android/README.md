@@ -3554,3 +3554,29 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - 매니페스트에 Rtl를 사용하겠다고 설정되어야 함 (<application ... android:supportsRtl="true")
 - 어떤 컴포넌트가 RTL로 표시되었을 때 어떻게 나타나는지 확인하고 싶다면 해당 컴포넌트에 다음 속성 적용
   - android:layoutDirection="rtl"
+
+#### CallbackFlow
+
+- callback을 flow로 변환
+- callbackFlow는 Flow라기 보단 flow builder라는 표현이 더 알맞음
+- 이름에서 보이듯이 callback을 flow로 변경
+- 기존에는 비동기 처리를 위해 callback 구조를 많이 사용하기도 했고, 여타 라이브러리들나 SDK들이 callback으로 응답을 주는 경우가 많기 때문에 이를 중간에서 flow로 converting 하기 위해 사용
+- callbackFlow 정의 부분
+  - public fun <T> callbackFlow(@BuilderInference block: suspend ProducerScope<T>.() -> Unit): Flow<T> = CallbackFlowBuilder(block)
+  - 넘겨받은 block이 CallbackFlowBuilder()의 param으로 들어감
+  - 여기서 param의 정의만으로 생성된 block은 ProducerScope이라는 걸 알 수 있음
+  - 즉, 내부적으로 channel을 생성
+- callbackFlow로 생성되는 coroutine scope은 ProducerScope이므로 기본적인 Channel api를 사용하여 데이터의 방출을 처리
+- trySend()를 이용하여 성공과 실패일때 각각 데이터를 전달하도록 처리
+- trySend는 coroutine v1.5.0 이후부터 offer를 대신하는 api로 buffer가 꽉 찬 상태에서는 false를 반환
+- awaitClose {..}는 ProducerScope block의 코드의 실행이 완료되고 나서 바로 종료되는 걸 막는 코드
+- 콜백이 한 번만 올 수도 있으나, addListener(또는 addObserver)로 특정 이벤트를 관찰하는 경우에는 callback이 호출되는 걸 지속적으로 관찰해야 하기 때문에 이 api를 써서 지속적으로 callback을 전달받을 수 있도록 flow를 유지.
+- awaitClose는 flow가 cancel 되거나 close 될 때(channel.close()가 명시적으로 호출될 때) 해당 블록을 호출
+- 해당 block안에서는 resource를 해체하는 코드가 삽입되어야 함
+- 만약 callback을 addObserver()로 등록하여 전달받고 있었다면 removeOvserver()가 들어가야 할 것으로 판단
+- awaitClose를 명시하지 않을 경우 observer leak이 발생할 수 있다고 판단하기 때문에 반드시 block의 맨 마지막에 명시해야 하며, 그렇지 않을 경우 exception이 발생하므로 주의 필요
+- callbackFlow는 Cold stream
+- Cold stream이기 때문에 만약 두 곳에서 collect를 한다면 동일한 결과를 두 번 반환
+- 즉 callbackFlow로 구성한 block이 각각 호출
+- callbackFlow는 기본적으로 기본 buffer 크기를 사용하도록 고정
+- 생성자 param으로 넘겨줄 수 없기 때문에 buffer의 크기를 변경하려면 buffer() operator를 사용 가능
