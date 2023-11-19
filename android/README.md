@@ -3584,4 +3584,6 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 #### onSaveInstanceState & onRestoreInstanceState() 재정리
 
 - onSaveInstanceState()는 onDestroy() 메소드가 호출되기 전에 호출됨
+  - onPause --> onStop --> onSaveInstanceState --> onDestroy
 - onRestoreInstanceState()는 onCreate() 메소드가 호출된 직후에 호출
+  - onCreate --> onStart --> onRestoreInstanceState --> onResume
