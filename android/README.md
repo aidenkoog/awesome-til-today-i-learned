@@ -3587,3 +3587,11 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - onPause --> onStop --> onSaveInstanceState --> onDestroy
 - onRestoreInstanceState()는 onCreate() 메소드가 호출된 직후에 호출
   - onCreate --> onStart --> onRestoreInstanceState --> onResume
+
+#### ViewBinding, findViewById 에 대한 근본적인 이유 설명
+- 뷰와 상호 작용 하는 코드를 쉽게 작성 가능.
+- findViewById 대체. 
+- findViewById 의 문제점 리스트업
+  - 1. 중복되는 리소스의 존재 문제 (타 레이아웃에 있는 리소스 아이디 참조 가능)
+  - 2. 현재 레이아웃이 아닌 다른 레이아웃에 있는 리소스도 참조 가능하기 때문에 컴파일 시점때 에러가 발생하지 않고 런타임때 에러가 발생하는 문제
+- ViewBinding 사용 시 타 레이아웃에 있는 아이디는 참조하지 않으므로 오로지 현재 레이아웃에만 집중 가능
