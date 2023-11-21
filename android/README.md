@@ -3595,3 +3595,15 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - 1. 중복되는 리소스의 존재 문제 (타 레이아웃에 있는 리소스 아이디 참조 가능)
   - 2. 현재 레이아웃이 아닌 다른 레이아웃에 있는 리소스도 참조 가능하기 때문에 컴파일 시점때 에러가 발생하지 않고 런타임때 에러가 발생하는 문제
 - ViewBinding 사용 시 타 레이아웃에 있는 아이디는 참조하지 않으므로 오로지 현재 레이아웃에만 집중 가능
+
+#### Coroutine Async / Await / Job Join
+
+- Async 를 사용하면 job join 하는 것보다 훨씬 더 간편하게 사용 가능
+  - Job 하나당 3초씩 걸린다 가정 => join 하면 병렬 처리 되어 3초 걸림, join 하지 않으면 6초 걸림
+  - val job1 = launch { answer1 = networkCall() },  val job2 = launch { answer2 = networkCall2() }, job1.join(), job2.join()
+- Async는 새로운 coroutine을 시작하고 GlobalScope.launch과 비슷하지만, GlobalScope.launch처럼 job(백그라운드 작업)을 리턴하지않고 Deferred를 리턴
+- Async를 사용했기 때문에 deferred값을 리턴
+  - deferred값을 리턴할 때는 await을 사용해줘야 함.
+  - await은 스레드를 방해하지 않고 deferred값이 계산될 때까지, 기다리게 하는 함수
+- GlobalScope은 topLevel 코루틴 이고 앱 라이프사이클중 항상 살아있음.
+- LifecycleScope은 현재 라이프 사이클에서만 살아있는 코루틴
