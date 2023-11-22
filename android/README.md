@@ -3625,3 +3625,8 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - compose 는 가진 의미 그대로 구성해서 사용 가능
   - 그래서 더 이상 상속이 아니라 내부 컴포넌트를 조합해서 사용할 수 있도록 컴포즈가 나온 것임
     - 상속이 아닌 조합으로 ui 구성
+
+#### HashMap vs LinkedHashMap
+
+- HashMap 은 순서대로 저장되지 않음
+- LinkedHashMap 은 순서대로 저장됨 (put한 순서)
