@@ -3637,3 +3637,12 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - 대표적인것이 ARMv7 이 있고, 우리가 작성한 코드가 javac에 의해 바이트 코드(.class)로 바뀌고, Dalvik VM(현재는 ART VM) 안에서 JIT 컴파일을 통해 기계어로 번역
 - 이때 이 기계어를 해석하고 명령하는데, 이때 CPU 마다 명령을 실행하는 방법이 다르고, 실행 가능한 바이너리 형식, 명령 집합 등이 정의되어 있는 것이 애플리케이션 바이너리 인터페이스(ABI)
 
+#### 안드로이드 빌드 프로세스
+
+- Android asset packaging tool (AAPT) 를 사용하여 리소스(/res 이하 파일들)를 컴파일
+  / 이때 R.java 라고 불리는 하나의 클래스로 컴파일
+- 두번째로 .java 파일들이 javac 로 부터 .class 파일로 컴파일
+- 클래스 파일들은 dx 툴(Android SDK tools 아래 포함)에 의해 달빅 바이트 코드(classes.dex)로 변환
+- APKbuilder 에 의해 apk(android packagin key) file 생성
+- 현재는 각 디바이스의 해상도, 언어, abi 타입등으로 나눠 들어가 있는 apks 로 제공되어 나중에 디바이스에 필요한 리소스만 가지고, 애플리케이션을 만드는 AAB(android app bundle) 로 사용되기도 함
+
