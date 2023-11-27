@@ -3646,3 +3646,16 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - APKbuilder 에 의해 apk(android packagin key) file 생성
 - 현재는 각 디바이스의 해상도, 언어, abi 타입등으로 나눠 들어가 있는 apks 로 제공되어 나중에 디바이스에 필요한 리소스만 가지고, 애플리케이션을 만드는 AAB(android app bundle) 로 사용되기도 함
 
+#### Annotation Retention 설명
+
+- Annotation의 스코프를 제한하는데 사용되고 파라미터에는 3가지 존재
+  - SOURCE
+    - 컴파일 시에만 유효
+    - 빌드된 바이너리에는 미포함 (@Suppress 와 같이 개발 중에만 유효)
+  - BINARY
+    - 컴파일과 바이너리에도 포함
+    - 리플렉션을 통해 접근은 불가능
+  - RUNTIME
+    - 컴파일과 바이너리에도 포함
+    - 리플렉션을 통해 접근도 가능
+    - Custom Annotation에 @Retention 표시하지 않는 경우 디폴트 값이 RUNTIME
