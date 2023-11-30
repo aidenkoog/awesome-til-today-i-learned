@@ -3659,3 +3659,22 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
     - 컴파일과 바이너리에도 포함
     - 리플렉션을 통해 접근도 가능
     - Custom Annotation에 @Retention 표시하지 않는 경우 디폴트 값이 RUNTIME
+
+#### callbackFlow 와 channelFlow 차이점
+
+- flow 관련 설명
+  - Thread-Safety와 다운스트림으로의 문제 전달을 막기 위해 flow 블록 내에서는 Context를 하나만 사용할 수 있음
+- 두 flow 의 탄생 배경
+  - flow 파이프라인에서는 rx의 SubscribeOn과 유사하게 flowOn을 통해 context를 바꾸어줄 수 있지만 하나의 블록 안에서 동적으로 바꾸거나 콜백 함수 등에서는 사용할 수 없음. - 이런 문제를 위해 callbackFlow와 channelFlow가 존재
+- callbackFlow vs channelFlow
+  - callbackFlow와 channelFlow에서의 기능상의 차이점은 없으며 사실상 이름만 다른 형태로 사용
+  - callbackFlow와 channelFlow는 여러개의 Context를 사용 가능
+  - flow 안에서 emit은 불가능, 스코프 선언이 불가능하기 때문
+  - 이를 극복하기 위해 callbackFlow 사용
+  - callbackFlow 내에서 작동은 BlockingQueue와 유사하게 작동. 동기로 값을 내보낸다면 send 비동기로 값을 내보낸다면 offer를 사용
+  - lockingQueue와의 차이점은 BlockingQueue와는 다르게 close에 원인이 되는 문제를 null값이 아닌 Throwable로 넘겨준다면 catch 파이프라인에서 에러값을 핸들링하여 새로운 스트림을 만들어낼 수 있음. 또한 awaitClose는 람다형식의 콜백을 인자로받아 close될때의 실행되는 콜백함수를 정의할 수 있음
+  - awaitClose를 이용하여 더이상 리스너 스트림이 필요하지 않을때 콜백 리스너에 null값을 할당하거나 혹은 스트림을 더이상 만들지 않기 위해 dispose등 활용 가능
+  - channelFlow => channel을 이용해서 코루틴에서 데이터를 주고받기 위한 flow, 한 블럭안에서 여러개의 컨텍스트를 사용할 수 있음
+  - send()를 통해서 채널로 데이터를 보낼 수도 있지만 send() 함수는 suspend가 달려있으므로 비동기
+  - 동기식은 trySendBlocking, trySend를 통해서도 가능
+  - trySend()는 버퍼가 꽉 차있는 경우 현재 값을 무시하고 다음 값을 보내려고 하며 trySendBlocking()의 경우 버퍼가 꽉 차있는 경우, 버퍼의 자리가 빌때까지 기다린 후 다시 시도
