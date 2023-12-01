@@ -3678,3 +3678,10 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - send()를 통해서 채널로 데이터를 보낼 수도 있지만 send() 함수는 suspend가 달려있으므로 비동기
   - 동기식은 trySendBlocking, trySend를 통해서도 가능
   - trySend()는 버퍼가 꽉 차있는 경우 현재 값을 무시하고 다음 값을 보내려고 하며 trySendBlocking()의 경우 버퍼가 꽉 차있는 경우, 버퍼의 자리가 빌때까지 기다린 후 다시 시도
+
+#### reduce, fold 연산자 재정리
+
+- reduce, fold, toList, toSet과 같은 연산자는 플로우를 끝내는 함수라 종단 연산자(terminal operator)
+- reduce는 흔히 map과 reduce로 함께 소개되는 함수형 언어의 오래된 메커니즘
+- 첫번째 값을 결과에 넣은 후 각 값을 가져와 누진적으로 계산
+- fold는 초기값 존재
