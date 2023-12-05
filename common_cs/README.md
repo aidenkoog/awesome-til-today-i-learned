@@ -961,3 +961,20 @@
 - 예를 들어 파이썬 Flask SQLAlchemy의 메소드를 활용해 SQL데이터를 생성하고 조회할 수 있기 때문에 가독성이 높아지고 개발언어를 일관되게 활용할 수 있어 편리
 - ORM은 백엔드 개발에 있어 개발언어의 일관성과 가독성을 높여주는 강력한 장점
 - 다만, ORM만으로는 SQL의 모든 부분을 다루기가 어렵기 때문에 백엔드 개발 시 SQL 쿼리에 대한 지식과 경험이 바탕이 되어야 더 효과적인 백엔드 개발이 가능
+
+#### URI, Web Browser 요청 흐름
+
+- URI
+  - Uniform Resource Identifier
+  - 리소스를 식별하는 통합된 방법 (통일된 방식)
+  - 로케이터, 이름 또는 둘다 추가로 분류될 수 있음?
+  - URI (Resource Identifier) > URL (Resource Locator) + URN (Resource Name)
+  - URL: http://xxx.xxx:8080/xxx (리소스가 있는 위치를 지정)
+    - scheme:// <-- 프로토콜 (어떤 방식으로 자원에 접근할 것인가하는 약속 규칙, http, ftp)
+    - scheme://[userinfo$]xxx
+    - scheme://host(:port)
+    - /path, ?query (?what=hello&when=mon), #fragment
+    - query ?는 키, 값 형태
+    - #fragement: html 내부 북마크 등에 사용
+  - URN: urn:xxx:xxx:xx:xxx (리소스에 이름 부여, 책 isbn)
+  - 위치는 변할 수 있지만 이름은 변하지 않음
