@@ -992,12 +992,15 @@
 #### HTTP
 
 - HyperText Transfer Protocol (HTML 전송, 지금은 모든것 전송)
+  - 문서 간의 링크를 통해 연결
 - HTTP/1.1 (1997): 현재 가장 많이 사용, 중요 버전
+  - RFC2068 -> RFC2616 (1999) -> RFC7230~7235 (2014)
   - HTTP/2, /3은 성능 개선, /3은 UDP 사용, 성능 개선
 - 기반 프로토콜
   - TCP: HTTP/1.1, 2
   - UDP: HTTP/3
-- Chrome inspector 에서 protocol 컬럼에서 HTTP 버전 볼수 있음
+- Chrome inspector -> Network 에서 protocol 컬럼에서 HTTP 버전 볼수 있음
+  - h2, http/1.1 etc
 - 클라이언트 서버 구조
 - 무상태 프로토콜, 비연결성
 - HTTP 메시지
