@@ -1036,6 +1036,20 @@
   - HTTP 지속 연결 (Persistent Connections)으로 문제 해결
     - 몇 십초동안 유지 등의 메커니즘 존재
 
+#### HTTP 메세지
+
+- 메세지 구조
+  - start-line
+    - request-line / status-line
+  - header
+    - OWS 띄어쓰기 허용 (참고)
+    - field name은 대소문자 구분 없음
+    - HTTP 전송에 대한 필요한 모든 부가 정보 포함
+  - empty line (CRLF) 엔터
+  - message body
+    - 실제 전송할 데이터 포함
+    - 바이트로 표현 가능한 모든 데이터 전송 가능
+
 #### RDB vs NoSQL
 
 - RDB
