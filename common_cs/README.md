@@ -1050,6 +1050,17 @@
     - 실제 전송할 데이터 포함
     - 바이트로 표현 가능한 모든 데이터 전송 가능
 
+#### HTTP Method
+
+- HTTP API 구축 과정
+  - URI 설계 (/read-xxxx, /modify-xxx?)
+    - 리소스 의미: 회원조회라고 하면 회원이라는 개념 자체가 리소스
+  - URI 재 설계
+    - /members, /members/{id}
+  - 조회, 등록, 수정, 삭제, 전체 조회를 어떻게 구분할 건인가?
+  - 리소스와 행위를 구별, URI는 리소스만 식별.
+  - 행위: HTTP Method (GET, POST, PUT, DELETE, PATCH)
+
 #### RDB vs NoSQL
 
 - RDB
