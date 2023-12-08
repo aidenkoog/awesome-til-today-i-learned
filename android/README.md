@@ -3685,3 +3685,11 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
 - reduce는 흔히 map과 reduce로 함께 소개되는 함수형 언어의 오래된 메커니즘
 - 첫번째 값을 결과에 넣은 후 각 값을 가져와 누진적으로 계산
 - fold는 초기값 존재
+
+#### 이미지 크기에 따라 ImageView 높이 동적 변경 방법
+
+- 기본 속성: width 0dp, height wrap_content
+- 적용 필수 속성: adjustViewBounds
+  - adjustViewBounds는 src로 추가된 이미지의 원래 비율을 계산해서 ImageView의 높이가 결정
+  - 주의할 점은 이미지의 height은 wrap_content여야 높이를 비율에 맞게 설정할 수 있고,
+  - background가 아닌 src로 drawable이미지를 추가해야 함
