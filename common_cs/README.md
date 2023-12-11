@@ -1048,6 +1048,7 @@
     - OWS 띄어쓰기 허용 (참고)
     - field name은 대소문자 구분 없음
     - HTTP 전송에 대한 필요한 모든 부가 정보 포함
+      - 메시지 바디 내용, 바디 크기, 압축, 인증, 요청 클라이언트(브라우저) 정보, 서버 앱 정보 등
     - Host: www.google.com
       - field-name ":" OWS field-value OWS
   - empty line (CRLF) 엔터, 공백 라인
@@ -1059,12 +1060,14 @@
 
 - HTTP API 구축 과정
   - URI 설계 (/read-xxxx, /modify-xxx?)
+    - 맨 처음에 이런식으로 설계.
     - 리소스 의미: 회원조회라고 하면 회원이라는 개념 자체가 리소스
+      - 추가 설명: 회원을 조회해라라는 것이 리소스가 아니고 회원 자체가 리소스 (member)
   - URI 재 설계
-    - /members, /members/{id}
-  - 조회, 등록, 수정, 삭제, 전체 조회를 어떻게 구분할 건인가?
+    - /members, /members/{id} (조회), /members/{id} (등록)...
+    - 조회, 등록, 수정, 삭제, 전체 조회를 어떻게 구분할 건인가?
   - 리소스와 행위를 구별, URI는 리소스만 식별.
-  - 행위: HTTP Method (GET, POST, PUT, DELETE, PATCH)
+    - 행위: HTTP Method (GET, POST, PUT, DELETE, PATCH)
 
 #### RDB vs NoSQL
 
