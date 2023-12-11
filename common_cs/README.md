@@ -1103,12 +1103,13 @@
   - 리소스 URI에 POST 요청이 오면 요청 데이터를 어떻게 처리할지 리소스마다 따로 정해줘야 함 - 정해진 것이 없음
   - 예외사항: 컨트롤 URI <-- 예외적인 리소스 (start-xxx)
 - PUT: 리소스 대체, 해당 리소스 없으면 생성 (파일을 폴더에 넣은 행위와 유사)
-  - 클라이언트가 리소스 위치를 인지하고 URI 지정 (포스트와 차이점)
+  - 클라이언트가 리소스 위치를 인지하고 직접 URI 지정 (포스트와 차이점)
     - POST는 /members (POST) <--- 리소스가 100번에 지정될 지 200번이 될지 모름
     - PUT은 /members/100 (PUT) <-- 사용자가 정확하게 리소스를 알고 있음
   - 완전히 대체 (덮어쓰기)
     - username, age가 있을 때 age 필드만 넣고 PUT하는 경우 username은 삭제됨 (리소스가 대체되므로)
     - 수정하는게 아니라 갈아치우는 느낌
+  - 스토어
 - PATCH: 리소스 부분 변경
   - 부분만 수정하고 싶을 때 사용 (PUT에서의 완전 대체 현상 극복)
   - 패치 지원안되는 경우도 있음 <-- POST 사용하면 됨
@@ -1174,3 +1175,30 @@
       - GET (조회, 쿼리 파라미터로 데이터 전달)
       - Content-Type: application/json 주로 사용 (거의 표준)
         - TEXT, XML, JSON 등
+
+#### HTTP api 설계 예시 정리
+
+- HTTP API - 컬렉션
+  - 포스트 기반 (대부분 사용)
+    - /members <-- 컬렉션이라 부름
+    - 서버가 관리하는 리소스 디렉토리 <-- 컬렉션
+    - 서버가 리소스의 URI를 생성하고 관리
+    - Post 신규 자원 등록 특징
+      - 클라이언트는 등록될 리소스의 URI를 모름
+  - 풋 기반
+    - 스토어
+    - 클라이언트가 리소스 URI 결정
+    - 클라이언트가 관리하는 리소스 저장소 (/files/xxx.jpg)
+- HTML FORM 사용 (순수 HTML, HTML Form 사용한다 가정)
+  - GET, POST만 지원
+  - POST의 /new, /edit, /delete 가 컨트롤 URI 또는 컨트롤러
+  - 컨트롤 URI --> HTTP 메소드로 해결하기 힘든 경우 사용
+  - Form을 보는것은 get, 실제 수정, 등록할때는 POST
+    - /members/new, /members/{id}/edit, /members/{id}/delete (POST, Delete 사용이 불가하므로 어쩔수 없이 컨트롤 URI 사용 필수)
+- URI 설계 개념 (참고)
+  - 문서 (document) --> /members/100, files/star.jpg
+  - 컬렉션 (collection) --> /members
+  - 스토어 (store) --> /files
+  - 컨트롤러 / 컨트롤 URI --> /members/{id}/delete
+    - 문서, 컬렉션, 스토어로 해결하기 힘든 추가 프로세스 실행
+    - 동사를 직접 사용 (ex. /members/{id}/delete)
