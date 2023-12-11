@@ -1216,7 +1216,21 @@
   - 204 No Content
     - 서버가 요청을 성공적으로 수행하였으나 응답 페이로드 본문에 보낼 데이터가 없는 경우
     - 예. 웹 문서 편집기에서 저장 버튼 (저장 버튼 결과로 아무 내용이 없어도 됨)
-- 3xx (Redirection): 요청을 완료하려면 추가 행동이 필요
+- 3xx (Redirection): 요청을 완료하려면 추가 행동이 필요 (User Agent의 추가 조치 필요, User Agent: 웹 브라우저)
+  - 리다이렉션: 3xx 응답 결과에 Location 헤더가 있으면 그 위치로 이동
+  - 자동 리다이렉션 흐름
+    - GET /event
+    - Response (301, Moved Permanently, Location: /new-event)
+    - GET /new-event (Web browser가 다시 처음부터 요청)
+    - Response (200 OK)
+  - 리다이렉션 종류
+    - 영구: 특정 리소스의 URI가 영구적으로 이동 / 검색 엔진 등에서도 변경 인지
+      - 301: 리다이렉트 시 요청 메소드가 GET으로 변하고 본문이 제거 될 수 있음
+        - 흐름 예: POST (본문도 같이) --> /new-event --> GET /new-event --> 200 OK (본문은 제거)
+      - 308: 301과 기능 동일 / 처음 메소드와 본문 유지 (실무에서는 빈도 낮음)
+        - 흐름 예: POST (본문도 같이) --> /new-event --> POST /new-event, 본문 유지 --> 200 OK
+    - 일시: 주문 완료 후 주문 내역 화면으로 이동하는 예 / PRG (Post/Redirect/Get)
+    - 특수: 결과 대신 캐시를 사용 (다운로드 할 필요없이 캐시사용하면 될 때 응답)
 - 4xx (Client Error): 클라이언트 오류, 잘못된 문법 등으로 서버가 요청을 수행할 수 없음
 - 5xx (Server Error): 서버 오류, 서버가 정상 요청을 처리하지 못함
 - 예외적인 코드 발생 시 상위 상태코드로 해석해서 처리
