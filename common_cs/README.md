@@ -1038,14 +1038,19 @@
 
 #### HTTP 메세지
 
-- 메세지 구조
+- 메세지 구조 (요청과 응답 메시지 구조가 다름), RFC7230 스펙
   - start-line
     - request-line / status-line
+    - 종류: GET, POST, PUT, DELETE
+    - 절대경로 /로 시작하는 경로, ? 쿼리문 혼합
+    - 응답 메시지: HTTP-version SP status-code SP reason-phrase CRLF
   - header
     - OWS 띄어쓰기 허용 (참고)
     - field name은 대소문자 구분 없음
     - HTTP 전송에 대한 필요한 모든 부가 정보 포함
-  - empty line (CRLF) 엔터
+    - Host: www.google.com
+      - field-name ":" OWS field-value OWS
+  - empty line (CRLF) 엔터, 공백 라인
   - message body
     - 실제 전송할 데이터 포함
     - 바이트로 표현 가능한 모든 데이터 전송 가능
