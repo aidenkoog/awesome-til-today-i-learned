@@ -1202,3 +1202,10 @@
   - 컨트롤러 / 컨트롤 URI --> /members/{id}/delete
     - 문서, 컬렉션, 스토어로 해결하기 힘든 추가 프로세스 실행
     - 동사를 직접 사용 (ex. /members/{id}/delete)
+
+#### HTTP 상태코드
+
+- 2xx
+- 3xx
+- 4xx
+- 5xx
