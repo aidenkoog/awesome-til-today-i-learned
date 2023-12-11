@@ -1140,3 +1140,37 @@
   - 응답 결과 리소스를 캐시해서 사용해도 되는가?
   - GET, HEAD, POST, PATCH 는 캐시 가능 (실제로 GET, HEAD 정도만 캐시로 사용)
   - POST, PATCH는 본문 내용까지 캐시 키로 고려해야 하는데 구현이 쉽지 않으므로 잘 사용되지 않음
+
+#### HTTP 메소드 활용
+
+- 클라이언트에서 서버로 데이터 전송
+  - 쿼리 파라미터 (GET) 통한 데이터 전송
+    - 예: 정렬 필터(검색어)
+  - 메시지 바디
+    - POST, PUT, PATCH
+    - 회원가입, 주문, 리소스 등록, 변경
+  - 4가지 상황
+    - 1) 정적 데이터 조회
+    - 2) 동적 데이터 조회 (주로 검색, 게시판 목록에서 정렬 필터(검색어), 쿼리 파라미터 사용하여 데이터 전달)
+    - 3) HTML Form 데이터 전송 (<Form> 태그)
+      - Post 전송 (회원 가입 / 주문 / 데이터 변경) / GET도 가능
+        - HTML Form 전송은 GET, POST만 지원!!
+      - 웹브라우저가 Form 태그 데이터를 조합하여 HTTP 메시지를 생성
+      - application/x-www-form-urlencoded (username=xxx&age=20)
+        - 전송 데이터를 url encoding 처리해서 전달
+        - 예: abc김 --> abc%EA%B9%80
+      - 폼 태그 method에 따라 값을 넣는 경로가 달라짐
+        - GET이면 쿼리, 포스트면 바디에 들어감
+      - Multipart/form-data
+        - form 태그 내 enctype="multipart/form-data"
+        - boundary
+        - 바이너리 데이터 전송 시 사용?
+    - 4) HTTP API 데이터 전송
+      - 보통 클라이언트에 HTTP 요청 데이터를 만들어주는 라이브러리가 존재
+      - 서버 to 서버
+      - 앱 클라이언트
+      - 웹 클라이언트 (AJAX, React, VueJs)
+      - POST, PUT, PATCH (메시지 바디 통한 데이터 전송)
+      - GET (조회, 쿼리 파라미터로 데이터 전달)
+      - Content-Type: application/json 주로 사용 (거의 표준)
+        - TEXT, XML, JSON 등
