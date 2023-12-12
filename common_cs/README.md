@@ -1324,3 +1324,17 @@
     - Content-Range
     - 이미지 받는 경우
       - 받다가 끊긴 경우
+- 일반 정보
+  - From (이메일 정보)
+  - Referer (이전 웹사이트 주소)
+    - Request Headers 내 referer (원래는 referrer인데 오타임)
+  - User-Agent
+    - user-agent: Mozilla/5.0 ... 클라이언트 앱 정보, 웹 브라우저 정보
+      - 어떤 종류의 브라우저에서 장애 발생하는지 파악 가능 (서버에게 도움됨)
+      - 요청에서 사용됨
+  - Server
+    - 요청을 처리하는 origin 서버의 소프트웨어 정보
+    - 마지막 서버 정보
+    - 응답에서 사용
+  - Date
+    - 응답에서만 사용, 메시지 발생 날짜와 시간
