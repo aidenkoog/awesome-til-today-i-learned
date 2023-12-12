@@ -252,4 +252,8 @@
     - Lv0 --> LvX
     - Queue, deque
     - Queue 상태만 봐도 다음에 어디 방문할지 예상가능
+    - 접근과 방문 차이
   - 깊이 우선 탐색 DFS
+    - Stack
+    - Recursion*
+      - 약간 서브트리에 위임한다는 느낌
