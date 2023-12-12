@@ -1489,3 +1489,12 @@
 - Expires
   - 캐시 만료일 지정, 초단위가 더 유연하므로 지금은 CacheControl-maxage사용
   - Expires와 Cache-Control 같이 사용 시 Expires는 무시
+
+#### 프록시 캐시
+
+- CDN / AWS Cloud Front
+- Private 캐시 / Public 캐시
+- Cache-Control: public 또는 private
+- Cache-Control: s-maxage (프록시 서버에만 적용)
+- Age: 60
+  - 오리진 서버에서 응답 후 프록시 캐시 내 머문 시간 (초)
