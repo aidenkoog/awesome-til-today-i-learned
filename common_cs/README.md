@@ -1498,3 +1498,16 @@
 - Cache-Control: s-maxage (프록시 서버에만 적용)
 - Age: 60
   - 오리진 서버에서 응답 후 프록시 캐시 내 머문 시간 (초)
+
+#### 캐시 무효화
+
+- Cache-Control: no-cache, no-store, must-revalidate
+- Pragma: no-cache (HTTP 1.0 하위 호환)
+- 웹 브라우저는 기본적으로 캐시를 하는데 명시적으로 캐싱을 금지하기 위해 no-cache, no-store, must-revalidate 넣어야 함
+- must-revalidate
+  - 캐시 만료 후 최초 조회 시 원서버에 검증해야함
+  - no-cache랑 어떤 차이?
+  - 프록시 캐시 서버가 원서버와의 연결이 단절된다면?
+  - 프록시 캐시 서버는 장애보다 오래된 데이터라도 보여주자라는 로직이 있음 (200 OK)
+  - must-revalidate 적용 시 무조건 504 Gateway Timeout 발생시킴
+    - 통장잔고 등의 민감 데이터 핸들링 시
