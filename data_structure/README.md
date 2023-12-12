@@ -212,6 +212,12 @@
 
 - Direct Address Table
 - Stack
+- Queue
+- LinkedList
+- Two Pointer
+- Dynamic Array
+- Array
+- List
 - Hash Table
 - Hash Function
 - Dictionary
@@ -222,3 +228,22 @@
 - Time Complexity
 - Space Complexity
 - Memory
+- Recursion (factorial, fibonacci)
+  - recurrence relation
+  - base case (핵심)
+- Tree
+  - Node
+  - Edge
+  - Root
+  - Leaf
+  - Child / Parent / Sibling
+  - degree
+    - 모든 노드의 차수가 n개 이하인 트리를 n진 트리
+  - ancestor
+  - descendant
+  - height
+  - level
+  - Subtree
+- Binary Tree (2진 트리)
+- Complete Binary Tree (완전 이진 트리)
+  - 왼쪽부터 오른쪽 순서로 채워나감
