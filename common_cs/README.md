@@ -1311,3 +1311,16 @@
       - Accept-Language; ko-KR,ko;q=0.9,en-US;q=0.8 ...
       - 1은 생략
   - 구체적인 기술이 우선됨 (*보다는 상세 패스)
+- 전송방식
+  - 단순 전송
+    - Content-Length
+  - 압축 전송
+    - Content-Encoding
+  - 분할 전송
+    - Transfer-Encoding: chunked
+    - 마지막: \r\n
+    - Content Length 넣으면 안됨 (예상이 안되므로)
+  - 범위 전송
+    - Content-Range
+    - 이미지 받는 경우
+      - 받다가 끊긴 경우
