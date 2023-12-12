@@ -247,3 +247,9 @@
 - Binary Tree (2진 트리)
 - Complete Binary Tree (완전 이진 트리)
   - 왼쪽부터 오른쪽 순서로 채워나감
+- 트리 순회 Traversal = 트리 탐색 (트리의 각 노드를 방문, 한번씩 방문해야 하므로 완전 탐색)
+  - 너비 우선 탐색 BFS
+    - Lv0 --> LvX
+    - Queue, deque
+    - Queue 상태만 봐도 다음에 어디 방문할지 예상가능
+  - 깊이 우선 탐색 DFS
