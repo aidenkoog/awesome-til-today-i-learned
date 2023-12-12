@@ -1357,3 +1357,7 @@
     - 유저 에이전트가 다음 요청을 하기까지 기다려야 하는 시간
     - 503 (Service Unavailable)
     - 초단위, 날짜표기 가능
+- 인증
+  - Authorization: 클라이언트 인증 정보를 서버에 전달
+  - WWW-Authenticate: 리소스 접근 시 필요한 인증 방법 정의
+    - 401 Unauthorized 응답과 함께 사용
