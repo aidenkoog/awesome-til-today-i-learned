@@ -207,3 +207,18 @@
   - 지역 / 매개 변수의 데이터 값이 저장되는 공간
   - 메소드 호출 시 메모리에 할당되고 종료되면 메모리가 해제되는 LIFO 구조
 - OS의 스케쥴러
+
+#### Data structure 키워드 정리
+
+- Direct Address Table
+- Stack
+- Hash Table
+- Hash Function
+- Dictionary
+- Collision
+  - open addressing
+  - separate chaining
+- Random Access
+- Time Complexity
+- Space Complexity
+- Memory
