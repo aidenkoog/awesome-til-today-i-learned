@@ -1274,3 +1274,14 @@
 - 예외적인 코드 발생 시 상위 상태코드로 해석해서 처리
   - 299 --> 200
   - 451 --> 400
+
+#### HTTP 헤더
+
+- 필드이름: 값 형태
+- 종류
+  - General
+  - Request (User-Agent: Mozilla/5.0)
+  - Response (Server: Apache)
+  - Entity (Content-Type)
+    - 엔티티 헤더는 엔티티 본문의 데이터를 해석할 수 있는 정보 제공 (text, html인지 etc), 데이터 유형, 길이 등
+    - 엔티티 --> 2014, Representation (표현)
