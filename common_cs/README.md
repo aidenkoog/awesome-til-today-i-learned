@@ -1284,4 +1284,19 @@
   - Response (Server: Apache)
   - Entity (Content-Type)
     - 엔티티 헤더는 엔티티 본문의 데이터를 해석할 수 있는 정보 제공 (text, html인지 etc), 데이터 유형, 길이 등
-    - 엔티티 --> 2014, Representation (표현)
+    - 엔티티 --> 2014부터 Representation (표현) 이라고 부름
+- 표현
+  - Content-Type 표현데이터 형식
+    - text/html; charset=utf-8
+    - application/json
+    - image/png
+  - Content-Encoding
+    - gzip
+    - deflate
+    - identity
+    - 데이터를 전달하는 곳에서 압축 후 인코딩 헤더 추가
+  - Content-Language
+    - ko / en / en-US
+  - Content-Length
+    - 바이트 단위
+  - 표현 헤더는 전송, 응답 둘 다 사용
