@@ -1478,3 +1478,14 @@
     - ETag만 보내서 같으면 유지, 다르면 다시 받기
     - 캐시 제어 로직을 서버에서 완전히 관리
   - 조건 만족 200 OK / 만족하지 않으면 304 Not Modified
+
+#### 캐시 제어 헤더
+
+- Cache-Control
+  - max-age
+  - no-cache (data는 캐시해도 되나 항상 origin 서버에 검증하고 사용)
+  - no-store (데이터에 민감 정보 있으므로 저장하면 안됨)
+- Pragma
+- Expires
+  - 캐시 만료일 지정, 초단위가 더 유연하므로 지금은 CacheControl-maxage사용
+  - Expires와 Cache-Control 같이 사용 시 Expires는 무시
