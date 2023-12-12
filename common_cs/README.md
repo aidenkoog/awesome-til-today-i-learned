@@ -1300,3 +1300,14 @@
   - Content-Length
     - 바이트 단위
   - 표현 헤더는 전송, 응답 둘 다 사용
+- Content Negotiation
+  - 클라이언트가 선호하는 표현 요청
+  - 요청 시에만 사용
+  - Accept
+  - Accept-Charset
+  - Accept-Encoding
+  - Accept-Language
+    - Quality Values(q)
+      - Accept-Language; ko-KR,ko;q=0.9,en-US;q=0.8 ...
+      - 1은 생략
+  - 구체적인 기술이 우선됨 (*보다는 상세 패스)
