@@ -14,10 +14,18 @@
   - 생성: 객체 인스턴스 생성하는 패턴
     - 클래스
       - Factory Method
+        - 입력되는 인자에 따라 다른 인스턴스 생성
+        - 생성한 인스턴스 관리까지 하고자 한다면 팩토리 클래스 내부에 HashMap으로 관리 가능
     - 오브젝트
       - Absract Factory
       - Builder
+        - 인스턴스 생성 시 필요한 인자가 많은 경우
+        - 설정되는 인자에 따라 다른 스타일의 인스턴스 생성 가능
+        - 다이얼로그 팩토리가 그 예
       - Prototype
+        - 자바 clone() 메소드가 대표적인 예
+          - 참고: 일반적으로 clone()은 얕은 복사, 내부적으로 참조하고 있는 인스턴스는 인스턴스가 복제되는것이 아니라 그 주소가 복제되므로 만약 복제한 인스턴스로 값을 변경할 경우 기본 인스턴스의 값도 변경됨
+          - 따라서 깊은 복사를 하려면 clone 메소드를 오버라이딩한 후 따로 복사해주는 루틴 작성 필요
       - Singleton
   - 구조: 클래스와 객체를 더 큰 구조로 만들 수 있게 구성을 사용하는 패턴
     - 클래스
@@ -25,6 +33,8 @@
     - 오브젝트
       - Adapter (object)
       - Bridge
+        - 개념과 기능 구현부의 분리
+        - 분리하지 않으면 상속구조가 복잡해지므로 필요한 패턴
       - Decorator
       - Facade
       - Flyweight
@@ -33,7 +43,9 @@
   - 행위: 클래스와 객체들이 상호작용하는 방법과 역할을 분담하는 방법을 다루는 패턴
     - 클래스
       - Interpreter
-      - Temp₩late Method
+      - Template Method
+        - 하위 클래스에 구현부를 위임
+        - abstract가 아닌 일반 함수를 즉 바디가 있는 함수를 abstract 에 선언하는 것을 훅 오퍼레이션
     - 오브젝트
       - Chain of Responsibility
       - Command
@@ -44,6 +56,10 @@
       - Observer
       - State
       - Strategy
+        - 정책이나 알고리즘 교체시 주로 사용
+        - 부모 클래스에서 Strategy 인스턴스를 가지고 있으며 이를 설정하기 위한 setter 필요
+        - 따라서 실제로 나의 클래스에서 사용 시 xxxStrategy.run() 이런 식으로 구현이 되어야 함
+          - public void run() { xxxStrategy.run() }
       - Visitor
 - 범위
   - 클래스
