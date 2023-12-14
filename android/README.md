@@ -3693,3 +3693,28 @@ volatile 키워드를 붙인 자원은 read, write 작업이 CPU Cache Memory가
   - adjustViewBounds는 src로 추가된 이미지의 원래 비율을 계산해서 ImageView의 높이가 결정
   - 주의할 점은 이미지의 height은 wrap_content여야 높이를 비율에 맞게 설정할 수 있고,
   - background가 아닌 src로 drawable이미지를 추가해야 함
+
+#### koin di 적용 전 기본 di library와의 차이점 분석
+
+- 장점
+  - 러닝커브가 낮음
+  - Kotlin 개발 환경에 도입 수월
+  - 별도의 어노테이션을 사용하지 않기 때문에 컴파일 시간이 단축
+  - ViewModel 주입을 쉽게 할 수 있는 별도의 라이브러리를 제공
+- 단점
+  - Dagger2와 달리 런타임에서 에러가 날 수도 있음?
+    - (단위 테스트를 통해 방지 가능, 즉 테스트 많이 해서 에러 줄여야 함).
+  - Activity나 Fragment, Service 등이 아닌 곳에서 사용하기 위해선 생성자로 넘기거나 별도의 구현을 해야 함
+- 모듈 키워드
+  - viewModel
+    - ViewModel의 경우 선언하고 주입 받는 방법이 일반적인 클래스와 다름
+    - viewModel 키워드로 모듈을 등록하면 Koin이 해당 ViewModel을 ViewModelFactory에 등록하고 현재 컴포넌트와 바인딩
+    - 주입 받을 때도 ViewModelFactory에서 해당 ViewModel 객체를 불러옴
+  - get
+    - non lazy 주입
+  - getViewModel()
+    - non-lazy 하게 주입
+  - single
+    - 앱이 실행되는 동안 계속 유지되는 싱글톤 객체를 생성
+  - factory
+    - 요청할 때마다 매번 새로운 객체를 생성
