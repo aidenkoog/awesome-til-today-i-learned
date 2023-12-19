@@ -1348,3 +1348,30 @@ val length = name!!.length
     - Task 단위: Job(Coroutine)
     - 작업 단위로 Coroutine 할당
     - Coroutine은 JVM Heap 영역에 쌓임, Job Object라 생각하면 됨
+   
+#### 코루틴 스코프빌더 재정리*
+
+- launch
+  - 호출하는 쪽의 스레드를 중단 없이 시작시킬 수 있으며(안드로이드라면 주로 UI스레드), 결과를 호출한 쪽에 반환하지 않음
+  - 일반 함수 내부 → launch 빌더 내부 → suspend함수 호출
+- async
+  - launch와 마찬가지로 현재 스레드를 중단시키지 않고 실행
+  - 결과를 호출한쪽에 반환
+  - 오로지 suspend함수 내부에서만 사용이 가능
+  - suspend함수 내부에서만 사용 가능하단 뜻은 다른 빌더로 또다시 감싸줘야만 한다는걸 의미
+  - 일반 함수 내부 → launch빌더 내부 → suspend함수 호출 → async빌더
+- withContext
+  - async빌더와 상당히 유사
+  - withContext빌더는 Deferred<T>형태의 객체를 반환하지 않고, T형태의 객체를 그대로 반환
+  -  withContext도 async처럼 suspend함수 안에서 선언되어야만 하는데, 이때 부모 빌더와는 다른 coutine context를 사용하여 실행시킴
+- coroutineScope
+  - 병행으로 실행되는 코루틴이 모두 완료되어야만 하는 처리를 할때 유용.
+  -  모든 코루틴이 실행이 완료되어야만 하며, 하나라도 실패시 작업은 모두 취소됨
+- viewModelScope
+  - ViewModel의 라이프사이클에 맞춰 Scope을 적절히 cancel시켜줄 수 있는 스코프
+  - 예를들어, 사용자가 api를 호출하자마자 액티비티를 onDistroy했다고 가정했을 때 그럼 이때 ViewModel도 onCrear되는데, 이때 ViewModelScope도 이에 맞추어 비동기코드를 종료시켜 줌
+- GlobalScope
+  - 프로그램 전체에서 싱글톤으로 진행시킬 수 있는 스코프
+- runBlocking
+  - 실행시킨 코루틴 작업이 끝날때까지 호출한 곳의 메인스레드가 끝나길 대기
+  -  메인스레드는 UI스레드를 의미 (그래서 UI스레드에선 해당 스코프 호출보단 다른 방법을 찾아보는게 좋은 방향)
