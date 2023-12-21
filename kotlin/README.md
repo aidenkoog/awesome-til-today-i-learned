@@ -1375,3 +1375,10 @@ val length = name!!.length
 - runBlocking
   - 실행시킨 코루틴 작업이 끝날때까지 호출한 곳의 메인스레드가 끝나길 대기
   -  메인스레드는 UI스레드를 의미 (그래서 UI스레드에선 해당 스코프 호출보단 다른 방법을 찾아보는게 좋은 방향)
+
+#### Continuation Passing Style
+- 결과를 호출자에게 직접 반환하는 대신 Callback같은 것 continuation으로 결과를 전달하는 것을 의미
+- suspend function
+  - 내부적으로는 JVM에 들어갈 때 바이트코드로 컴파일되면서 같은 xxx(…)인데 Continuation이 생성되어 Continuation Passing Style로 변환됨
+- 호출했던 함수의 끝에 매개변수가 하나 추가되서 Continuation이라는 객체를 넘겨주는 것으로 변환되는 것임
+- 레이블링 작업 때문에 특정 지점 파악이 가능
