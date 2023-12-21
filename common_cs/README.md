@@ -1511,3 +1511,9 @@
   - 프록시 캐시 서버는 장애보다 오래된 데이터라도 보여주자라는 로직이 있음 (200 OK)
   - must-revalidate 적용 시 무조건 504 Gateway Timeout 발생시킴
     - 통장잔고 등의 민감 데이터 핸들링 시
+   
+#### Concurrency과 Parallelism
+- Concurrency(동시성) : Interleaving(시분할), 다수의 task를 조금씩 나누어 실행
+  - 10분 소요 task 2개 수행시 context switching 비용을 제외하고 20분 소요 
+- Parallelism(병렬성) : Parallelizing(병렬수행), 다수의 task가 동시에 실행
+  - 10분 소요 task와 12분 소요 task를 수행 시 12분 소요 context switching 필요 없음)
