@@ -3741,3 +3741,22 @@ Array<Cat>은 Array<Animal>을 상속받게 되므로 주석 부분에서 에러
   - write은 가능하지만 제네릭 타입으로의 read는 불가능
   - 반공변성으로 인해 제네릭 타입 또는 조상 타입을 가능하게 하였으므로,
 제네릭 타입으로 해당 값을 read 할 때 해당 값의 타입이 제네릭 타입의 조상 타입일 경우 문제가 발생하기 때문
+
+#### 스레드, 코루틴 연관 설명
+
+- 스레드
+  - Thread.sleep 은 블락킹 메소드
+- GlobalScope.launch { … } ≒ thread { … }
+- delay(…) ≒ Thread.sleep(…)
+  - delay() 메서드는 coroutine scope 안에서만 동작
+- 스레드풀
+- 여러 개 스레드 생성 시 OOM 발생 가능성
+- 코루틴 사용 시 퍼포먼스 향상
+- 코루틴 사용 시 반복되는 작업을 쉽게 취소 가능
+- 스레드 stop은 deprecated, interrupt로 취소해야 함
+  - 반복되는 작업에 Thread.interrupted() 메서드를 호출하여 매번 확인 필요
+  - 그리고 interrupt를 한후 sleep() 같은 Blocking 메서드가 호출되었을 경우 InterruptedException 발생
+  - Blocking 메서드를 호출할 경우 try-catch 처리 필요
+- 코루틴은 cancelAndJoin 함수 호출하여 잡 취소 가능
+- 비동기 병렬 처리 쉽게 구현 가능
+  - async, await키워드 사용한 처리
