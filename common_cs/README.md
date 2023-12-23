@@ -1517,3 +1517,20 @@
   - 10분 소요 task 2개 수행시 context switching 비용을 제외하고 20분 소요 
 - Parallelism(병렬성) : Parallelizing(병렬수행), 다수의 task가 동시에 실행
   - 10분 소요 task와 12분 소요 task를 수행 시 12분 소요 context switching 필요 없음)
+
+#### Process Thread에서 critical section과 race condition에 대한 설명
+
+- Critical section(임계영역) : 
+  - 병렬프로그래밍에서 2개 이상의 thread가 하나의 자원에 접근하는 명령문, 혹은 코드의 일부
+  - Race condition : 2개 이상의 프로세스가 병행적으로(concurrently) 읽거나 쓰는 동작을 할 떄 서로 경쟁하는 상황
+    - 이러한 문제를 해결하기 위해서는 synchronized(동기화)처리 필요
+    - 임계영역에서 실행되는 스레드는 lock을 획득하게되는데, 이 lock은 오직 하나의 thread만 갖을 수 있음
+
+#### Semaphore, Mutex에 대한 설명
+
+- 경쟁프로세스가 직면하는 Mutual exclusion, deadlock, starvation의 상태를 예방할 수 있는 방법들.
+- Semaphore : 공유된 자원의 데이터를 여러 프로세스가 접근하는 것을 막는 것
+- Mutex : 여러 스레드들의 critical section에 대한 접근이 겹치지 않도록 1개의 스레드만 접근할 수 있도록 하는 것
+- Semaphore와 Mutex와의 차이
+  - Semaphore는 1개의 스레드만 들어가게 할 수도 있고, 여러개의 스레드가 접근 할 수 있음
+  - Mutex는 1개의 스레드만 접근 할 수 있음
