@@ -3791,3 +3791,51 @@ Array<Cat>은 Array<Animal>을 상속받게 되므로 주석 부분에서 에러
   - listener를 등록하고 해제하지 않거나, Observable 에 PropertyChangedCallback 을 등록하고 해제하지 않는 경우들이 메모리 릭을 발생
   - Activity의 멤버 변수가 다른 Class에 참조되어 메모리 해제가 되지 않으면, 그 Activity 까지도 메모리가 완전히 해제가 되지 않아서, 사용하면 할수록 메모리 사용량의 증가가 비대해지는 영향
   - 사용 후에는 리셋하거나 초기화해주는 코드 필요
+
+#### Flux, UDA, MVI 패턴
+
+- 2014년 페이스북 F8 컨퍼런스에서 발표된 아키텍처
+- Client-Side 웹 애플리케이션을 만들기 위해 사용하는 디자인 패턴
+- 대규모 애플리케이션에서 데이터 흐름을 일관성 있게 관리함으로써 프로그램의 예측가능성(Predictability)을 높이기 위함
+- 사용자 입력을 기반으로 Action을 만들고 Action을 Dispatcher에 전달하여 Store(Model)의 데이터를 변경한 뒤 View에 반영하는 단방향의 흐름으로 애플리케이션을 만드는 아키텍처
+- 요소
+  - Action
+    - Action이란 데이터를 변경하는 행위로서 Dispatcher에게 전달되는 객체를 의미
+    - Action creator 메서드는 새로 발생한 Action의 타입(type)과 새로운 데이터(payload)를 묶어 Dispatcher에게 전달
+  - Dispatcher
+    - Dispatcher는 모든 데이터의 흐름을 관리하는 중앙 허브
+    - Dispatcher에는 Store들이 등록해놓은 Action 타입마다의 콜백 함수들이 존재
+    - Action을 감지하면 Store들이 각 타입에 맞는 Store의 콜백 함수를 실행
+    - Store의 데이터를 조작하는 것은 오직 Dispatcher를 통해서만 가능
+    - 또한 Store들 사이에 의존성이 있는 상황에서도 순서에 맞게 콜백 함수를 순차적으로 처리할 수 있도록 관리
+  - Store (Model)
+    - Store는 상태 저장소로서 상태와 상태를 변경할 수 있는 메서드를 가지고 있음
+    - 어떤 타입의 Action이 발생했는지에 따라 그에 맞는 데이터 변경을 수행하는 콜백 함수를 Dispatcher에 등록
+    - Dispatcher에서 콜백 함수를 실행하여 상태가 변경되면 View에게 데이터가 변경되었음을 알림
+  - View
+    - Store에서 View에게 상태가 변경되었음을 알려주면 최상위 View(Controller View)는 Store에서 데이터를 가져와 자식 View에게 내려보냄
+    - 새로운 데이터를 받은 View는 화면을 리렌더링
+    - 또한 사용자가 View에 어떤한 조작을 하면 그에 해당하는 Action을 생성
+- UDA(Uni-Directional Architecture)
+  - UDA는 단방향 구조를 가지며, 다음과 같은 특징 존재
+    - 단방향 — View에 영향을 주는 State는 한 방향으로만 수정 가능
+    - 동기적 실행 — 앞 액션이 끝난 후 뒤 액션을 실행
+    - View와 State의 분리 — Model은 State를 변화시키고, View는 State를 참조
+  - UDA의 핵심은 데이터의 흐름이 한 방향으로 관리되며, State는 Model에서 관리됨
+  - UDA는 하나의 아키텍처이기보다, 앱을 디자인하는 방법 또는 아키텍처의 특성
+  - UDA를 대표적으로 구현한 패턴으로는 Flux, Redux 그리고 Android 특화된 UDA인 MVI가 있음
+- MVI
+  - view(model(intent))
+  - model
+    - 데이터베이스 또는 Api 등에 대한 브리지 계층, 유스케이스, 레파지토리, 모듈
+    - MVI에서 의미하는 Model은 데이터를 보유하여 앱의 유일한 상태를 의미
+    - intent()의 결과로 전달된 유저의 의도를 분석하고 지금 앱의 상태에 맞춰 새로운 불변 객체 Model을 생성
+  - view
+  - intent
+    - 사용자의 버튼 클릭 등을 포함한 Action 및 시스템 이벤트로 인한 UI의 변화는 Intent 함수의 결과로 동작
+    - 앱을 어떠한 구조로 구성해야 하는지에 대한 문제보다는 어떤 앱의 상태와 데이터에 초점을 두고 그 흐름을 어떻게 다룰지 방향을 제시
+  - side effect
+    - intent, model 사이
+    - io, api, background 작업 등
+    - intent > model > side effect > intent > model
+- reference: https://blog.duckie.team/duckie-android-mvi-pattern-%EC%A0%81%EC%9A%A9%EA%B8%B0-2ab5e217f63b 
