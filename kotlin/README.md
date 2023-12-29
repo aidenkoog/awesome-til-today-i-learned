@@ -1382,3 +1382,16 @@ val length = name!!.length
   - 내부적으로는 JVM에 들어갈 때 바이트코드로 컴파일되면서 같은 xxx(…)인데 Continuation이 생성되어 Continuation Passing Style로 변환됨
 - 호출했던 함수의 끝에 매개변수가 하나 추가되서 Continuation이라는 객체를 넘겨주는 것으로 변환되는 것임
 - 레이블링 작업 때문에 특정 지점 파악이 가능
+
+#### get()과 직접 참조(=)의 차이
+
+```kotlin
+val a = MutableLiveData<String>()
+val b: LiveData<String> = a
+val c: LiveData<String>
+	get() = a
+```
+- 직접 선언하는 것(b)과 get() = ... 으로 선언하는 것(c)의 차이점은, 
+- 직접 선언하면 b 와 a 는 서로 동일한 객체를 바라보게 되는 것
+- get() 으로 선언할 경우엔 내부적으로 함수가 호출되고, 해당 함수의 결과 값으로 a 객체를 리턴하는 것.
+
