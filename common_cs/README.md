@@ -1534,3 +1534,34 @@
 - Semaphore와 Mutex와의 차이
   - Semaphore는 1개의 스레드만 들어가게 할 수도 있고, 여러개의 스레드가 접근 할 수 있음
   - Mutex는 1개의 스레드만 접근 할 수 있음
+
+#### RESTful API 재정리*
+
+- RESTful API
+​  - Rest 의 속성을 가지는(REST의 원리를 따르는) 서비스 API
+​  - Representational State Transfer 의 약자
+  - 웹,웹 상의 자원들을 HTTP URI 의 형태로 표현(Represent) 하고 URI 의 형식으로 HTTP Method(GET,POST,PUT,DELETE)를 통해 해당 자원을 조작(CRUD)할 수 있는 Software Architecture
+  - 혹은 그러한 작동원리 및 규정등을 의미
+​- 4가지 원칙(에 해당하는 가이드라인)
+​  - 1. 자원의 식별 - 자원 각각을 메세지에 의해 식별가능해야 함
+    - 주로 웹 기반의 REST 시스템에서 URI를 사용하며, 자원은 XML 이나 JSON 형태를 가짐
+​  - 2. URI 등의 메세지를 통한 Resource의 조작. 메세지와 HTTP Method 만을 이용해 Resource를 충분히 조작할 수 있어야 함
+    - Resource 조작은 CRUD Operation ​을 지정해주는 작업을 의미
+    - CRUD Operation : Create, Read, Update, Delete 로 자원을 조작하는 4가지 기본동작. 
+​  - 3. 자기서술적 메세지 - URI 메세지등에 자원과 자원을 처리해야하는 방법에 대한 정보를 충분히 포함하고 있어야 함
+    - 즉, Client 는 URI 만을 보고 자원을 어떻게 다룰 수 있는지를 파악 가능해야 함
+​  - 4. Hyper Media
+    - Client가 Resource에 접근할 수 있도록, 구분되는 표현을 통해 접근을 제공해 주어야 함
+    - HyperText Link 등을 의미
+​- RESTful 한 시스템에는 위의 조건에 추가하여 다음과 같은 6가지 필요조건이 존재
+​  - 1. Client / Server 구조 : 자원을 요청하는 쪽이 Client가 되고, 요청받는 쪽이 Server가 됨
+​  - 2. Stateless : Client가 요청 및 요청한 Context 는 서버에 저장되면 안됨
+    - Cookie나 context등을 신경쓸 필요없어 구현이 단순해지고, 서버의 부담을 줄일 수 있음
+    - Client의 이전 요청이 다음 요청에 영향을 주면 안됨 (DB 를 수정하여 영향을 주는 것은 가능.)
+​  - 3. Cachable : Client는 응답을 Caching 할 수 있어야 함
+​  - 4. Layered System : Client 에게는 서버에 직접 연결이 되었는지, 중간 계층의 서버를 통해 연결이 되어 있는지를 알 수 없어야 함
+    - Client는 Server만 호출하고, Server는 다중계층으로 구현하여 보안 및 확장성을 향상 시킬수 있음
+​  - 5. Code on demand : Javascript 나 Java applet 등을 이용하여 기능을 확장할 수 있음
+    - 주로 Client가 Server에서 Script를 받아 실행시킴.( Optional, 꼭 존재할 필요는 없음 )
+​  - 6. Interface Consistency : Interface Architecture를 작은 단위로 분리하고 단순화시켜 Client, Server의 각 파트가 독립적으로 관리,개선될 수 있도록 함
+    - HTTP 표준 프로토콜을 따르는 모든 플랫폼에서 사용할 수 있으며, 특정 언어나 기술등의 플랫폼에 의존하지 않음
