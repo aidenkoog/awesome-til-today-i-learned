@@ -1395,3 +1395,9 @@ val c: LiveData<String>
 - 직접 선언하면 b 와 a 는 서로 동일한 객체를 바라보게 되는 것
 - get() 으로 선언할 경우엔 내부적으로 함수가 호출되고, 해당 함수의 결과 값으로 a 객체를 리턴하는 것.
 
+#### Lambda Function 과 High Order Function 설명 재정리*
+​
+- Kotlin에서는 함수형 프로그래밍을 지원
+- High Order Function(고차함수) 란 , 함수를 인수로 취하거나 함수를 결과로 반환할 수 있는 함수를 의미
+  - Android Studio 에서 자주 사용하는 Call-Back Method 등이 고차함수
+- 고차함수에서 매개변수로 주어지는 식을 Lambda Expression ( 람다 표현식 ) 이라고 부름
