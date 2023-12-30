@@ -3839,3 +3839,10 @@ Array<Cat>은 Array<Animal>을 상속받게 되므로 주석 부분에서 에러
     - io, api, background 작업 등
     - intent > model > side effect > intent > model
 - reference: https://blog.duckie.team/duckie-android-mvi-pattern-%EC%A0%81%EC%9A%A9%EA%B8%B0-2ab5e217f63b 
+
+#### 동일성과 동등성 비교에 대한 설명
+    
+- 동등성(equality, ==)은 두 개의 객체의 값이 완전히 동일한 것인지 비교 (값비교, 내부적으로 equals를 호출)
+  - 자바의 equals와 동일
+- 동일성(idenity, ===)은 같은 주소를 참조하는 지 비교 (주소 값 비교, 식별자를 기반으로 객체를 판단)
+  - 자바의 ==과 동일
