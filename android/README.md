@@ -3846,3 +3846,55 @@ Array<Cat>은 Array<Animal>을 상속받게 되므로 주석 부분에서 에러
   - 자바의 equals와 동일
 - 동일성(idenity, ===)은 같은 주소를 참조하는 지 비교 (주소 값 비교, 식별자를 기반으로 객체를 판단)
   - 자바의 ==과 동일
+
+#### 안드로이드 로그 관련 설명
+
+- 안드로이드 로그캣의 경우 4000자 이상이 넘어가는 로그가 찍히면 로그를 찍을 수 없음
+- retrofit 을 이용한 network 통신을할 때 json을 주고 받다 보면 종종 발생
+- ott 등 content metadata를 log로 찍어 확인해야 하는 상황이 발생할 경우가 그에 해당하는데, 이때 로그를 사용하기 위해 만든 function은 아래와 같음
+- 긴 로그 잘라서 표시하기
+```
+fun longLog(message: String) {
+        if (message.length > 4000) {
+            Log.d(TAG, message.substring(0, 4000));
+            longLog(message.substring(4000));
+        } else {
+            Log.d(TAG, message);
+        }
+    }
+```
+- 로그를 파일로 저장
+```
+fun appendLog(text: String) {
+        if (GlobalApplication.DEBUG) {
+            try {
+                d(text)
+                val storageDir: File? =
+                    GlobalApplication.instance.mContext.filesDir
+                val logFile = File(storageDir, "application_log.txt")
+                if (!logFile.exists()) {
+                    try {
+                        logFile.createNewFile()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                try {
+                    val buf = BufferedWriter(FileWriter(logFile, true))
+                    buf.append(createLogMsgForDebugFile(buildLogMsg(text)))
+                    buf.newLine()
+                    buf.close()
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun createLogMsgForDebugFile(text: String): String {
+        return "${DateUtils.getCurrentTimeFormatForDebug()} : ${buildLogMsg(text)}"
+    }
+```
