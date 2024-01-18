@@ -749,3 +749,10 @@
 - Class
 - Constructor
 - Data type
+
+#### toolchain 에러 (cmdline-tools component is missing) 처리 방법
+
+- AndroidStudio 내 Android SDK Command-Line Tools (Latest) 설치
+- 위 내용 적용해도 에러 발생하는 경우 아래 스텝 수동으로 진행
+  - flutter config --android-sdk "C:\Users\k0376\AppData\Local\Android\Sdk"
+  - flutter config --android-studio-dir "C:\Program Files\Android\Android Studio"
