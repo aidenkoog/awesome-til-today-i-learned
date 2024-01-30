@@ -3898,3 +3898,18 @@ fun appendLog(text: String) {
         return "${DateUtils.getCurrentTimeFormatForDebug()} : ${buildLogMsg(text)}"
     }
 ```
+
+#### runBlocking, viewModel, Context 관련 구현 이슈 정리
+
+- runBlocking은 UI 스레드에서 사용할 경우 UI를 멈추기 때문에 ANR 이 발생할 수 있음
+- ViewModel에서 View의 Context를 가지고 있는 형태는 지양하여야 함
+- 추가 설명
+  - Activity가 onDestroy()가 되어도 ViewModel은 살아있으며 이후에 onCleared()가 호출되면서 ViewModel이 사라지는데 이러한 특징을 통해서 화면 회전같은 이벤트에 대응할 수 있음
+  - 화면이 회전하게 되면 onDestroy()되고 다시 Activity가 onCreate()단계부터 생성되는데 이로 인해 화면이 회전해도 View에 나타나는 데이터는 없어지지 않고 보여질 수 있음
+  - 메모리 누수가 발생하고 심지어는 에러까지 날 수 있음
+  - Portrait(세로 모드)에서 Activity를 시작하게 되면 현재 Activity에 대한 Context를 가지게 되는데 만약에 Landscape(가로 모드)로 전환을 하게 되면 현재 Activity는 onDestroy()가 되며 Context 역시 같이 없어져야 함
+  - 하지만 ViewModel에서 Context에 대한 참조가 이루어진다면 onDestroy()이후에도 Context는 살아있게 되는 문제 발생
+  - Activity의 Lifecycle에 맞춰 없어져야 하지만 조금 더 긴 ViewModel의 Lifecycle로 인해 죽지 않고 계속 메모리에 남게 됨
+  - 이러한 이유로 메모리 누수를 야기할 가능성이 있음
+  - 새로운 Landscape(가로 모드)로 전환하면 새로운 Activity의 Context가 생성되며 기존의 Portrait(세로 모드)의 Context와 같이 있게 됨
+  - 만약 Context를 사용해야 하는 상황에서 Portrait(가로 모드)의 Context와 충돌이 일어날 가능성도 있음
