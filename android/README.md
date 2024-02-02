@@ -3913,3 +3913,7 @@ fun appendLog(text: String) {
   - 이러한 이유로 메모리 누수를 야기할 가능성이 있음
   - 새로운 Landscape(가로 모드)로 전환하면 새로운 Activity의 Context가 생성되며 기존의 Portrait(세로 모드)의 Context와 같이 있게 됨
   - 만약 Context를 사용해야 하는 상황에서 Portrait(가로 모드)의 Context와 충돌이 일어날 가능성도 있음
+
+#### 프래그먼트 관련 내용
+
+- 프래그먼트 객체 생성한다고 해서 onCreateView 가 호출되지는 않음
