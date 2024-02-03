@@ -1565,3 +1565,21 @@
     - 주로 Client가 Server에서 Script를 받아 실행시킴.( Optional, 꼭 존재할 필요는 없음 )
 ​  - 6. Interface Consistency : Interface Architecture를 작은 단위로 분리하고 단순화시켜 Client, Server의 각 파트가 독립적으로 관리,개선될 수 있도록 함
     - HTTP 표준 프로토콜을 따르는 모든 플랫폼에서 사용할 수 있으며, 특정 언어나 기술등의 플랫폼에 의존하지 않음
+
+#### STOMP
+
+- STOMP는 Simple Text Oriented Messaging Protocol의 약자
+- 간단한 메시지를 전송하기 위한 프로토콜
+- 메시지 브로커와 publisher - subscriber 방식을 사용
+- 메시지의 발행자와 구독자가 존재하고 메시지를 보내는 사람과 받는 사람이 구분
+- 메시지 브로커는 발행자가 보낸 메시지를 구독자에게 전달해주는 역할
+- STOMP는 HTTP와 비슷하게 frame 기반 프로토콜 command, header, body로 구성
+- STOMP frame 구조
+  - COMMAND
+  - header1:value1
+  - header2:value2
+  - Body^@
+- 웹 소켓과 STOMP를 함께 사용하면 frame의 구조가 정해져있기 때문에 통신에 용이
+- STOMP를 사용할 때 통신 과정
+  - 수신자는 /topic 경로를 구독하고 있고 발행자는 /app 혹은 /topic으로 메시지를 보냄
+  - 만약 발행자가 /topic 경로로 메시지를 보내면 바로 수신자에게 도착하고 /app 경로로 메시지를 보내면 가공을 한 다음 보내게 됨
