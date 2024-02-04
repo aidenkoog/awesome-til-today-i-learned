@@ -3917,3 +3917,18 @@ fun appendLog(text: String) {
 #### 프래그먼트 관련 내용
 
 - 프래그먼트 객체 생성한다고 해서 onCreateView 가 호출되지는 않음
+
+#### 웹소켓 Thunder, Scarlet
+
+- Scarlet
+  - Scarlet은 내부적으로 State Machine을 통해 상태 관리를 하며 Android에서 WebSocket을 매우 편리하게 이용할 수 있게 다양한 기능을 제공해주는 라이브러리
+  - 1.WebSocket Event Pipeline
+    - Retrofit에서 영감을 받은 라이브러리답게 Dynamic Proxy 기능을 사용하여 Annotation을 기반으로 WebSocket Event 파이프라인 생성 로직을 자체적으로 구현
+    - WebSocket Connection 연결부터 종료까지 모든 상황을 Stream이라고 하는 Pipeline을 생성하여 Reactive하게 반응할 수 있도록 구현한 라이브러리
+    - @Send
+      - fun request(request: BinanceRequest)
+    - @Receive
+      - fun observeEvent(): ReceiveChannel<WebSocket.Event>
+    - @Receive
+      - fun observeTicker(): ReceiveChannel<TickerResponse>
+    - 위와 같이 Send, Receive Annotation을 붙이기만 하면 내부적으로 웹소켓 연결을 만들고 파이프라인을 생성해서 특정 Return Type 과 Annotation을 기반으로 Binary, String으로 흘러오는 데이터들을 직렬화하여 매핑 시킴
