@@ -3932,3 +3932,17 @@ fun appendLog(text: String) {
     - @Receive
       - fun observeTicker(): ReceiveChannel<TickerResponse>
     - 위와 같이 Send, Receive Annotation을 붙이기만 하면 내부적으로 웹소켓 연결을 만들고 파이프라인을 생성해서 특정 Return Type 과 Annotation을 기반으로 Binary, String으로 흘러오는 데이터들을 직렬화하여 매핑 시킴
+
+#### Socket IO
+
+1. 서버와 연결할 때 사용할 socket 객체를 생성한다. 
+여기서 사용하는 socket 객체는 서버와 이벤트를 주고받는 역할을 한다.
+2. 서버가 전송한 이벤트를 받았을 때 실행할 동작을 .on() 함수를 사용해서 설정한다.
+3. 서버에게 연결을 요청한다.
+ 
+4. 서버와의 연결에 성공하면 onConnect Listener 의 call 함수가 호출된다.
+5. 연결 성공이라는 토스트가 출력된다.
+6. 호출된 함수에서 서버에게 server_hi 이름의 이벤트를 전송한다.
+ 
+7. 서버가 전송한 client_hello 이벤트를 받으면 onClientHello Listener 의 call 함수가 호출된다.
+8. 서버에게 받은 데이터("hello") 라는 토스트가 출력된다.
