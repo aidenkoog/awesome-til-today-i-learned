@@ -3975,3 +3975,10 @@ fun appendLog(text: String) {
   - reified 키워드를 사용하지 않으면 인자로 해당 비교할 값의 클래스 타입을 추가로 인자로 지정해줘야 함
   - 예. class: Class<T> 이런식
 - 불필요한 인자를 줄이고 보다 간단하게 제네릭 구현을 위한 코틀린 키워드
+
+#### SharedFlow를 이용한 EventBus 구현
+
+- 컴포넌트 간 통신 가능, 큐모가 크고 분산화된 시스템에 효과적
+- EventBus object 클래스 정의
+- SharedFlow 정의
+- post 함수 내에서 emit 처리
