@@ -1,11 +1,17 @@
-# Awesome-til-today-i-learned
+## Notice
+
+- This repository will no longer be maintained as of February 10th.
+
+## Awesome-til-today-i-learned
+
 - This is a repository used when I want to reorganize new information or previously known knowledge.
 
-## Notice
+## History
+
 - Repository name: til --> awesome-til-today-i-learned (2023/10)
 
 ### Development
-- 2023/10 ~ till die
+- 2023/10 ~ 2024/02
 
 ### TIL (Today I learned)
 
