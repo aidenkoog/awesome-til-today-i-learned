@@ -3982,3 +3982,9 @@ fun appendLog(text: String) {
 - EventBus object 클래스 정의
 - SharedFlow 정의
 - post 함수 내에서 emit 처리
+
+#### ViewModelScope
+
+- 기본 디스패쳐는 Dispatchers.Main
+- viewModelScope.launch(Dispatchers.IO){} 등으로 디스패쳐 변경 가능
+- 스코프 안에서 withContext 사용하야 스레드 변경 가능
