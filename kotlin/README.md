@@ -1401,3 +1401,21 @@ val c: LiveData<String>
 - High Order Function(고차함수) 란 , 함수를 인수로 취하거나 함수를 결과로 반환할 수 있는 함수를 의미
   - Android Studio 에서 자주 사용하는 Call-Back Method 등이 고차함수
 - 고차함수에서 매개변수로 주어지는 식을 Lambda Expression ( 람다 표현식 ) 이라고 부름
+
+#### inline, crossinline, noinline, reified
+
+- inline 키워드
+  - 고차 함수를 사용하면 런타임 패널티가 있기 때문에 함수 구현 자체를 코드에 넣음으로써 오버헤드를 없앨 수 있음
+  - 내부적으로 객체 생성과 함께 함수 호출을 하게 되어 있어서, 이런 부분에서 오버헤드가 생길 수 있음
+  - inline 키워드는 이런 오버헤드를 없애기 위해 사용
+- noinline
+  - 이 키워드가 붙은 인자는 다른 함수의 인자로 전달이 가능
+- crossinline
+  - 고차함수에서 함수를 인자로 받아 setOnClickListener 내부에서 호출해야 하는데 일반적인 코드는 동작하지 않음. 
+  - inline 함수는 인자로 받은 함수를 다른 실행 컨텍스트를 통해 호출할 때는 함수 안에서 비-로컬 흐름을 제어할 수 없음
+  - 이럴 때 사용하는 것이 crossinline 키워드
+- reified
+  - inline 함수에서 특정 타입을 가졌는지 판단할 수 없기 때문임
+  - 이럴 때 reified 키워드를 사용
+  - 타입 파라미터에 reified 키워드를 붙여주면 마치 클래스처럼 타입 파라미터에 접근 가능
+  - 참고로 reified는 inline이 아닌 일반 함수에서는 사용할 수 없음
