@@ -3999,5 +3999,13 @@ fun appendLog(text: String) {
 - intent, reduce, postSideEffect 와 같은 dsl을 활용하여 상태 및 부수효과를 변경
 - intent : 컨테이너 내에 있는 상태 및 부수효과를 변경하기 위한 빌드 함수
 - reduce : 현재 상태와 들어온 이벤트를 토대로 새로운 상태를 만들어 냄
-- postSideEffect : 상태 변경과 관련 없는 이벤트들을 처리하기 위한 부수효과를 발생
+- postSideEffect : 상태 변경과 관련 게없는 이벤트들을 처리하기 위한 부수효과를 발생
 - viewModel.container 를 통해 stateFlow(상태)와 sideEffectFlow(부수효과)에 접근 할 수 있으며, 이를 직접 수집하거나 orbit-viewmodel 모듈 의존성추가를 통해 손쉽게 viewModel.observe(…)를 호출 가능
+
+#### DataStore
+
+- SharedPreferences 대신 사용 가능
+- Jetpack DataStore는 프로토콜 버퍼를 사용해서 키밸류 쌍 또는 유형이 지정된 객체를 저장할 수 있는 데이터 저장소 솔루션
+- 코루틴 및 flow를 써서 비동기적이고 일관된 트랜잭션 방식으로 데이터를 저장
+- DataStore는 소규모 단순 데이터 세트에 적합하며 부분 업데이트나 참조 무결성은 지원하지 않음
+- 완전 비동기식 API를 제공해 UI 쓰레드를 차단할 위협을 줄임
