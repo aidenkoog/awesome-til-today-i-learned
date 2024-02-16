@@ -3988,3 +3988,16 @@ fun appendLog(text: String) {
 - 기본 디스패쳐는 Dispatchers.Main
 - viewModelScope.launch(Dispatchers.IO){} 등으로 디스패쳐 변경 가능
 - 스코프 안에서 withContext 사용하야 스레드 변경 가능
+
+#### Android Orbit Mvi
+
+- 멀티플랫폼을 지원하는 Redux/MVI 같은 라이브러리
+- Orbit은 상태(State)와 부수효과(Side Effects)를 관리하는 Container라는 개념을 정의하고 사용
+- 일반적으로 ViewModel이 Container Host가 되어 Container를 관리하게 되는데, 이로 인해 상태 및 부수효과를 다루기가 쉬워지고, 보일러플레이트를 감소
+- 일반적으로 안드로이드에서는 ViewModel을 ContainerHost(인터페이스)로 구현
+- 인터페이스를 구현하게 되면 container를 생성해야 하는데, container<State, SideEffect>(…) 팩토리 함수를 활용할 수 있음
+- intent, reduce, postSideEffect 와 같은 dsl을 활용하여 상태 및 부수효과를 변경
+- intent : 컨테이너 내에 있는 상태 및 부수효과를 변경하기 위한 빌드 함수
+- reduce : 현재 상태와 들어온 이벤트를 토대로 새로운 상태를 만들어 냄
+- postSideEffect : 상태 변경과 관련 없는 이벤트들을 처리하기 위한 부수효과를 발생
+- viewModel.container 를 통해 stateFlow(상태)와 sideEffectFlow(부수효과)에 접근 할 수 있으며, 이를 직접 수집하거나 orbit-viewmodel 모듈 의존성추가를 통해 손쉽게 viewModel.observe(…)를 호출 가능
