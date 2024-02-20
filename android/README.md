@@ -4032,3 +4032,10 @@ fun appendLog(text: String) {
   - dataOutputStream.writeByte(socketData.tail.toInt())
   - // Flush the stream to ensure all data is sent
   - dataOutputStream.flush()
+
+#### USB OTGMode
+
+- USB OTG(OTG는 On-The-Go를 뜻함)를 사용하면 안드로이드 장치가 "USB 호스트"로 작동하여 USB 장치를 제어하고 전원을 공급할 수 있음
+- 호스트 비활성화 시 반대로 됨
+- 디버깅 시 내가 디버깅하고자 하는 디바이스의 OTG Mode는 호스트가 아니어야 내컴퓨터에서 해당 디바이스에 대한 디버깅을 할 수있음
+- (USB 로 디버깅 시)
