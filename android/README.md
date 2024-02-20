@@ -4025,3 +4025,10 @@ fun appendLog(text: String) {
 - Byte의 범위는?
   - Byte코드는 127 ~ -128의 범위를 가짐
   - 총 8bit의 메모리를 갖기 때문임
+- 예를 들어 보내야될 데이터구조가 head 0x02, len, data, tail 0x03 이라 가정
+  - dataOutputStream.writeByte(socketData.head.toInt())
+  - dataOutputStream.writeInt(socketData.len)
+  - dataOutputStream.write(socketData.data)
+  - dataOutputStream.writeByte(socketData.tail.toInt())
+  - // Flush the stream to ensure all data is sent
+  - dataOutputStream.flush()
