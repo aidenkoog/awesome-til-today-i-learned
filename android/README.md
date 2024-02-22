@@ -4039,3 +4039,9 @@ fun appendLog(text: String) {
 - 호스트 비활성화 시 반대로 됨
 - 디버깅 시 내가 디버깅하고자 하는 디바이스의 OTG Mode는 호스트가 아니어야 내컴퓨터에서 해당 디바이스에 대한 디버깅을 할 수있음
 - (USB 로 디버깅 시)
+
+#### Retrofit 2 Multipart
+
+- 서버로 파일을 전송할 때 사용, 파일 업로드
+- 데이터 앞에는 @Part 어노테이션을 추가
+- @Multipart fun xxx(@Part imageFile: MultipartBody.Part)
