@@ -1419,3 +1419,20 @@ val c: LiveData<String>
   - 이럴 때 reified 키워드를 사용
   - 타입 파라미터에 reified 키워드를 붙여주면 마치 클래스처럼 타입 파라미터에 접근 가능
   - 참고로 reified는 inline이 아닌 일반 함수에서는 사용할 수 없음
+
+#### CoroutineScope vs GlobalScope 설명
+
+- CoroutineScope
+  - 라이프사이클을 별도로 가지고 종료 가능 	
+- GlobalScope
+  - 싱글톤으로 만들어져 있음
+  - 어플리케이션의 라이프사이클에 따라 동작
+  - 취소 처리가 복잡 (누락 가능성)
+  - throw exception 처리 복잡 (누락 가능성)
+  - 글로벌 스코프 사용 시 내부의 서로 다른 런치 동작에 대한 영향을 다른 자식의 런치에 영향이 가지 않도록 하기 위해서는 2개의 코드 추가 가능
+    - SupervisorJob : 예외상황을 상위 부모에게 통지하지 않음 --> 자식들에서 발생한 예외 상황이 다른 자식에게 영향을 주지 않음
+    - CoroutineExceptionHandler: Exception을 글로벌하게 받아서 처리
+    - GlobalScope.launch (exception + SupervisorJob()) {}
+  - Activity, Fragment가 즉시 종료되어 뷰를 날렸을 경우 오류 발생 가능성 있음
+    - GlobalScope.launch(exception + SupervisorJob())
+    - onCleared() --> job.cancel() 필요
