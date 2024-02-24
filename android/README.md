@@ -4045,3 +4045,13 @@ fun appendLog(text: String) {
 - 서버로 파일을 전송할 때 사용, 파일 업로드
 - 데이터 앞에는 @Part 어노테이션을 추가
 - @Multipart fun xxx(@Part imageFile: MultipartBody.Part)
+
+#### 안드로이드 소켓 프로그래밍 재정리
+
+- 서버와 소켓 연결은 Socket 클래스와 InetSocketAddress 클래스를 이용
+- InetSocketAddress는 연결 서버 정보를 표현하는 클래스로 생성자에 IP 주소와 포트번호를 지정
+- InetSocketAddress로 표현된 서버에 연결 요청은 Socket 클래스의 connect() 함수 호출로 이루어지고 connect() 함수의 매개변수로 InetSocketAddress 객체와 타임아웃 시간을 지정
+- 연결한 서버와 데이터를 송수신 하기 위해 소켓 객체를 이용해 socket.getOutputStream(), socket.getInputStream() 구문으로 IO 객체를 획득
+- 그리고 이 IO 객체를 이용하여 필요 시 데이터를 전송하거나 수신
+- 데이터를 전송하기 위해서는 write() 메서드를 사용하고 데이터를 수신하기 위해서는 read() 메서드를 사용
+- 소켓 연결, 읽기, 쓰기는 다른 스레드에서 처리 필수
