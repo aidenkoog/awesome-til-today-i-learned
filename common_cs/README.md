@@ -1614,3 +1614,12 @@
   - Circuit Open: A가 B,C,D를 호출하는 데 B가 장애가 발생할 경우 B를 차단, 차단기 같은 느낌
   - Exception
   - Thread Pool / Queue / Semaphore Full 이슈
+
+#### 개발 / 매니징 관련 용어 정리
+
+- Electric Diagram
+- DC (Design Confirmation)
+- MP (Mass Production)
+- 일정 진행 중 발생하는 문제
+  - 문제 기술 / 근본 원인 / 조치 내용
+  - PRCAs?
