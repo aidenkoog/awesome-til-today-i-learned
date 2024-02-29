@@ -4062,3 +4062,16 @@ fun appendLog(text: String) {
 - await() 함수가 실행되면 코루틴은 결과가 반환될 때까지 기다리게 됨
 - 이를 일시 중단(suspend) 되었다고 하며 이러한 특성으로 인해 await() 메소드는 일시 중단이 가능한 코루틴 내부에서만 사용이 가능
 - 그렇기 때문에 await() 는 코루틴 내부 혹은 suspend 함수 내에서만 사용이 가능
+
+#### Compose Gradient 그라데이션 효과 주기
+
+- Brush 이용해 그라데이션 효과 구현 가능
+- fun Modifier.background(brush: Brush, shape: Shape = RectabgleShape, alpha: Float = 1.0f)
+- Brush: 그라데이션 방향
+- brush = Brush.vericalGradient(listOf(Color.Red, Color.Blue))
+- Brush는 그라데이션을 다루기 위한 클래스들을 모아놓은 Sealed Class (sealed class Brush)
+  - LinearGradient
+  - RadialGradient
+  - SweepGradient
+- Brush.linearGradient(colors = redAndBlue, start = Offset.Zero, end = Offset.Infinite)
+- alpha 값 범위는 0.0f ~ 1.0f(원색), 0.7정도 주면 파스텔톤 연출 가능
