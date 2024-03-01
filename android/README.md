@@ -4075,3 +4075,18 @@ fun appendLog(text: String) {
   - SweepGradient
 - Brush.linearGradient(colors = redAndBlue, start = Offset.Zero, end = Offset.Infinite)
 - alpha 값 범위는 0.0f ~ 1.0f(원색), 0.7정도 주면 파스텔톤 연출 가능
+
+#### Compose
+
+- Side Effect: Composable 범위 밖에서 발생하는 앱 상태에 대한 변경
+- 일반적으로 컴포즈를 사용할 때 여러 컴포저블을 조합해서 사용
+- 기본적으로 컴포저블은 바깥쪽에서 안쪽으로 상태를 내려줌
+- 안쪽 컴포저블에서 바깥쪽에 있는 컴포저블의 상태에 대한 변경을 해주거나 컴포저블에서 컴포저블이 아닌 앱 상태에 대해 변화를 준다면
+- 단방향이 아닌 양방향 의존성으로 Effect가 생기며 이를 사이드 이펙이라 부름
+- LaunchedEffect
+  - Composable Lifecycle Scope에서 suspend fun을 실행하기 위해 사용
+  - LaunchedEffect가 Composable 을 시작하면 매개변수로 전달된 코드 블록으로 코루틴이 실행됨
+  - LaunchedEffect가 Composition을 종료하면 코루틴이 취소됨
+  - LaunchedEffect가 다른 키로 recomposition 되면 기존 코루틴이 취소되고 새 코루틴에서 새 suspend 함수가 실행
+- LaunchedEffect는 key라 불리는 기준가을 두어 key가 바뀔 때만 LaunchedEffect의 supsend fun을 취소하고 재실행
+  - recomposition은 Composable의 State가 바뀔 때마다 일어나므로, 만약 recomposition이 일어날 때마다 이전 LaunchedEffect가 취소되고 다시 수행된다면 매우 비효율적이기 때문에 이를 해결하기 위해 키를 사용
