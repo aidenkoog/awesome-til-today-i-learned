@@ -4090,3 +4090,14 @@ fun appendLog(text: String) {
   - LaunchedEffect가 다른 키로 recomposition 되면 기존 코루틴이 취소되고 새 코루틴에서 새 suspend 함수가 실행
 - LaunchedEffect는 key라 불리는 기준가을 두어 key가 바뀔 때만 LaunchedEffect의 supsend fun을 취소하고 재실행
   - recomposition은 Composable의 State가 바뀔 때마다 일어나므로, 만약 recomposition이 일어날 때마다 이전 LaunchedEffect가 취소되고 다시 수행된다면 매우 비효율적이기 때문에 이를 해결하기 위해 키를 사용
+
+#### Compose List 뷰 구현
+
+- Column 안에 컴포저블 ListScreen() 호출
+- Column() { Text() RowList() Text() GridList() }
+- GridList() 내 로직 구현
+  - LazyVerticalGrid 정의: 지연 목록, 데이터 수를 모르는 경우 맞춰서 변할 수 있음
+  - array data의 value?.let { items(it) { item -> GridItemCard(data = item) } }
+- 기본적으로 컴포넌트들을 만들 때 Column() { Text, etc }, Row { Text, etc } 와 같은 방식으로 구현하면 됨
+- 이미지 로딩은 아래와 같이 구현
+  - Surface(shape = ..copy(CornerSize(20.dp))) { AsyncImage(model, description, contentScale, placeHolder, modifier ) }
