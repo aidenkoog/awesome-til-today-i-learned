@@ -4101,3 +4101,12 @@ fun appendLog(text: String) {
 - 기본적으로 컴포넌트들을 만들 때 Column() { Text, etc }, Row { Text, etc } 와 같은 방식으로 구현하면 됨
 - 이미지 로딩은 아래와 같이 구현
   - Surface(shape = ..copy(CornerSize(20.dp))) { AsyncImage(model, description, contentScale, placeHolder, modifier ) }
+
+#### Compose로 커스텀 다이얼로그 생성
+
+- Compose에서도 AlertDialog sdk 제공됨
+- AlertDialog( icon = ..., title, text, onDismissRequest = onDismiss, confirmButton = { TextButton(onClick = ...) {} ...
+- 더 커스텀한 Dialog 사용하기 위해서는 Dialog Composable 사용 가능
+  - 다이얼로그 설정 가능한 객체: DialogProperties
+-  Dialog(onDismissRequest = onDismiss) { Card() { Text, modifier, textAlign..} }
+-  Column 이나 Row등의 레이아웃 구성 통해 더 복잡하게도 구성 가능
