@@ -4110,3 +4110,17 @@ fun appendLog(text: String) {
   - 다이얼로그 설정 가능한 객체: DialogProperties
 -  Dialog(onDismissRequest = onDismiss) { Card() { Text, modifier, textAlign..} }
 -  Column 이나 Row등의 레이아웃 구성 통해 더 복잡하게도 구성 가능
+
+#### Dynamic Proxy 다이나믹 프록시
+
+- 함수의 실행 전에 특정 인터페이스를 거치도록 만들 수 있는 자바 기능 중 하나이며,
+- 컴파일 타임이 아닌 런타임에 만들 수 있는 프락시
+- 안드로이드에선 대표적으로 Retrofit 이 다이나믹 프록시를 사용하여 구현되어 있으
+- 다이나믹 프록시 구현 방법
+  - Proxy.newProxyInstance 함수 아래 3가지 인자를 통해 만들 수 있음
+    - 첫 번째 인자는 클래스 로더
+      - 인터페이스나, 인터페이스의 구현체의 클래스 로더
+    - 두 번째 인자는 인터페이스들
+      - 인자로 포함된 인터페이스들을 모두 포함하는 Dynamic Proxy가 생성됨
+    - 세 번째 인자는 InvocationHandler
+      - proxy( 자기 자신 ), method( 실행된 함수 정보 ), args( 함수 실행에 사용된 인자들 )를 인자로 받는 함수 하나만 구현하면 됨
