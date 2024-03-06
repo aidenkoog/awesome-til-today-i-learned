@@ -4124,3 +4124,13 @@ fun appendLog(text: String) {
       - 인자로 포함된 인터페이스들을 모두 포함하는 Dynamic Proxy가 생성됨
     - 세 번째 인자는 InvocationHandler
       - proxy( 자기 자신 ), method( 실행된 함수 정보 ), args( 함수 실행에 사용된 인자들 )를 인자로 받는 함수 하나만 구현하면 됨
+
+#### Result class
+
+- runCatching 사용해서 Result 클래스 활용 가능
+- 받는 측에서 onSuccess, onFailure 로 분기처리 가능
+- Result Class는 4개의 함수와 property를 제공
+  - isSuccess : 성공 여부
+  - isFailure : 실패 여부
+  - getOrNull() : exception이 발생하지 않은 경우 해당 값, 발생한 경우는 null
+  - exceptionOrNull() exception이 발생한 경우 해당 exception, 발생하지 않은 경우는 null
