@@ -4134,3 +4134,12 @@ fun appendLog(text: String) {
   - isFailure : 실패 여부
   - getOrNull() : exception이 발생하지 않은 경우 해당 값, 발생한 경우는 null
   - exceptionOrNull() exception이 발생한 경우 해당 exception, 발생하지 않은 경우는 null
+
+#### expect, actual class
+
+- expect 클래스는 플랫폼 별로 다른 구현을 가져야 하는 로직이 있을 때 해당 로직에 대한 구현을 강제하기 위해 만들어짐
+- 만약 Android와 iOS에서 버전을 체크해야 하는 것과 같이 구현이 달라져야 하는 부분이 있다면, 해당 부분을 expect class와 actual class로 구현해야 함
+- 탄생 배경
+  - KMM이 나오면서 코틀린을 사용해 안드로이드, iOS 모두의 비즈니스 로직을 구현하기 위해  Kotlin에 class와 fun에 붙일 수 있는 expect modifier가 탄생
+  - expect modifier은 abstract modifier와 비슷하게 동작하지만, 의도가 상이
+  - abstract class는 자신을 상속하는 클래스가 추상체로 포함된 함수나 변수 등을 구현하도록 만들지만, expect class는 KMM에서의 공통 모듈에서 선언된 선언체가 Android, iOS 각각에서 구현되도록 강제하기 위해 만들어짐
