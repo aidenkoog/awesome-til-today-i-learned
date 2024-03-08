@@ -1666,3 +1666,13 @@
   - 연결의 설정 (3-way handshaking) 와 해제(4-way handshaking)
   - 전이중 (Full-Duplex), 점대점 (point to point) 서비스
   - UDP 보다 전송속도가 느리다.
+- Client
+  - Socket socket = new Socket("localhost", 포트번호);
+  - Socket socket = new Socket(new InetSocketAddress("localhost", 포트번호));
+  - Client에서 Socket을 사용하기 위한 두 가지 방법
+  - 연결하려는 외부 서버의 IP주소 대신 도메인 이름을 알고 있을 때 InetSocketAddress class를 사용할 수 있음
+  - 데이터를 받기 위해 InputStream의 read() 메서드를 호출하면 상대방이 데이터를 보내기 전까지 블로킹 됨
+  - read() 메서드가 블로킹 해제되고 리턴되는 경우
+    - 상대방이 데이터를 보냈을 때 (리턴 값 => 읽은 바이트 수)
+    - 상대방이 정상적으로 Socket의 close() 메서드를 호출했을 때 (-1)
+    - 상대방이 비정상적으로 종료했을 때 (IOException 발생)
