@@ -4143,3 +4143,18 @@ fun appendLog(text: String) {
   - KMM이 나오면서 코틀린을 사용해 안드로이드, iOS 모두의 비즈니스 로직을 구현하기 위해  Kotlin에 class와 fun에 붙일 수 있는 expect modifier가 탄생
   - expect modifier은 abstract modifier와 비슷하게 동작하지만, 의도가 상이
   - abstract class는 자신을 상속하는 클래스가 추상체로 포함된 함수나 변수 등을 구현하도록 만들지만, expect class는 KMM에서의 공통 모듈에서 선언된 선언체가 Android, iOS 각각에서 구현되도록 강제하기 위해 만들어짐
+
+#### 코루틴 상세 설명 (suspend fun, continuation)
+
+- 콜백 기반 코드를 sequential code로 바꾸어주기 때문에 비동기 코드를 단순화
+- CPS는 함수 호출 시에 Continuation을 전달하는 패러다임이며, Kotlin Coroutine 역시 CPS로 구현
+- Kotlin 컴파일러는 suspend 함수를 CPS 패러다임을 구현한 코드로 변환
+- Kotlin의 suspend 키워드는 내부적으로 콜백을 생성
+- 즉, suspend 키워드를 만난 Kotlin 컴파일러는 suspend-resume을 위한 최적화된 콜백 코드를 생성
+- Continuation은 다음에 무슨 일을 해야 할지 담고 있는 확장된 콜백
+- Continuation은 resume되었을 때의 동작 관리를 위한 객체로, 연속적인 상태간의 communicator
+- Continuation은 호출 함수간의 suspend-resume을 위한 communicator이고, CPS는 함수 호출 시에 이 Continuation을 전달하는 패러다임
+- Kotlin 컴파일러는 suspend fun의 시그니처를 변경
+- 매개변수에 Continuation을 추가
+- Kotlin 컴파일러는 suspend fun의 내부 코드들을 분석하여 중단 가능 지점을 찾아 구분
+- Kotlin 컴파일러는 다음 실행 지점을 나타내는 label과 내부 변수들을 관리하는 상태머신 클래스를 생성
