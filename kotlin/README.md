@@ -1436,3 +1436,18 @@ val c: LiveData<String>
   - Activity, Fragment가 즉시 종료되어 뷰를 날렸을 경우 오류 발생 가능성 있음
     - GlobalScope.launch(exception + SupervisorJob())
     - onCleared() --> job.cancel() 필요
+
+#### 코루틴 내부 구조
+
+- 코루틴은 디컴파일되면 일반 코드
+- Continuation Passing Style(CPS, 연속 전달 방식) 이라는 형태의 코드로 전환
+- Continuation Passing Style은 결과를 호출자에게 직접 반환하는 대신 Callback같은 것 continuation으로 결과를 전달하는 것을 의미
+- suspend fun은 내부적으로는 JVM에 들어갈 때 바이트코드로 컴파일되면서 같은 함수인데 Continuation이 생성되어 Continuation Passing Style로 변환
+- 호출했던 함수의 끝에 매개변수가 하나 추가되서 Continuation이라는 객체를 넘겨주는 것으로 변환
+- 일시 중단과 재개를 위해서 suspention point를 label로 표시해두는 Labeling 작업이 이루어짐
+- 작성했던 함수가 내부적으론 switch-case문처럼 바뀌어 case문이 생성되고 실행
+- Label들이 다 완성되고 나면 Continuation Passing Style로 변환
+- Continuation이라는 객체가 있고, 매 번 함수를 호출할 때마다 continuation을 넘김
+- continuation은 Callback 인터페이스 같은 것으로, 재개를 해주는 인터페이스를 가진 객체
+- sm이라고 하는 것은 state machine을 의미하는데, 각각의 함수가 호출될 때 상태(지금까지 했던 연산의 결과)를 같이 넘겨줘야 함
+- 이 state machine의 정체는 결국 Continuation이고, Continuation이 어떠한 정보값을 가진 형태로 Passing이 되면서 코루틴이 내부적으로 동작하게 되는 것
