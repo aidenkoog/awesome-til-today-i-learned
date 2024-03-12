@@ -4158,3 +4158,17 @@ fun appendLog(text: String) {
 - 매개변수에 Continuation을 추가
 - Kotlin 컴파일러는 suspend fun의 내부 코드들을 분석하여 중단 가능 지점을 찾아 구분
 - Kotlin 컴파일러는 다음 실행 지점을 나타내는 label과 내부 변수들을 관리하는 상태머신 클래스를 생성
+
+#### Hilt Binds, Provides
+
+- 클래스의 인스턴스를 Hilt에게 바로 제공 할 수 있는 경우에는 따로 Module을 통해 Install 하지 않고 constructor inject을 통해 종속성을 제공해 줄 수 있음
+- Room, Retrofit과 같은 외부 라이브러리에서 제공되는 클래스이므로 프로젝트 내에서 소유할 수 없는 경우 또는 constructor를 가질 수 없는 인터페이스에 대한 종속성 삽입의 경우에는 위와 같은 constructor-inject를 통해 종속성을 제공할 수 없음
+- 이 때 Hilt Module을 추가하여 종속성을 제공 할 수 있는데, 제공해야 하는 종속성의 종류에 따라 @Binds와 @Provides로 나뉘게 됨
+- @Binds
+  - constructor를 가질 수 없는 인터페이스에 대한 종속성 삽입의 경우에 사용
+  - 함수의 반환 타입은 구현하고자 하는 interface type이며, 매개변수는 실제 제공하고자 하는 interface의 구현체 class
+  - @Binds 어노테이션을 사용하기 위해서는 모듈은 abstract class, 함수는 abstract function이어야 함
+- @Provides
+  - Room, Retrofit과 같은 외부 라이브러리에서 제공되는 클래스이므로 프로젝트 내에서 소유할 수 없는 경우 또는 Builder 패턴 등을 통해 인스턴스를 생성해야 하는 경우에 사용
+  - 함수의 반환 타입은 제공하고자 하는 인스턴스의 type이며, 매개변수는 인스턴스 생성에 필요한 종속성, 함수 내부는 실제 인스턴스의 구현
+  - @Provides만 포함되는 Module의 경우 object 형태로 생성 했을 때 provider는 최적화 된 코드를 제공하며, inline 된 코드로 제공됨
