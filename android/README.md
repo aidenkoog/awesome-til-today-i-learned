@@ -4172,3 +4172,11 @@ fun appendLog(text: String) {
   - Room, Retrofit과 같은 외부 라이브러리에서 제공되는 클래스이므로 프로젝트 내에서 소유할 수 없는 경우 또는 Builder 패턴 등을 통해 인스턴스를 생성해야 하는 경우에 사용
   - 함수의 반환 타입은 제공하고자 하는 인스턴스의 type이며, 매개변수는 인스턴스 생성에 필요한 종속성, 함수 내부는 실제 인스턴스의 구현
   - @Provides만 포함되는 Module의 경우 object 형태로 생성 했을 때 provider는 최적화 된 코드를 제공하며, inline 된 코드로 제공됨
+
+#### adb 무선 디버깅
+
+- cd appdata/local/android/sdk/platform-tools
+- 또는 환경변수 설정
+- adb tcpip 5555 (생략 가능)
+- adb connect [device ip]
+- 참고. Android 11 이상의 기기에서 무선 디버깅 기능을 지원
