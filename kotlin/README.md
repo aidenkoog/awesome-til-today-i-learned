@@ -1451,3 +1451,15 @@ val c: LiveData<String>
 - continuation은 Callback 인터페이스 같은 것으로, 재개를 해주는 인터페이스를 가진 객체
 - sm이라고 하는 것은 state machine을 의미하는데, 각각의 함수가 호출될 때 상태(지금까지 했던 연산의 결과)를 같이 넘겨줘야 함
 - 이 state machine의 정체는 결국 Continuation이고, Continuation이 어떠한 정보값을 가진 형태로 Passing이 되면서 코루틴이 내부적으로 동작하게 되는 것
+
+#### Pair, Triple
+
+- Pair는 객체를 생성하고 두개의 객체를 넣을 수 있음
+- 원래는 따로 클래스를 만들어서 처리해야 하나 Pair, Triple 등을 사용하면 번거로움 없이 설정이 가능
+- 안에 들어가는 객체의 클래스 또는 자료형은 중요하지 않음
+- 두개가 동일해도 되고 달라도 됨
+- Pair 옆에 <타입, 타입>을 명시적으로 작성하는 것도 가능
+- pair.component1, 2 등으로 읽는 것도 가능
+- val (hello, number) = Pair("Hello", 1234) 이런식도 가능
+- val (hello, world) = "Hello" to "World"
+- Triple은 first, second, third 로 접근 가능
