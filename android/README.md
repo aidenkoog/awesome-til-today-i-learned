@@ -4180,3 +4180,20 @@ fun appendLog(text: String) {
 - adb tcpip 5555 (생략 가능)
 - adb connect [device ip]
 - 참고. Android 11 이상의 기기에서 무선 디버깅 기능을 지원
+
+#### 컴포즈 네비게이션
+
+- NavController 가 네비게이션의 핵심 컴포넌트
+- 백스택을 기억하고, 이동가능하게 해준다. 
+- rememberNavController() 를 통해 얻을 수 있음
+- navController 는 항상 최상위 컴포저블에 선언 필수
+- 각각의 컴포저블 네비게이션 도착지는 route 와 관련있다. 
+- route 는 String 으로 정의하는데, 컴포저블의 경로를 설정하고 navController 에게 알맞은 도착지를 알려주게된다. 
+- 절대경로를 갖는 딥링크랑 비슷하다고 생각할 수도 있다. 
+- 각 도착지는 유니크한 네임을 가져야 한다.
+- NavController 는 항상 하나의 NavHost 와 연관되어 진다.
+- NavHost 는 컨테이너 처럼 작동하며, 현재 목적지 화면을 보여주는 책임이 있다. 
+- 여러 컴포저블을 네비게이트 하면서 NavHost 는 자동으로 리컴포즈된다. 
+- 또한 NavController 는 네비게이션 그래프인 NavGraph 와 연결된다. 
+- NavGraph 는 네비게이션 간에 컴포저블 도착지를 매핑합니다. 
+- (본질적으로 가져올 수 있는 대상의 컬렉션.)
