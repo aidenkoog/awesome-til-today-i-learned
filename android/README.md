@@ -4197,3 +4197,16 @@ fun appendLog(text: String) {
 - 또한 NavController 는 네비게이션 그래프인 NavGraph 와 연결된다. 
 - NavGraph 는 네비게이션 간에 컴포저블 도착지를 매핑합니다. 
 - (본질적으로 가져올 수 있는 대상의 컬렉션.)
+
+#### 컴포즈 성능 개선
+
+- 상태 읽기 연기
+  - 값 직접 전달이 아닌 람다 통해 전달
+- 키 지정히기
+  - compose에서 LazyColumn을 사용할 때 key를 지정해주지 않는다면
+  - item이 추가되거나 순서가 바뀐다면 item 전체가 recompose 됨
+  - 키를 지정해줘서 유일성을 보장해준다면 순서가 바뀌어도 나머지 요소들의 recomposition을 방지
+- 계산 최소화
+  - 계산하는 부분을 밖에 빼서 remember로 감싸준다면 쓸데없은 계산을 하지않아 효율이 올라가게 되
+- 역방향 쓰기 금지
+  - recomposition 안에서 상태를 변경하지 말라
