@@ -4210,3 +4210,12 @@ fun appendLog(text: String) {
   - 계산하는 부분을 밖에 빼서 remember로 감싸준다면 쓸데없은 계산을 하지않아 효율이 올라가게 되
 - 역방향 쓰기 금지
   - recomposition 안에서 상태를 변경하지 말라
+
+#### 소켓 통신 데이터 전송
+
+- 정수형, 바이트, 가변 데이터 셋팅 및 전송법
+- DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+- dataOutputStream.writeInt(integerData);
+- dataOutputStream.writeByte(byteData);
+- dataOutputStream.writeUTF(variableData);
+ 
