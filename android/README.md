@@ -4219,3 +4219,11 @@ fun appendLog(text: String) {
 - dataOutputStream.writeByte(byteData);
 - dataOutputStream.writeUTF(variableData);
  
+#### 컴포즈 네비게이션 동작 이슈 정리
+
+- 현상: popBackStack으로 처리한 부분이 존재, 해당 동작 반복하다보면 네비게이션 동작이 멈추는
+경우 발생
+- 극복방법
+  - popBackStack을 navigate로 변환 후 데스티네이션은 원하는 스크린 시그니처로 지정
+  - navOptions에서 popUpTo에 직전 화면의 데스티네이션 시그니처 지정 후 inclusive = true 처
+- 위와 같이 처리하면 첫번째 데스티네이션으로 네비게이션될때 이전 화면 스택 정리가 가능
