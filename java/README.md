@@ -651,6 +651,7 @@
   - list.sort(String::compareToIgnoreCase);
   - list.sort(String::compareToIgnoreCase.reversed().thenComparing(...));
 
-#### Java 8 Data/Time 클래스 관련 설명
+#### SparseIntArray
 
-- 
+- HashMap<Integer,Integer> 를 사용하는 것보다 SparseIntArray 를 사용하는 것이 메모리를 효율적으로 사용 가능
+- 사용법은 HashMap 과 거의 유사하고 get 메소드 호출시 항목이 존재하지 않으면 null 이 아닌 0 을 리턴
